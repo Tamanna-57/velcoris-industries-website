@@ -28,6 +28,8 @@ src/
   App.jsx                 header/footer shell + path routing
   pages/Home.jsx          homepage
   pages/Technology.jsx    technology page
+  pages/Media.jsx         media page
+  lib/media.js            media page content (gallery, LinkedIn posts)
   lib/technology.js       technology page copy (verbatim from the original)
   index.css               tokens (light/dark), base styles, focus, reduced-motion
   lib/content.js          all homepage copy and figures
@@ -48,6 +50,8 @@ src/
     Logo.jsx              official logo (vector)
     ProcessStack.jsx      technology: stacking 6-stage process cards
     StageVisuals.jsx      technology: diagram for each process stage
+    MediaGallery.jsx      media: category filter + coverflow gallery
+    LinkedInNews.jsx      media: LinkedIn posts as article cards
 public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
 ```
@@ -56,4 +60,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 - [x] Homepage round 1 (redesign)
 - [x] Homepage round 2 (client review: full-image hero, team video, original lower sections restored)
 - [x] Round 3: nav hover fade + Technology page
-- [ ] Company, Applications, Media, Contact pages
+- [x] Round 4: Media page
+- [ ] Company, Applications, Contact pages
