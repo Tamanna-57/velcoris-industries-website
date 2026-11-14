@@ -151,24 +151,12 @@
   .link-accent:hover svg { transform: translateX(3px); }
 }
 
-/* Floating header tones (pill nav, logo, controls) */
-.site-header {
-  --hdr-ink: var(--ink);
-  --hdr-muted: var(--muted);
-  --hdr-line: color-mix(in srgb, var(--line) 80%, transparent);
-  --hdr-pill: color-mix(in srgb, var(--surface) 82%, transparent);
-}
-.site-header[data-tone="dark"] {
-  --hdr-ink: #f3f4f6;
-  --hdr-muted: #a9b0bb;
-  --hdr-line: rgba(255, 255, 255, 0.16);
-  --hdr-pill: rgba(17, 18, 20, 0.62);
-}
-/* Hover fade (reference: EquitiFy): only the hovered item dims to grey */
-.nav-link { transition: color 0.25s ease, opacity 0.25s ease; }
-.nav-pill .nav-link:hover,
-.nav-pill .nav-link:focus-visible { color: var(--hdr-muted); }
-#mobile-menu .nav-link:hover { color: var(--muted); }
+/* Nav hover (reference: EquitiFy): only the hovered item fades to grey */
+:root, [data-theme="light"] { --nav-hover: #6b7380; } /* 4.8:1 on white */
+[data-theme="dark"] { --nav-hover: #8a919c; }         /* 6.3:1 on #0a0b0d */
+.nav-link { transition: color 0.3s ease; }
+.nav-link:hover,
+.nav-link:focus-visible { color: var(--nav-hover); }
 
 /* Hexagon grid texture used on the original site's dark sections */
 .hex-pattern {

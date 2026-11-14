@@ -33,7 +33,7 @@ src/
   lib/content.js          all homepage copy and figures
   lib/hooks.js            reveal / in-view / reduced-motion hooks
   components/
-    Header.jsx            floating pill nav (hover fade, adaptive dark tone), mobile menu
+    Header.jsx            nav (hover fade), mobile menu
     ThemeToggle.jsx       light/dark toggle with circular reveal (light is default)
     Hero.jsx              full-bleed lattice hero, faded left → dark right
     ProcessVideo.jsx      scroll-expand graphene video
@@ -55,5 +55,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 ## Status
 - [x] Homepage round 1 (redesign)
 - [x] Homepage round 2 (client review: full-image hero, team video, original lower sections restored)
-- [x] Round 3: header interaction + Technology page
+- [x] Round 3: nav hover fade + Technology page
 - [ ] Company, Applications, Media, Contact pages
