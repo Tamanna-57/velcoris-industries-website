@@ -1,7 +1,7 @@
 // Applications page content, from velcorisindustries.com/applications (14 Nov 2026).
 // Photos are the original page's Unsplash images (free to use under the Unsplash licence).
 
-const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70` // width added per srcset
+const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=60` // width added per srcset
 
 export const APPS_HERO = {
   eyebrow: 'Industrial applications',

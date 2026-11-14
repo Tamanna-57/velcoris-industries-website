@@ -332,6 +332,18 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 
 ---
 
+## 3m. Round 13: Loading speed for first-time visitors (14 Nov 2026)
+
+| # | Change | Client reason | Measured result |
+|---|---|---|---|
+| R13-1 | **Remote photos served through Vercel Image Optimization** (`vercel.json` → `images`): gallery, lab, "Three advantages" and Company photos are fetched once from velcorisindustries.com, resized to the size shown, converted to WebP and cached at the edge for 31 days. `src/lib/img.js` builds the URLs and `srcset`. | "Pictures and videos take a lot of time to load in a new browser; fine with cache." | Founder photo 1.9 MB → 13 KB; leadership photo → 9 KB; lab photos 50–140 KB; gallery average 87 KB (originals 120–350 KB). First request per image is slower while Vercel creates the copy; later visitors get the cached copy. |
+| R13-2 | **Video starts buffering 600 px before it is on screen** (was: only when visible), plus a **540p phone version** (580 KB vs 1.28 MB) chosen automatically on small screens; both files are web-optimised (fast start). | Same. | Phone video fully buffered (readyState 4) by the time the section is reached. |
+| R13-3 | **Cache headers**: `/media/*` cached 30 days with background revalidation (was revalidated on every visit); hashed build files a year. | Same. | Repeat views of media skip the network. |
+| R13-4 | **Hero preload matches the screen**: phones preload the 45 KB image only (the 114 KB desktop image was also downloading). | Found while measuring. | One hero download per visit. |
+| R13-5 | Applications photos (Unsplash) at quality 60 instead of 70. | Same. | About a quarter smaller. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
