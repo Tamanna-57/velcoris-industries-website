@@ -5,13 +5,17 @@ import { useEffect, useRef } from 'react'
  * Thin lines, a slow glide towards the viewer, a gentle surface wave, and a few small sparks
  * that run along the bonds. Pauses off screen / in background tabs; reduced motion draws one frame.
  */
-const BG = '#0a0b0d'
-const LINE = '200,212,240'
-const SPARK = '132,162,255'
+// Palettes follow the site theme. `lineA` / `dotA` are the near-row opacities (they fade with depth).
+const PALETTES = {
+  dark: { bg: '#0a0b0d', line: '200,212,240', lineA: 0.5, quiet: 0.3, dotA: 0.75, spark: '132,162,255', head: '225,233,255', halo: 0.18 },
+  light: { bg: '#ffffff', line: '20,22,28', lineA: 0.2, quiet: 0.3, dotA: 0.32, spark: '74,102,184', head: '58,84,168', halo: 0.12 },
+}
 const BUCKETS = 8
+const QL = 4 // levels of the 'quiet zone' behind the copy
+const FEATHER = 90 // px over which the lattice returns to full strength around the copy
 const SPEED = 0.07 // world units per second (lattice period is ~1.73 * size)
 
-export default function LatticeField({ className = '' }) {
+export default function LatticeField({ className = '', theme = 'auto', protectRef }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -24,6 +28,22 @@ export default function LatticeField({ className = '' }) {
     let sparks = []
     let start = performance.now()
     let lastSpark = 0
+    let pal = PALETTES.dark
+    let keepOut = null // copy block (canvas coords): sparks stay out of it
+
+    const readTheme = () => {
+      const t = theme === 'auto' ? document.documentElement.getAttribute('data-theme') : theme
+      pal = t === 'dark' ? PALETTES.dark : PALETTES.light
+    }
+    const measureCopy = () => {
+      const el = protectRef && protectRef.current
+      if (!el) { keepOut = null; return }
+      const c = canvas.getBoundingClientRect()
+      const r = el.getBoundingClientRect()
+      const pad = 28
+      keepOut = { x0: r.left - c.left - pad, y0: r.top - c.top - pad, x1: r.right - c.left + pad, y1: r.bottom - c.top + pad }
+    }
+    const blockedXY = (x, y) => keepOut && x > keepOut.x0 && x < keepOut.x1 && y > keepOut.y0 && y < keepOut.y1
 
     function build() {
       const mobile = W < 768
@@ -82,8 +102,8 @@ export default function LatticeField({ className = '' }) {
       g = {
         f, horizon, zNear, zFar, s, rowH, mobile,
         vx: Float32Array.from(vx), vy: Float32Array.from(vy), adj, edges: Uint32Array.from(edges),
-        px: new Float32Array(n), py: new Float32Array(n), pz: new Float32Array(n), on: new Uint8Array(n),
-        paths: Array.from({ length: BUCKETS }, () => null),
+        px: new Float32Array(n), py: new Float32Array(n), pz: new Float32Array(n), on: new Uint8Array(n), qv: new Float32Array(n),
+        paths: Array.from({ length: BUCKETS * QL }, () => null),
         wave: 0.05, // surface wave height (camera height = 1)
       }
     }
@@ -115,6 +135,7 @@ export default function LatticeField({ className = '' }) {
       canvas.height = Math.round(H * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       build()
+      measureCopy()
       sparks = []
     }
 
@@ -122,7 +143,7 @@ export default function LatticeField({ className = '' }) {
       const t = reduced ? 0 : (now - start) / 1000
       const total = t * SPEED
       const off = total % g.rowH
-      const { vx, vy, px, py, pz, on, edges } = g
+      const { vx, vy, px, py, pz, on, qv, edges } = g
       const n = vx.length
 
       // Project every vertex once
@@ -134,42 +155,56 @@ export default function LatticeField({ className = '' }) {
         const sy = g.horizon + (g.f * (1 - h)) / y
         px[i] = sx; py[i] = sy; pz[i] = y
         on[i] = sx > -60 && sx < W + 60 && sy > -60 && sy < H + 60 ? 1 : 0
+        if (keepOut) {
+          const dx = Math.max(keepOut.x0 - sx, 0, sx - keepOut.x1)
+          const dy = Math.max(keepOut.y0 - sy, 0, sy - keepOut.y1)
+          const u = Math.min(1, Math.hypot(dx, dy) / FEATHER)
+          qv[i] = u * u * (3 - 2 * u) // smoothstep: 0 behind the copy → 1 outside
+        } else qv[i] = 1
       }
 
-      ctx.fillStyle = BG
+      ctx.fillStyle = pal.bg
       ctx.fillRect(0, 0, W, H)
 
-      // Edges, grouped by depth so overlapping strokes never stack
-      for (let b = 0; b < BUCKETS; b++) g.paths[b] = new Path2D()
+      // Edges, grouped by depth and by quiet level, so overlapping strokes never stack
+      const NP = BUCKETS * QL
+      for (let b = 0; b < NP; b++) g.paths[b] = new Path2D()
       for (let e = 0; e < edges.length; e += 2) {
         const a = edges[e], c = edges[e + 1]
         if (!on[a] && !on[c]) continue
         const z = (pz[a] + pz[c]) / 2
-        const k = Math.min(BUCKETS - 1, Math.floor(((z - g.zNear) / (g.zFar - g.zNear)) * BUCKETS))
-        const p = g.paths[Math.max(0, k)]
+        const k = Math.max(0, Math.min(BUCKETS - 1, Math.floor(((z - g.zNear) / (g.zFar - g.zNear)) * BUCKETS)))
+        const q = Math.min(QL - 1, Math.floor(Math.min(qv[a], qv[c]) * QL))
+        const p = g.paths[k * QL + q]
         p.moveTo(px[a], py[a])
         p.lineTo(px[c], py[c])
       }
       for (let b = 0; b < BUCKETS; b++) {
         const z = g.zNear + ((b + 0.5) / BUCKETS) * (g.zFar - g.zNear)
         const a = depthA(z)
-        ctx.strokeStyle = `rgba(${LINE},${(0.5 * a).toFixed(3)})`
         ctx.lineWidth = 0.65 - 0.25 * (b / BUCKETS)
-        ctx.stroke(g.paths[b])
+        for (let q = 0; q < QL; q++) {
+          const m = pal.quiet + (1 - pal.quiet) * (q / (QL - 1))
+          ctx.strokeStyle = `rgba(${pal.line},${(pal.lineA * a * m).toFixed(3)})`
+          ctx.stroke(g.paths[b * QL + q])
+        }
       }
 
-      // Junction dots, batched by depth (one fill per bucket)
-      for (let b = 0; b < BUCKETS; b++) g.paths[b] = new Path2D()
+      // Junction dots, batched by depth and quiet level; none behind the copy
+      for (let b = 0; b < NP; b++) g.paths[b] = new Path2D()
       for (let i = 0; i < n; i++) {
-        if (!on[i]) continue
+        if (!on[i] || qv[i] < 0.25) continue
         const k = Math.min(BUCKETS - 1, Math.max(0, Math.floor(((pz[i] - g.zNear) / (g.zFar - g.zNear)) * BUCKETS)))
+        const q = Math.min(QL - 1, Math.floor(qv[i] * QL))
         const r = 1.7 - 1.1 * (k / BUCKETS)
-        g.paths[k].rect(px[i] - r / 2, py[i] - r / 2, r, r)
+        g.paths[k * QL + q].rect(px[i] - r / 2, py[i] - r / 2, r, r)
       }
       for (let b = 0; b < BUCKETS; b++) {
         const z = g.zNear + ((b + 0.5) / BUCKETS) * (g.zFar - g.zNear)
-        ctx.fillStyle = `rgba(${LINE},${(0.75 * depthA(z)).toFixed(3)})`
-        ctx.fill(g.paths[b])
+        for (let q = 1; q < QL; q++) {
+          ctx.fillStyle = `rgba(${pal.line},${(pal.dotA * depthA(z) * (q / (QL - 1))).toFixed(3)})`
+          ctx.fill(g.paths[b * QL + q])
+        }
       }
 
       if (!reduced) drawSparks(now, t, total)
@@ -180,12 +215,12 @@ export default function LatticeField({ className = '' }) {
       // start somewhere visible, biased to the right half where the lattice is clearest
       for (let tries = 0; tries < 40; tries++) {
         const i = (Math.random() * g.vx.length) | 0
-        if (!on[i] || px[i] < W * (g.mobile ? 0 : 0.45)) continue
+        if (!on[i] || blockedXY(px[i], g.py[i])) continue
         const path = [i]
         let prev = -1, cur = i
         const len = 4 + ((Math.random() * 4) | 0)
         for (let k = 0; k < len; k++) {
-          const opts = adj[cur].filter((v) => v !== prev)
+          const opts = adj[cur].filter((v) => v !== prev && on[v] && !blockedXY(px[v], g.py[v]))
           if (!opts.length) break
           prev = cur
           cur = opts[(Math.random() * opts.length) | 0]
@@ -231,13 +266,13 @@ export default function LatticeField({ className = '' }) {
           const grad = ctx.createLinearGradient(x0, y0, x1, y1)
           const near = (a1 - tail) / TAIL
           const far = (a0 - tail) / TAIL
-          grad.addColorStop(0, `rgba(${SPARK},${(far * fade * da).toFixed(3)})`)
-          grad.addColorStop(1, `rgba(${SPARK},${(near * fade * da).toFixed(3)})`)
+          grad.addColorStop(0, `rgba(${pal.spark},${(far * fade * da).toFixed(3)})`)
+          grad.addColorStop(1, `rgba(${pal.spark},${(near * fade * da).toFixed(3)})`)
           ctx.beginPath()
           ctx.moveTo(x0, y0)
           ctx.lineTo(x1, y1)
           // faint soft halo, then a thin bright core
-          ctx.globalAlpha = 0.18
+          ctx.globalAlpha = pal.halo
           ctx.strokeStyle = grad
           ctx.lineWidth = 2.6 + 1.4 * da
           ctx.stroke()
@@ -251,7 +286,7 @@ export default function LatticeField({ className = '' }) {
           const u = head - s
           const p0 = pts[s], p1 = pts[s + 1]
           const da = depthA(p0[2])
-          ctx.fillStyle = `rgba(225,233,255,${(fade * da).toFixed(3)})`
+          ctx.fillStyle = `rgba(${pal.head},${(fade * da).toFixed(3)})`
           ctx.beginPath()
           ctx.arc(p0[0] + (p1[0] - p0[0]) * u, p0[1] + (p1[1] - p0[1]) * u, 0.9 + 0.7 * da, 0, Math.PI * 2)
           ctx.fill()
@@ -274,8 +309,15 @@ export default function LatticeField({ className = '' }) {
       cancelAnimationFrame(raf)
     }
 
+    readTheme()
     resize()
     play()
+    const mo = new MutationObserver(() => { readTheme(); if (!running) frame(performance.now()) })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    const onWinResize = () => measureCopy()
+    window.addEventListener('resize', onWinResize)
+    const ro2 = new ResizeObserver(() => measureCopy())
+    if (protectRef && protectRef.current) ro2.observe(protectRef.current)
     const ro = new ResizeObserver(() => { resize(); if (!running) frame(performance.now()) })
     ro.observe(canvas)
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? play() : pause() })
@@ -285,10 +327,13 @@ export default function LatticeField({ className = '' }) {
     return () => {
       pause()
       ro.disconnect()
+      mo.disconnect()
+      ro2.disconnect()
+      window.removeEventListener('resize', onWinResize)
       io.disconnect()
       document.removeEventListener('visibilitychange', onVis)
     }
-  }, [])
+  }, [theme, protectRef])
 
   return <canvas ref={ref} className={`block h-full w-full ${className}`} aria-hidden="true" />
 }

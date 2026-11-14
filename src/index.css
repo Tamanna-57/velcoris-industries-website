@@ -375,21 +375,3 @@
 }
 [data-theme="dark"] .folder-front { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
 
-/* Hero, light theme: fade the lattice image itself into the page instead of washing it with a
-   translucent white layer (that layer turned the dark image muddy grey). Dark theme unchanged. */
-.hero-lattice { display: block; height: 100%; }
-:root:not([data-theme="dark"]) .hero-fade { display: none; }
-@media (min-width: 768px) {
-  :root:not([data-theme="dark"]) .hero-lattice {
-    /* --text-end = where the hero copy column ends: container gutter + 36rem column */
-    --text-end: calc(max(2.5rem, (100% - 1240px) / 2) + 36rem);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent calc(var(--text-end) + 1rem), rgba(0, 0, 0, 0.3) calc(var(--text-end) + 9rem), rgba(0, 0, 0, 0.72) calc(var(--text-end) + 19rem), #000 calc(var(--text-end) + 32rem));
-    mask-image: linear-gradient(90deg, transparent 0, transparent calc(var(--text-end) + 1rem), rgba(0, 0, 0, 0.3) calc(var(--text-end) + 9rem), rgba(0, 0, 0, 0.72) calc(var(--text-end) + 19rem), #000 calc(var(--text-end) + 32rem));
-  }
-}
-@media (max-width: 767px) {
-  :root:not([data-theme="dark"]) .hero-lattice {
-    -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent 76%, rgba(0, 0, 0, 0.5) 83%, #000 91%);
-    mask-image: linear-gradient(180deg, transparent 0, transparent 76%, rgba(0, 0, 0, 0.5) 83%, #000 91%);
-  }
-}

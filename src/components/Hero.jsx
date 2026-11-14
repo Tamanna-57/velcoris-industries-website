@@ -5,13 +5,12 @@ import { ArrowRight } from './icons'
 import LatticeField from './LatticeField'
 
 /**
- * Full-bleed hero. An animated graphene lattice (canvas, thin lines) covers the section; a gradient
- * washes it out (faded) on the left, where the copy sits, and lets it fade to full
- * dark on the right.
- * Replaces the old 50/50 text + boxed-image split and the top ticker.
+ * Full-bleed hero: an animated graphene lattice (canvas, thin lines) fills the whole section and
+ * follows the light / dark theme; the copy sits centred on top. Small sparks avoid the copy block.
  */
 export default function Hero() {
   const imgRef = useRef(null)
+  const copyRef = useRef(null)
   const reduced = useReducedMotion()
 
   // Subtle pointer parallax on the lattice (desktop, motion allowed only)
@@ -35,35 +34,29 @@ export default function Hero() {
 
   return (
     <section aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-[72px]">
-      {/* Lattice backdrop */}
+      {/* Animated lattice across the whole hero (follows light / dark theme) */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <div className="hero-lattice">
-          <div ref={imgRef} className="h-full w-full scale-[1.04] transition-transform duration-700 ease-out will-change-transform">
-            <LatticeField />
-          </div>
+        <div ref={imgRef} className="h-full w-full scale-[1.04] transition-transform duration-700 ease-out will-change-transform">
+          <LatticeField protectRef={copyRef} />
         </div>
-        {/* Dark theme: left→right (desktop) / top→bottom (mobile) wash from the page colour into the lattice.
-            Light theme: no wash; the image itself fades out (mask in index.css), so the text sits on clean white. */}
-        <div className="hero-fade absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
-        <div className="hero-fade absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />
       </div>
 
-      <div className="container-x flex flex-1 flex-col justify-center pb-28 pt-12 md:py-20">
-        <div className="max-w-[36rem]">
+      <div className="container-x flex flex-1 flex-col items-center justify-center pb-24 pt-10 text-center md:py-20">
+        <div ref={copyRef} className="flex max-w-full flex-col items-center">
           <p className="eyebrow">Industrial graphene · Greater Noida, India</p>
 
           <h1
             id="hero-title"
-            className="mt-6 text-[clamp(2.75rem,6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-ink"
+            className="mt-6 max-w-6xl text-[clamp(2.5rem,5.4vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-ink"
           >
-            Graphene at industrial scale. <span className="block">Made in India.</span>
+            <span className="md:whitespace-nowrap">Graphene at industrial scale.</span> <span className="block">Made in India.</span>
           </h1>
 
-          <p className="mt-6 max-w-[32rem] text-lg leading-relaxed text-muted md:text-xl">
+          <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-muted md:text-xl">
             High-purity graphene for defence, energy and aerospace, at a fraction of the cost of imports.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             <a href={SAMPLE_HREF} className="btn-primary">
               Request a sample <ArrowRight />
             </a>
@@ -73,14 +66,14 @@ export default function Hero() {
           </div>
 
           {/* Former ticker, now a single statement */}
-          <p className="mt-10 border-l-2 border-line-strong pl-3 text-sm text-muted">
+          <p className="mt-10 text-sm text-muted">
             Formerly <strong className="font-semibold text-ink">Weber Innovations</strong>, now Velcoris Industries.
           </p>
         </div>
       </div>
 
       {/* Key figures */}
-      <div className="relative border-t border-white/10 bg-[#0a0b0d]/85">
+      <div className="relative border-t border-white/10 bg-[#0a0b0d]">
         <dl className="container-x grid grid-cols-3 divide-x divide-white/10">
           {HERO_STATS.map((s) => (
             <div key={s.label} className="flex flex-col-reverse py-5 pl-4 first:pl-0 sm:py-6 sm:pl-8">

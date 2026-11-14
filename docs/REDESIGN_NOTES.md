@@ -436,3 +436,16 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   - About 60 fps at 1440 px (1× and 2× screens) and on a 390 px phone. Large canvases are capped at 1.5× resolution.
   - Pauses when off screen or in a background tab; reduced motion draws one still frame.
   - Hero text contrast: 7.3–19.5:1, with the link at 5.4:1 or above.
+
+### R14-5 — Hero: centred text, animation across the whole hero
+- **User's reason:** "Make the text of the landing page in the center… I want the pure animation on the whole page and the text at the center."
+- Scope: hero section only (`Hero.jsx`, `LatticeField.jsx`, plus removing the old hero fade rules from `index.css`). Nothing else on the site changed.
+- The copy is centred. "Graphene at industrial scale." stays on one line from tablet width up, and "Made in India." sits below it.
+- The animated perspective honeycomb now covers the whole hero; the right-side fade and the left wash are removed.
+- The honeycomb follows the theme: thin dark lines on white in light mode, thin light lines on near-black in dark mode.
+- The stats band under the hero is now solid black. It was see-through and turned grey over the white honeycomb.
+- Behind the text block the honeycomb softens gradually (no junction dots, lighter lines, a 90 px blend), so it never forms a box. Sparks stay out of the text area.
+- **Checks:**
+  - Hero text contrast at 390, 1024 and 1440 px, measured at 3.5 s, 6.2 s and 9.7 s into the animation: at least 4.66:1 everywhere (link 4.66, body 6.1+, headline 13.7+).
+  - About 60 fps on desktop (1× and 2×), 52 fps on a 390 px phone.
+  - Follows the theme toggle live and survives navigating away and back; reduced motion shows a still frame. No console errors.
