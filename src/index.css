@@ -17,12 +17,13 @@
   --accent-strong: #1f4fe0; /* button fill */
   --accent-hover: #173fb8;
   --on-accent: #ffffff;
-  /* Applications band: dark in both themes */
-  --apps-bg: #0a0b0d;
-  --apps-ink: #f3f4f6;
-  --apps-line: rgba(255, 255, 255, 0.18);
-  --apps-tile-on: #1a1d22;
-  --apps-link: #7da4ff;
+  /* Dark bands (Recognition, India, footer, CTA card): dark in both themes */
+  --band-bg: #111214;
+  --band-ink: #f3f4f6;
+  --band-muted: #a9b0bb;
+  --band-line: rgba(255, 255, 255, 0.12);
+  --band-card: rgba(255, 255, 255, 0.04);
+  --band-link: #7da4ff;
   color-scheme: light;
 }
 
@@ -37,11 +38,12 @@
   --accent-strong: #2f5bff;
   --accent-hover: #4a72ff;
   --on-accent: #ffffff;
-  --apps-bg: #15171b;
-  --apps-ink: #f3f4f6;
-  --apps-line: #2f343c;
-  --apps-tile-on: #23272e;
-  --apps-link: #7da4ff;
+  --band-bg: #15171b;
+  --band-ink: #f3f4f6;
+  --band-muted: #a9b0bb;
+  --band-line: rgba(255, 255, 255, 0.1);
+  --band-card: rgba(255, 255, 255, 0.04);
+  --band-link: #7da4ff;
   color-scheme: dark;
 }
 
@@ -56,6 +58,12 @@
   --color-accent-strong: var(--accent-strong);
   --color-accent-hover: var(--accent-hover);
   --color-on-accent: var(--on-accent);
+  --color-band: var(--band-bg);
+  --color-band-ink: var(--band-ink);
+  --color-band-muted: var(--band-muted);
+  --color-band-line: var(--band-line);
+  --color-band-card: var(--band-card);
+  --color-band-link: var(--band-link);
 
   --font-display: "Inter Tight Variable", "Inter Variable", system-ui, sans-serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -141,6 +149,11 @@
   .link-accent:hover { text-decoration-color: currentColor; }
   .link-accent svg { transition: transform 0.2s; }
   .link-accent:hover svg { transform: translateX(3px); }
+}
+
+/* Hexagon grid texture used on the original site's dark sections */
+.hex-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.07'/%3E%3Cpath d='M28 97 L56 80.8 L56 48.5 L28 64.7 L0 48.5 L0 80.8 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.07'/%3E%3C/svg%3E");
 }
 
 /* Scroll reveal: quick, starts before the section is fully in view,

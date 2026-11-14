@@ -4,8 +4,9 @@ import { useReducedMotion } from '../lib/hooks'
 import { ArrowRight } from './icons'
 
 /**
- * Full-bleed hero. The graphene lattice covers the whole section and fades from the
- * page colour on the left (where the copy sits) to dark on the right.
+ * Full-bleed hero. The whole graphene lattice image covers the section; a gradient
+ * washes it out (faded) on the left, where the copy sits, and lets it fade to full
+ * dark on the right.
  * Replaces the old 50/50 text + boxed-image split and the top ticker.
  */
 export default function Hero() {
@@ -45,12 +46,12 @@ export default function Hero() {
             height="1080"
             fetchPriority="high"
             decoding="async"
-            className="h-full w-full scale-[1.04] object-cover object-[72%_70%] transition-transform duration-700 ease-out will-change-transform max-md:object-[60%_100%]"
+            className="h-full w-full scale-[1.04] object-cover object-center transition-transform duration-700 ease-out will-change-transform"
           />
         </picture>
         {/* Left→right fade (desktop) / top→bottom fade (mobile) from the page colour into the dark lattice */}
-        <div className="absolute inset-0 hidden md:block [background:linear-gradient(90deg,var(--bg)_0,var(--bg)_38rem,color-mix(in_srgb,var(--bg)_88%,transparent)_44rem,color-mix(in_srgb,var(--bg)_60%,transparent)_52rem,color-mix(in_srgb,var(--bg)_28%,transparent)_62rem,color-mix(in_srgb,var(--bg)_8%,transparent)_72rem,transparent_82rem)]" />
-        <div className="absolute inset-0 md:hidden [background:linear-gradient(180deg,var(--bg)_0%,var(--bg)_74%,color-mix(in_srgb,var(--bg)_60%,transparent)_86%,transparent_100%)]" />
+        <div className="absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
+        <div className="absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />
       </div>
 
       <div className="container-x flex flex-1 flex-col justify-center pb-28 pt-12 md:py-20">

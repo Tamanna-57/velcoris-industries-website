@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Homepage, round 1 built and verified. Inner pages next.
+**Status:** Homepage round 2 built and verified (hero, video and "three advantages" redesigned; lower sections replicated from the original for section-by-section review).
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -113,8 +113,10 @@ See `src/index.css`. Contrast ratios are verified in section 5.
 | Asset | Source | Size |
 |---|---|---|
 | Logo | Official logo from the live site (`logo_main.png`), vectorised to SVG so it's sharp at any size and recolours with the theme | ~12 KB inline SVG |
-| Hero lattice | Procedurally rendered graphene honeycomb (Python), not AI-generated | 59 KB WebP (23 KB mobile) vs 1.4 MB PNG before |
-| Process video | Procedurally rendered graphite→graphene layer separation, 960px H.264 | 0.95 MB, loads only near the viewport |
+| Hero lattice | Procedurally rendered graphene honeycomb (Python), not AI-generated; re-rendered in round 2 to fill the frame | 116 KB WebP (45 KB mobile) vs 1.4 MB PNG before |
+| Scroll-expand video | Round 1: procedural graphite→graphene render. Round 2: the team's own graphene conductivity clip, 1280px H.264, no audio | 1.2 MB (from 5.5 MB), loads only near the viewport |
+| Lab photo | Original site's `lab2.png` | 50 KB WebP (from 2.3 MB) |
+| Icons | lucide-react (ISC licence), tree-shaken | only the icons used |
 | "Three advantages" visuals | Data-led SVG graphics (cost bars, batch scale, closed loop) | inline, ~0 KB extra |
 
 ### 2.6 Tools
@@ -143,6 +145,24 @@ See `src/index.css`. Contrast ratios are verified in section 5.
 | 13 | Lite Mode link | Footer link to the older `/lite-v2` site | Removed from the redesign | Heavier than the main site, inconsistent content and branding. The redesign itself is built to be light. |
 | 14 | Theme | Light only | Light/dark toggle (top right) with a circular "drop" reveal | Client request. Respects `prefers-color-scheme` and `prefers-reduced-motion`. |
 | 15 | Logo | Raster PNG | Vector SVG of the official logo | Sharp on every screen and recolours automatically for dark mode. |
+
+---
+
+## 3b. Homepage changes (round 2, client review, 14 Nov 2026)
+
+| # | Change | Reason |
+|---|---|---|
+| R2-1 | **Hero:** the *whole* lattice image now covers the section. A gradient washes it out (faded) on the left behind the copy and fades it into full dark on the right. The image was re-rendered so the lattice fills the frame edge to edge. | Client direction: the round-1 version hid most of the image behind solid page colour. The full image gives a richer, less template-like first screen. Contrast was verified pixel-by-pixel against the image (see 5.3). |
+| R2-2 | **Light mode is the default.** Dark mode applies only when the visitor picks it with the toggle (remembered per browser). | Client preference; the brand reads as a light, clean industrial site first. |
+| R2-3 | **Scroll-expand video now plays the team's own clip** (graphene sheet with current flowing across the lattice). Section title is now "Engineered at the atomic scale." (wording from the original hero panel); caption is "One atom thick. More conductive than copper." (claim from the original site). | A real brand asset replaces the placeholder. Title and caption were changed to match what the clip shows (conductivity, not layer separation). Re-encoded from 5.5 MB to 1.2 MB, audio track removed. |
+| R2-4 | **Sections after "Three advantages" restored to the original site's content and layout:** Recognition → India's strategic opportunity → Clean production → Work with us → Future vision → Footer. | Client decision: keep the original structure and revise each section individually in later rounds. Round-1 replacements (condensed opportunity figures, industry tiles, accurate recognition labels, three-step timeline, closing CTA) were removed. They remain in git history and can be brought back section by section. |
+| R2-5 | Replicated sections use the new type system, colour tokens and the original hex-grid texture. The original's grey Playfair *italic* second heading lines are rendered in the same sans in a lighter weight. | Keeps the original structure while honouring the earlier decisions (no italic AI-template font, no washed-out grey, WCAG contrast, dark-mode support). |
+| R2-6 | The original "From graphite to graphene" slider section is **not** replicated. | It is replaced by the scroll-expand video (the client found the slider laggy). |
+| R2-7 | Lab photo in "Clean production" reused from the original site (compressed to a 50 KB WebP, from a 2.3 MB PNG). | Faithful replication. *Note:* the audit flagged this image as likely AI-generated; recommend replacing it with a real facility photo. |
+| R2-8 | Footer: the "Lite Mode" link is left out; one phone number (+91 73028 32224) is used throughout. | Lite Mode points to an older, heavier site with a different phone number (see 1.6). |
+
+**Known claims carried over from the original, flagged for review:** "Recognised by the world's
+most demanding selectors" (two national shortlists); "11×" vs "10× to 1000×" on /applications.
 
 ---
 
@@ -178,12 +198,26 @@ See `src/index.css`. Contrast ratios are verified in section 5.
 | UI borders (non-text, 3:1 needed) | 3.18:1 | n/a |
 
 ### 5.2 Automated check of the built homepage (Playwright + headless Chrome)
-- Every visible text element checked against its real background: **0 of 103 fail** in light
-  and **0 of 103 fail** in dark (old site: ~40 of 199 failed).
+- Every visible text element checked against its real background: **0 of 118 fail** in light
+  and **0 of 118 fail** in dark (round 2 build; old site: ~40 of 199 failed).
 - 0 text elements under 12px (old site: 46).
 - Keyboard focus: visible 2px blue outline confirmed on Tab.
 - Theme toggle switches correctly; no horizontal overflow at 390px mobile width.
 - No console or runtime errors at 1440px desktop (both themes) or 390px mobile.
+
+### 5.3 Hero text over the image (round 2, pixel-level)
+Text was hidden, the hero screenshotted, and each text colour compared with **every** background
+pixel behind it (worst case, including bright lattice atoms):
+
+| Element | Light 1440 | Dark 1440 | Light 1024 | Light 390 | Dark 390 |
+|---|---|---|---|---|---|
+| Eyebrow | 5.05 | 7.54 | 5.69 | 5.96 | 7.89 |
+| Headline | 12.46 | 13.42 | 14.05 | 14.74 | 15.18 |
+| Intro paragraph | 5.69 | 7.04 | 5.69 | 5.96 | 7.54 |
+| "See the technology" link | 4.67 | 6.23 | 4.68 | 4.89 | 6.64 |
+| "Formerly Weber Innovations" line | 5.06 | 6.92 | 5.70 | 5.16 | 6.53 |
+
+All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
 
 ---
 

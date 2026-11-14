@@ -1,6 +1,6 @@
 """Procedural graphene renders for the Velcoris homepage.
 
-Usage: python3 render_lattice.py <outdir>
+Usage: python3 render_lattice.py <outdir> [hero]   (pass "hero" to render only the hero still)
 Outputs:
   hero.png          - wide still of a tilted graphene sheet (right-weighted)
   frames/f_XXXX.png - graphite -> graphene separation animation frames
@@ -105,13 +105,15 @@ def render(W, H, ss, layers, cx, cy, pts, bonds, path, glow=True):
     img.save(path)
 
 
-# ---------- hero still ----------
-pts_h, bonds_h = lattice(15)
+# ---------- hero still: lattice fills the whole frame ----------
+pts_h, bonds_h = lattice(30)
 render(1920, 1080, 2,
-       [(0.0, 0.35, 1.05, 22.0, 1500, 1.0)],
-       cx=1340, cy=560, pts=pts_h, bonds=bonds_h,
+       [(0.0, 0.3, 0.98, 30.0, 1500, 1.0)],
+       cx=1000, cy=380, pts=pts_h, bonds=bonds_h,
        path=os.path.join(OUT, "hero.png"))
 print("hero done")
+if len(sys.argv) > 2 and sys.argv[2] == "hero":
+    sys.exit(0)
 
 # ---------- animation: graphite stack -> isolated graphene ----------
 pts, bonds = lattice(9)

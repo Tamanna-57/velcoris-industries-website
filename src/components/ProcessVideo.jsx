@@ -6,8 +6,8 @@ const ease = (t) => 1 - Math.pow(1 - clamp(t), 3)
 
 /**
  * Scroll-expand video (reference: LxL Creative). A small framed clip grows to full-bleed
- * as the visitor scrolls, then plays the graphite → graphene process.
- * Replaces the old flat SVG slider: shows the science in seconds, with no reading.
+ * as the visitor scrolls, then plays a graphene conductivity clip (supplied by the team).
+ * Replaces the old flat SVG slider: shows the material in seconds, with no reading.
  *
  * Perf: one passive scroll listener + rAF; only `clip-path` / `opacity` / `transform`
  * change (compositor-friendly). The video doesn't load until the section is near view.
@@ -101,7 +101,7 @@ export default function ProcessVideo() {
     <video
       ref={videoRef}
       className="absolute inset-0 h-full w-full object-cover"
-      poster="/media/graphene-process-poster.webp"
+      poster="/media/graphene-conductivity-poster.webp"
       muted
       loop
       playsInline
@@ -110,7 +110,7 @@ export default function ProcessVideo() {
       onPlay={() => setPlaying(true)}
       onPause={() => setPlaying(false)}
     >
-      {near && <source src="/media/graphene-process.mp4" type="video/mp4" />}
+      {near && <source src="/media/graphene-conductivity.mp4" type="video/mp4" />}
     </video>
   )
 
@@ -119,7 +119,7 @@ export default function ProcessVideo() {
       type="button"
       onClick={togglePlay}
       className="absolute bottom-5 right-5 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 bg-black/55 px-4 text-sm font-medium text-white transition-colors hover:border-[#7da4ff] hover:text-[#7da4ff]"
-      aria-label={playing ? 'Pause process animation' : 'Play process animation'}
+      aria-label={playing ? 'Pause graphene animation' : 'Play graphene animation'}
     >
       <svg viewBox="0 0 16 16" className="size-3.5" fill="currentColor" aria-hidden="true">
         {playing ? <path d="M4 3h3v10H4zM9 3h3v10H9z" /> : <path d="M4 2.5v11l9-5.5z" />}
@@ -130,7 +130,7 @@ export default function ProcessVideo() {
 
   const caption = (
     <p id="process-desc" className="sr-only">
-      Animation: stacked graphite layers separate into a single, one-atom-thick sheet of graphene.
+      Animation: a single-atom graphene sheet with electrical current flowing across its honeycomb lattice.
     </p>
   )
 
@@ -140,7 +140,7 @@ export default function ProcessVideo() {
       <section ref={nearRef} aria-labelledby="process-title" className="bg-bg py-24">
         <div className="container-x">
           <p className="eyebrow">The science</p>
-          <h2 id="process-title" className="mt-4 text-[clamp(2.25rem,5vw,4rem)] text-ink">From graphite to graphene.</h2>
+          <h2 id="process-title" className="mt-4 text-[clamp(2.25rem,5vw,4rem)] text-ink">Engineered at the atomic scale.</h2>
           <div ref={sectionRef} className="relative mt-10 aspect-video overflow-hidden rounded-2xl bg-[#0a0b0d]">
             {video}
             {control}
@@ -166,7 +166,7 @@ export default function ProcessVideo() {
         >
           <p className="eyebrow">The science</p>
           <h2 id="process-title" className="mt-4 text-[clamp(2.5rem,7vw,6.5rem)] font-semibold tracking-[-0.04em] text-ink">
-            From graphite to graphene.
+            Engineered at the atomic scale.
           </h2>
         </div>
         <p
@@ -188,9 +188,9 @@ export default function ProcessVideo() {
             style={{ opacity: 'var(--cap-o)' }}
           >
             <div className="container-x pb-24 md:pb-20">
-              <p className="font-mono text-xs uppercase tracking-[0.12em] text-[#a9b0bb]">Layer separation</p>
+              <p className="font-mono text-xs uppercase tracking-[0.12em] text-[#a9b0bb]">Single-atom carbon network</p>
               <p className="mt-3 max-w-[36rem] font-display text-[clamp(1.75rem,3.6vw,3rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-[#f3f4f6]">
-                One atom thick. 200× stronger than steel.
+                One atom thick. More conductive than copper.
               </p>
             </div>
           </div>
