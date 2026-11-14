@@ -31,21 +31,23 @@ src/
   lib/hooks.js            reveal / in-view / reduced-motion hooks
   components/
     Header.jsx            sticky nav, mobile menu
-    ThemeToggle.jsx       light/dark toggle with circular reveal
-    Hero.jsx              full-bleed lattice hero with left→right fade
-    ProcessVideo.jsx      scroll-expand graphite→graphene video
+    ThemeToggle.jsx       light/dark toggle with circular reveal (light is default)
+    Hero.jsx              full-bleed lattice hero, faded left → dark right
+    ProcessVideo.jsx      scroll-expand graphene video
     Approach.jsx          hover list: Economical / Scalable / Sustainable
     ApproachVisuals.jsx   data visuals for the list
-    Opportunity.jsx       India opportunity figures (count-up)
-    Applications.jsx      industry tiles
-    Credentials.jsx       recognition + company facts
-    Steps.jsx             sample → formulate → scale
-    Footer.jsx            closing CTA + footer
+    Recognition.jsx       ┐
+    IndiaOpportunity.jsx  │ replicated from the original site,
+    CleanProduction.jsx   │ to be revised section by section
+    WorkWithUs.jsx        │
+    Footer.jsx            ┘ (also exports FutureVision)
+    SectionHeading.jsx    shared two-line heading
     Logo.jsx              official logo (vector)
-public/media/             hero image, process video + poster
+public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
 ```
 
 ## Status
-- [x] Homepage (round 1)
+- [x] Homepage round 1 (redesign)
+- [x] Homepage round 2 (client review: full-image hero, team video, original lower sections restored)
 - [ ] Company, Technology, Applications, Media, Contact pages

@@ -1,12 +1,12 @@
-import Applications from './components/Applications'
 import Approach from './components/Approach'
-import Credentials from './components/Credentials'
-import Footer, { ClosingCTA } from './components/Footer'
+import CleanProduction from './components/CleanProduction'
+import Footer, { FutureVision } from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import Opportunity from './components/Opportunity'
+import IndiaOpportunity from './components/IndiaOpportunity'
 import ProcessVideo from './components/ProcessVideo'
-import Steps from './components/Steps'
+import Recognition from './components/Recognition'
+import WorkWithUs from './components/WorkWithUs'
 
 export default function App() {
   return (
@@ -19,14 +19,16 @@ export default function App() {
       </a>
       <Header />
       <main id="main-content">
+        {/* Redesigned */}
         <Hero />
         <ProcessVideo />
         <Approach />
-        <Opportunity />
-        <Applications />
-        <Credentials />
-        <Steps />
-        <ClosingCTA />
+        {/* Replicated from the original site (to be revised section by section) */}
+        <Recognition />
+        <IndiaOpportunity />
+        <CleanProduction />
+        <WorkWithUs />
+        <FutureVision />
       </main>
       <Footer />
     </>
