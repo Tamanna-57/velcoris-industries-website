@@ -103,22 +103,16 @@ export const PATHWAY = {
       title: 'Source & Evaluate',
       text: 'High-purity graphene with certified laser Raman & XRD characterization per batch. Request evaluation samples for initial bench testing in your host resins or slurries.',
       tags: ['Sample evaluation kits', 'COA per batch', 'Full technical datasheet'],
-      cta: 'Request Samples',
-      href: '/contact?intent=sample',
     },
     {
       title: 'Formulate & Optimize',
       text: 'Our materials team collaborates with your process engineers to establish optimal loading percentages, dispersion protocols, and shear mixing parameters for target property gains.',
       tags: ['Percolation tuning', 'Shear protocol calibration', 'ASTM property validation'],
-      cta: 'Discuss Formulation',
-      href: '/contact?intent=application',
     },
     {
       title: 'Scale & Deploy',
       text: 'Transition smoothly from validated lab batches to commercial-scale supply. Domestic production in Greater Noida eliminates Chinese import delays, tariff risks, and volatile lead times.',
       tags: ['Consistent grading', 'Domestic sovereign supply', 'Commercial volume pricing'],
-      cta: 'Explore Supply',
-      href: '/contact?intent=supply',
     },
   ],
 }

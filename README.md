@@ -11,7 +11,7 @@ more visuals, and one clear action (request a sample).
 ## Stack
 - React 19 + Vite
 - Tailwind CSS v4 (design tokens in `src/index.css`)
-- Self-hosted fonts: Inter Tight (display), Inter (body), IBM Plex Mono (data/labels)
+- Self-hosted fonts: Inter Tight (display), Inter (body), IBM Plex Mono (data/labels), Space Grotesk (optimizer figures)
 - No animation libraries: scroll effects use native APIs (IntersectionObserver, rAF, View Transitions)
 
 ## Run locally
@@ -56,7 +56,7 @@ src/
     LinkedInNews.jsx      media: LinkedIn posts as article cards
     SectorRows.jsx        applications: 4 + view-all sector rows with reveal animation
     MatrixOptimizer.jsx   applications: interactive formulation model
-    StepRows.jsx          alternating step rows with isometric diagrams (home + applications)
+    StepRows.jsx          alternating step rows with isometric diagrams (homepage "Work with us")
   lib/optimizer.js        optimizer model + pathway/CTA copy
 public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
