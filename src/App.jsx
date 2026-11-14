@@ -3,6 +3,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Applications from './pages/Applications'
+import Company from './pages/Company'
 import Media from './pages/Media'
 import Technology from './pages/Technology'
 
@@ -11,6 +12,7 @@ import Technology from './pages/Technology'
 // Hosting needs an SPA fallback to index.html (vercel.json); Vite dev/preview already do this.
 const ROUTES = {
   '/': { page: Home, title: 'Velcoris Industries — Industrial Graphene, Made in India' },
+  '/company': { page: Company, title: 'About Velcoris Industries | Indigenous Graphene Hub India' },
   '/technology': { page: Technology, title: 'Closed-Loop Graphene Technology & Specs | Velcoris Industries' },
   '/applications': { page: Applications, title: 'Graphene Applications: Defence, EV & Concrete | Velcoris Industries' },
   '/media': { page: Media, title: 'Graphene Media, Lab Research & Facility Footage | Velcoris Industries' },

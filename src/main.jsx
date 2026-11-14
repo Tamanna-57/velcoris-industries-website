@@ -5,6 +5,7 @@ import '@fontsource-variable/inter'
 import '@fontsource-variable/space-grotesk'
 import '@fontsource/ibm-plex-mono/400.css'
 import '@fontsource/ibm-plex-mono/500.css'
+import '@fontsource/caveat/latin-600.css'
 import './index.css'
 import App from './App.jsx'
 
