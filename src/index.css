@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Neutral black/grey base + ONE blue, reserved for interactive elements.
+   All text pairs verified ≥ 4.5:1 (see docs/REDESIGN_NOTES.md §5).
+------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f3f4f6;
+  --line: #d9dce1;
+  --line-strong: #8a919c;
+  --ink: #0b0d10;
+  --muted: #4a5260;
+  --accent: #1f4fe0;        /* links, focus, active */
+  --accent-strong: #1f4fe0; /* button fill */
+  --accent-hover: #173fb8;
+  --on-accent: #ffffff;
+  /* Applications band: dark in both themes */
+  --apps-bg: #0a0b0d;
+  --apps-ink: #f3f4f6;
+  --apps-line: rgba(255, 255, 255, 0.18);
+  --apps-tile-on: #1a1d22;
+  --apps-link: #7da4ff;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0b0d;
+  --surface: #15171b;
+  --line: #2a2e35;
+  --line-strong: #6b7380;
+  --ink: #f3f4f6;
+  --muted: #a9b0bb;
+  --accent: #7da4ff;
+  --accent-strong: #2f5bff;
+  --accent-hover: #4a72ff;
+  --on-accent: #ffffff;
+  --apps-bg: #15171b;
+  --apps-ink: #f3f4f6;
+  --apps-line: #2f343c;
+  --apps-tile-on: #23272e;
+  --apps-link: #7da4ff;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+
+  --font-display: "Inter Tight Variable", "Inter Variable", system-ui, sans-serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    font-weight: 600;
+  }
+  ::selection {
+    background: var(--accent-strong);
+    color: var(--on-accent);
+  }
+  /* Visible keyboard focus everywhere (WCAG 2.4.7 / 2.4.11) */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  /* Primary action: the only filled blue element type */
+  .btn-primary {
+    display: inline-flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    background: var(--accent-strong);
+    color: var(--on-accent);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* Secondary action: blue text link with arrow */
+  .link-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
+  }
+  .link-accent:hover { text-decoration-color: currentColor; }
+  .link-accent svg { transition: transform 0.2s; }
+  .link-accent:hover svg { transform: translateX(3px); }
+}
+
+/* Scroll reveal: quick, starts before the section is fully in view,
+   and content stays visible if JS is unavailable. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Theme switch: circular "drop" reveal via the View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) { z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}
