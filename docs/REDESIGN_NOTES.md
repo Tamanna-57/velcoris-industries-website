@@ -418,3 +418,9 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   0 L effluent) are taken from the live site and not independently verified.
 - Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (rounds 6–7, all sections) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.
+
+### R14-3 — Thinner, uniform honeycomb behind the hero
+- **User's reason:** "thin the lines… text background is white and around it has the structure… looking very odd… make a uniform structure behind on the landing page."
+- Removed the white cut-out (mask) behind the copy, so the lattice now runs evenly across the whole hero.
+- Lines are thinner (0.7 px) and fainter (light 7%, dark 8%). Each edge is drawn once, so overlapping lines don't stack up into darker spots.
+- To keep the text readable, junction dots and the flowing pulses skip the area behind the copy. Every text item still passes WCAG AA (lowest is 4.54:1).
