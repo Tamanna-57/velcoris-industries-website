@@ -123,7 +123,7 @@ export default function SectorRows() {
   }
 
   return (
-    <section aria-labelledby="sectors-title" className="bg-bg pb-24 md:pb-32">
+    <section aria-labelledby="sectors-title" className="bg-bg pb-14 md:pb-20">
       <div className="container-x">
         <h2 id="sectors-title" className="eyebrow mb-14 md:mb-20">Commercial focus</h2>
         <ol className="space-y-24 md:space-y-32">

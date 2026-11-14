@@ -15,7 +15,7 @@ export default function Approach() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} aria-labelledby="approach-title" className="bg-bg py-24 md:py-32">
+    <section ref={ref} aria-labelledby="approach-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="reveal max-w-2xl">
           <p className="eyebrow">What sets us apart</p>
@@ -24,7 +24,7 @@ export default function Approach() {
           </h2>
         </div>
 
-        <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-12 md:gap-8">
+        <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:gap-8">
           {/* Visual panel */}
           <div className="reveal md:col-span-5">
             <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#0f1114] md:sticky md:top-28">

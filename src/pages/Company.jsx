@@ -15,7 +15,7 @@ function Linkedin({ className }) {
 /** Our mission: replicated from the original. */
 function MissionHero() {
   return (
-    <section aria-labelledby="company-title" className="hex-pattern-light bg-bg pb-16 pt-[calc(72px+5rem)] md:pb-20 md:pt-[calc(72px+6rem)]">
+    <section aria-labelledby="company-title" className="hex-pattern-light bg-bg pb-10 pt-[calc(72px+5rem)] md:pb-14 md:pt-[calc(72px+6rem)]">
       <div className="container-x">
         <p className="eyebrow">{MISSION.eyebrow}</p>
         <h1 id="company-title" className="mt-5 max-w-6xl text-[clamp(2.5rem,4.6vw,4.25rem)] font-semibold leading-[1.0] tracking-[-0.035em] text-ink">
@@ -32,7 +32,7 @@ function MissionHero() {
 function FounderNote() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="founder-title" className="bg-bg pb-20 md:pb-24">
+    <section ref={ref} aria-labelledby="founder-title" className="bg-bg pb-12 md:pb-16">
       <div className="container-x">
         <figure className="reveal grid items-center gap-8 border-t border-line pt-12 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-12 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
           <img
@@ -68,7 +68,7 @@ function FounderNote() {
 function Leadership() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="leadership-title" className="bg-bg py-20 md:py-24">
+    <section ref={ref} aria-labelledby="leadership-title" className="bg-bg py-12 md:py-16">
       <div className="container-x">
         <div className="reveal mx-auto max-w-2xl text-center">
           <SectionHeading id="leadership-title" eyebrow={LEADERSHIP.eyebrow} first={LEADERSHIP.first} second={LEADERSHIP.second} align="center" size="md" />
@@ -105,7 +105,7 @@ function Leadership() {
 function JoinUs() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="join-title" className="bg-surface py-20 md:py-24">
+    <section ref={ref} aria-labelledby="join-title" className="bg-surface py-12 md:py-16">
       <div className="container-x">
         <div className="reveal hex-pattern rounded-3xl bg-band px-6 py-16 text-center sm:px-12 md:py-20">
           <SectionHeading id="join-title" eyebrow={JOIN.eyebrow} first={JOIN.first} second={JOIN.second} align="center" tone="band" />

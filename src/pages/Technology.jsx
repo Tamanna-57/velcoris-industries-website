@@ -13,7 +13,7 @@ import { COMPARISON, DATASHEET, DISPERSION, FAQ, QUALITY, TECH_CTA, TECH_HERO, T
 
 function TechHero() {
   return (
-    <section aria-labelledby="tech-title" className="hex-pattern-light bg-bg pb-20 pt-[calc(72px+5rem)] md:pb-28 md:pt-[calc(72px+7rem)]">
+    <section aria-labelledby="tech-title" className="hex-pattern-light bg-bg pb-12 pt-[calc(72px+5rem)] md:pb-16 md:pt-[calc(72px+7rem)]">
       <div className="container-x">
         <p className="eyebrow">{TECH_HERO.eyebrow}</p>
         <h1 id="tech-title" className="mt-5 max-w-5xl text-[clamp(2.5rem,5.4vw,4.75rem)] font-semibold leading-[1.0] tracking-[-0.035em] text-ink">
@@ -69,13 +69,13 @@ function Comparison() {
     )
   }
   return (
-    <section ref={ref} aria-labelledby="compare-title" className="bg-bg py-24 md:py-28">
+    <section ref={ref} aria-labelledby="compare-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="reveal mx-auto max-w-3xl text-center">
           <SectionHeading id="compare-title" eyebrow={COMPARISON.eyebrow} first={COMPARISON.title} align="center" />
           <p className="mt-5 text-muted">{COMPARISON.body}</p>
         </div>
-        <div className="reveal mt-14 grid gap-5 lg:grid-cols-2">
+        <div className="reveal mt-10 grid gap-5 lg:grid-cols-2">
           {card('legacy', false)}
           {card('velcoris', true)}
         </div>
@@ -106,7 +106,7 @@ function Datasheet() {
   }
 
   return (
-    <section ref={ref} aria-labelledby="specs-title" className="bg-surface py-24 md:py-28">
+    <section ref={ref} aria-labelledby="specs-title" className="bg-surface py-14 md:py-20">
       <div className="container-x">
         <div className="reveal mx-auto max-w-2xl text-center">
           <SectionHeading id="specs-title" eyebrow={DATASHEET.eyebrow} first={DATASHEET.title} align="center" />
@@ -185,13 +185,13 @@ function QualityGates() {
   const ref = useReveal()
   const icons = [Activity, Layers, ChartColumn]
   return (
-    <section ref={ref} aria-labelledby="quality-title" className="bg-bg py-24 md:py-28">
+    <section ref={ref} aria-labelledby="quality-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="reveal mx-auto max-w-3xl text-center">
           <SectionHeading id="quality-title" eyebrow={QUALITY.eyebrow} first={QUALITY.title} align="center" />
           <p className="mt-5 text-muted">{QUALITY.body}</p>
         </div>
-        <ul className="reveal mt-14 grid gap-5 md:grid-cols-3">
+        <ul className="reveal mt-10 grid gap-5 md:grid-cols-3">
           {QUALITY.gates.map((g, i) => {
             const Icon = icons[i]
             return (
@@ -221,13 +221,13 @@ function Dispersion() {
   const ref = useReveal()
   const icons = [Droplets, RotateCw, FlaskConical, Archive]
   return (
-    <section ref={ref} aria-labelledby="dispersion-title" className="bg-surface py-24 md:py-28">
+    <section ref={ref} aria-labelledby="dispersion-title" className="bg-surface py-14 md:py-20">
       <div className="container-x">
         <div className="reveal mx-auto max-w-2xl text-center">
           <SectionHeading id="dispersion-title" eyebrow={DISPERSION.eyebrow} first={DISPERSION.title} align="center" />
           <p className="mt-5 text-muted">{DISPERSION.body}</p>
         </div>
-        <ul className="reveal mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {DISPERSION.items.map(([t, body], i) => {
             const Icon = icons[i]
             return (
@@ -252,7 +252,7 @@ function Faq() {
   const uid = useId()
   const [open, setOpen] = useState(-1)
   return (
-    <section ref={ref} aria-labelledby="faq-title" className="bg-bg py-24 md:py-28">
+    <section ref={ref} aria-labelledby="faq-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="reveal max-w-3xl">
           <SectionHeading id="faq-title" eyebrow={FAQ.eyebrow} first={FAQ.title} size="md" />
@@ -300,7 +300,7 @@ function Faq() {
 function TechCta() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="tech-cta-title" className="bg-surface py-20 md:py-24">
+    <section ref={ref} aria-labelledby="tech-cta-title" className="bg-surface py-12 md:py-16">
       <div className="container-x">
         <div className="reveal hex-pattern rounded-3xl bg-band px-6 py-16 text-center sm:px-12 md:py-20">
           <SectionHeading id="tech-cta-title" eyebrow={TECH_CTA.eyebrow} first={TECH_CTA.first} second={TECH_CTA.second} align="center" tone="band" />

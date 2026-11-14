@@ -36,19 +36,17 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-[72px]">
       {/* Lattice backdrop */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 767px)" srcSet="/media/hero-lattice-960.webp" type="image/webp" />
-          <img
-            ref={imgRef}
-            src="/media/hero-lattice.webp"
-            alt=""
-            width="1920"
-            height="1080"
-            fetchPriority="high"
-            decoding="async"
-            className="h-full w-full scale-[1.04] object-cover object-center transition-transform duration-700 ease-out will-change-transform"
-          />
-        </picture>
+        {/* Light theme: light lattice (dark lines on white). Dark theme: the original dark lattice. */}
+        <div ref={imgRef} className="h-full w-full scale-[1.04] transition-transform duration-700 ease-out will-change-transform">
+          <picture className="hero-img-light">
+            <source media="(max-width: 767px)" srcSet="/media/hero-lattice-light-960.webp" type="image/webp" />
+            <img src="/media/hero-lattice-light.webp" alt="" width="1920" height="1080" fetchPriority="high" decoding="async" className="h-full w-full object-cover object-center" />
+          </picture>
+          <picture className="hero-img-dark">
+            <source media="(max-width: 767px)" srcSet="/media/hero-lattice-960.webp" type="image/webp" />
+            <img src="/media/hero-lattice.webp" alt="" width="1920" height="1080" decoding="async" className="h-full w-full object-cover object-center" />
+          </picture>
+        </div>
         {/* Left→right fade (desktop) / top→bottom fade (mobile) from the page colour into the dark lattice */}
         <div className="absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
         <div className="absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />

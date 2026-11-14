@@ -59,7 +59,7 @@ export default function ProcessStack() {
   }, [reduced])
 
   return (
-    <section aria-labelledby="process-title" className="bg-surface py-24 md:py-32">
+    <section aria-labelledby="process-title" className="bg-surface py-14 md:py-20">
       <div className="container-x">
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow">{PROCESS_INTRO.eyebrow}</p>

@@ -8,7 +8,7 @@ import { MEDIA_HERO, PRESS } from '../lib/media'
 
 function MediaHero() {
   return (
-    <section aria-labelledby="media-title" className="hex-pattern-light bg-bg pb-16 pt-[calc(72px+5rem)] md:pb-20 md:pt-[calc(72px+7rem)]">
+    <section aria-labelledby="media-title" className="hex-pattern-light bg-bg pb-10 pt-[calc(72px+5rem)] md:pb-14 md:pt-[calc(72px+7rem)]">
       <div className="container-x">
         <p className="eyebrow">{MEDIA_HERO.eyebrow}</p>
         <h1 id="media-title" className="mt-5 max-w-5xl text-[clamp(2.5rem,5.4vw,4.75rem)] font-semibold leading-[1.0] tracking-[-0.035em] text-ink">
@@ -23,7 +23,7 @@ function MediaHero() {
 
 function Press() {
   return (
-    <section aria-labelledby="press-title" className="bg-surface py-20 md:py-24">
+    <section aria-labelledby="press-title" className="bg-surface py-12 md:py-16">
       <div className="container-x flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
         <div className="max-w-2xl">
           <p className="eyebrow">{PRESS.eyebrow}</p>

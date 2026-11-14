@@ -30,7 +30,7 @@ const POINTS = [
 export default function IndiaOpportunity() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="india-title" className="hex-pattern bg-band py-24 md:py-28">
+    <section ref={ref} aria-labelledby="india-title" className="hex-pattern bg-band py-14 md:py-20">
       <div className="container-x grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14">
         <div className="reveal">
           <SectionHeading

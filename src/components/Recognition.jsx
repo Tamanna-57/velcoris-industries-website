@@ -30,7 +30,7 @@ const FACTS = [
 export default function Recognition() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="recognition-title" className="hex-pattern bg-band py-24 md:py-28">
+    <section ref={ref} aria-labelledby="recognition-title" className="hex-pattern bg-band py-14 md:py-20">
       <div className="container-x">
         <div className="reveal">
           <SectionHeading
@@ -43,7 +43,7 @@ export default function Recognition() {
           />
         </div>
 
-        <ul className="reveal mx-auto mt-14 grid max-w-4xl gap-5 md:grid-cols-2">
+        <ul className="reveal mx-auto mt-10 grid max-w-4xl gap-5 md:grid-cols-2">
           {AWARDS.map(({ icon: Icon, ...a }) => (
             <li key={a.title} className="rounded-2xl border border-band-line bg-band-card p-7">
               <div className="flex items-start justify-between gap-4">
@@ -61,7 +61,7 @@ export default function Recognition() {
           ))}
         </ul>
 
-        <dl className="reveal mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-y-8 text-center md:grid-cols-4">
+        <dl className="reveal mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-y-8 text-center md:grid-cols-4">
           {FACTS.map((f) => (
             <div key={f.label} className="flex flex-col-reverse">
               <dt className="mt-1 font-mono text-xs uppercase tracking-[0.12em] text-band-muted">{f.label}</dt>

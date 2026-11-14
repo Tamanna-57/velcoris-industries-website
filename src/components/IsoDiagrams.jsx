@@ -186,7 +186,7 @@ export function ScaleIso({ active }) {
         <g transform="translate(-150 52) skewY(-30)">
           <rect width="74" height="40" rx="10" fill="var(--iso-tile)" stroke="var(--iso-stroke)" strokeWidth="1.2" />
           <circle cx="20" cy="20" r="10" fill="var(--iso-accent)" />
-          <path d="M15 20l3.5 3.5 6.5-7" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M15 20l3.5 3.5 6.5-7" fill="none" stroke="var(--bg)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           <text x="38" y="24" fontFamily={MONO} fontSize="10" fill="var(--iso-text)">COA</text>
         </g>
       </g>

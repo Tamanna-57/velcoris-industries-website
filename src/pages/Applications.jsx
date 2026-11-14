@@ -13,7 +13,7 @@ import { APPS_CTA, PATHWAY } from '../lib/optimizer'
 
 function AppsHero() {
   return (
-    <section aria-labelledby="apps-title" className="hex-pattern-light bg-bg pb-20 pt-[calc(72px+5rem)] md:pb-28 md:pt-[calc(72px+7rem)]">
+    <section aria-labelledby="apps-title" className="hex-pattern-light bg-bg pb-12 pt-[calc(72px+5rem)] md:pb-16 md:pt-[calc(72px+7rem)]">
       <div className="container-x">
         <p className="eyebrow">{APPS_HERO.eyebrow}</p>
         <h1 id="apps-title" className="mt-5 max-w-5xl text-[clamp(2.5rem,5.4vw,4.75rem)] font-semibold leading-[1.0] tracking-[-0.035em] text-ink">
@@ -32,13 +32,13 @@ function Pathway() {
   const ref = useReveal()
   const icons = [FlaskConical, Microscope, ArrowRight]
   return (
-    <section ref={ref} aria-labelledby="pathway-title" className="bg-bg py-24 md:py-28">
+    <section ref={ref} aria-labelledby="pathway-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="reveal mx-auto max-w-2xl text-center">
           <SectionHeading id="pathway-title" eyebrow={PATHWAY.eyebrow} first="From evaluation to" second="plant-scale production." align="center" />
           <p className="mt-5 text-muted">{PATHWAY.body}</p>
         </div>
-        <ol className="reveal mt-14 grid gap-6 md:grid-cols-3">
+        <ol className="reveal mt-10 grid gap-6 md:grid-cols-3">
           {PATHWAY.steps.map((st, i) => {
             const Icon = icons[i]
             return (
@@ -67,7 +67,7 @@ function Pathway() {
 function AppsCta() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="apps-cta-title" className="bg-surface py-20 md:py-24">
+    <section ref={ref} aria-labelledby="apps-cta-title" className="bg-surface py-12 md:py-16">
       <div className="container-x">
         <div className="reveal hex-pattern rounded-3xl bg-band px-6 py-16 text-center sm:px-12 md:py-20">
           <SectionHeading id="apps-cta-title" eyebrow={APPS_CTA.eyebrow} first={APPS_CTA.first} second={APPS_CTA.second} align="center" tone="band" />
