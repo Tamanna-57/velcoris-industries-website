@@ -345,6 +345,15 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 
 ---
 
+## 3n. Round 14: Animated hero lattice (15 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R14-1 | **Static lattice image replaced by an animated 2D honeycomb** (`HexField.jsx`, canvas): hexagons grow out from just under the navigation bar until they fill the section (~1.7–2.6 s), then some cells slowly fade in and out and pulses of current run along the edges like circuitry, in the site blue. | "Instead of the static honeycomb, something animated: it forms from the top of the nav, mutates into other honeycombs until it fills the screen, then some fade and some flow like electrical wires, like in the movies." | 60 fps on desktop, ~56 fps on a 4× throttled phone CPU; pauses off screen / in background tabs; follows light and dark theme; reduced motion draws the finished lattice once. Removes the 114 KB hero image download. |
+| R14-2 | **Centred, animated intro**: eyebrow, then the headline word by word (rise + blur-in), then the line, buttons and the "Formerly Weber Innovations" note, timed with the growth. | "While the honeycomb is forming, the introduction comes alive in the centre, in a much more animated form." | The lattice is cut out behind the text with a soft-edged mask fitted to the copy block, so every hero text element keeps its full contrast (7.9–19.5:1 light, 8.6–17.9:1 dark) at 390, 1024 and 1440 px. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
