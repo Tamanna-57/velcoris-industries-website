@@ -1,38 +1,46 @@
-import { ArrowUpRight, Box, FlaskConical, Users } from 'lucide-react'
+import { useState } from 'react'
 import { SAMPLE_HREF } from '../lib/content'
 import { useReveal } from '../lib/hooks'
+import { FormulateIso, SampleIso, ScaleIso } from './IsoDiagrams'
 import SectionHeading from './SectionHeading'
+import { ArrowRight } from './icons'
 
 const STEPS = [
   {
     n: '01',
-    icon: FlaskConical,
     title: 'Get Your Samples',
     text: 'Request high-purity graphene samples with full characterization data: Raman spectroscopy, TEM imaging, particle size distributions. Evaluate in your own lab, on your own terms.',
     cta: 'Request Samples',
     href: SAMPLE_HREF,
+    Diagram: SampleIso,
   },
   {
     n: '02',
-    icon: Users,
     title: 'Formulate Together',
     text: 'Our materials team works alongside your engineers to optimise graphene integration for your specific application, from dispersion parameters to performance targets.',
     cta: 'Discuss Application',
     href: '/contact?intent=application',
+    Diagram: FormulateIso,
   },
   {
     n: '03',
-    icon: Box,
     title: 'Scale with Confidence',
     text: 'Move from validated lab results to consistent production-scale supply. Domestic sourcing means no import delays, no geopolitical risk, and pricing that works at volume.',
     cta: 'Explore Supply',
     href: '/contact?intent=supply',
+    Diagram: ScaleIso,
   },
 ]
 
-/** Replica of the original "Work with us" section. */
+/**
+ * "Work with us" (reference: RSAShield "How it works").
+ * Was three equal cards. Now three alternating rows: number + title, the original text and its
+ * button on one side, an interactive isometric diagram on the other. Hovering or focusing a row
+ * animates its diagram.
+ */
 export default function WorkWithUs() {
   const ref = useReveal()
+  const [hover, setHover] = useState(-1)
   return (
     <section ref={ref} aria-labelledby="work-title" className="bg-bg py-24 md:py-28">
       <div className="container-x">
@@ -50,20 +58,28 @@ export default function WorkWithUs() {
           </p>
         </div>
 
-        <ol className="reveal mt-14 grid gap-5 md:grid-cols-3">
-          {STEPS.map(({ icon: Icon, ...s }) => (
-            <li key={s.n} className="flex flex-col rounded-2xl border border-line bg-surface p-7">
-              <div className="flex items-start justify-between">
-                <span className="font-display text-3xl font-light text-muted">{s.n}</span>
-                <span className="grid size-10 place-items-center rounded-lg border border-line bg-bg text-ink">
-                  <Icon className="size-[1.125rem]" strokeWidth={1.6} aria-hidden="true" />
-                </span>
+        <ol className="mt-16 space-y-20 md:mt-20 md:space-y-28">
+          {STEPS.map(({ Diagram, ...s }, i) => (
+            <li
+              key={s.n}
+              className="reveal grid items-center gap-10 md:grid-cols-2 md:gap-16"
+              onMouseEnter={() => setHover(i)}
+              onMouseLeave={() => setHover(-1)}
+              onFocus={() => setHover(i)}
+              onBlur={() => setHover(-1)}
+            >
+              <div className={i % 2 ? 'md:order-2' : ''}>
+                <h3 className="text-[clamp(2rem,3.6vw,3rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-ink">
+                  <span className="font-light text-muted">{s.n}.</span> {s.title}
+                </h3>
+                <p className="mt-5 max-w-lg text-lg text-muted">{s.text}</p>
+                <a href={s.href} className="btn-primary mt-8">
+                  {s.cta} <ArrowRight />
+                </a>
               </div>
-              <h3 className="mt-6 text-xl font-semibold text-ink">{s.title}</h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{s.text}</p>
-              <a href={s.href} className="link-accent mt-6 self-start text-sm">
-                {s.cta} <ArrowUpRight className="size-4" aria-hidden="true" />
-              </a>
+              <div className={`flex justify-center ${i % 2 ? 'md:order-1' : ''}`}>
+                <Diagram active={hover === i} />
+              </div>
             </li>
           ))}
         </ol>

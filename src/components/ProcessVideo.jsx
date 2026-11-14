@@ -118,7 +118,7 @@ export default function ProcessVideo() {
     <button
       type="button"
       onClick={togglePlay}
-      className="absolute bottom-5 right-5 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 bg-black/55 px-4 text-sm font-medium text-white transition-colors hover:border-[#7da4ff] hover:text-[#7da4ff]"
+      className="absolute bottom-5 right-5 z-20 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 bg-black/55 px-4 text-sm font-medium text-white transition-colors hover:border-[#93abe0] hover:text-[#93abe0]"
       aria-label={playing ? 'Pause graphene animation' : 'Play graphene animation'}
     >
       <svg viewBox="0 0 16 16" className="size-3.5" fill="currentColor" aria-hidden="true">

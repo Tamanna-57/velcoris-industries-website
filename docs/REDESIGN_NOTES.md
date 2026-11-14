@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 4: Media page (original replicated; "Latest from LinkedIn" redesigned).
+**Status:** Round 5: softer accent blue, nav hover matched to the reference, "Work with us" redesigned.
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -91,6 +91,7 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | EquitiFy Assets (client clip) | Hover fade on the hovered nav item | Header (round 3) |
 | Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
 | vastworld.ai (client screenshot) | News grid: picture, date · source, large headline, short summary; alternate cards offset | Media › Latest from LinkedIn (round 4) |
+| RSAShield (client screenshots) | Alternating "01. Title" rows with isometric diagrams | Home › Work with us (round 5) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
 
@@ -223,6 +224,18 @@ off-screen screen-reader labels widened the page); all cards and gallery control
 
 ---
 
+## 3e. Round 5 (14 Nov 2026)
+
+| # | Change | Client reason | Implementation notes |
+|---|---|---|---|
+| R5-1 | **Accent blue softened**: light `#1f4fe0` → `#4a66b8` (buttons, links, focus); dark-mode links `#7da4ff` → `#93abe0`, dark-mode buttons `#2f5bff` → `#4a66b8`. Diagram highlights and dark-band links updated to match. | "The blue is quite bright and looks harsh. It should still highlight, but less." | Still meets WCAG AA: white on `#4a66b8` 5.41:1; `#4a66b8` on white 5.41:1 and on the grey surface 4.91:1; `#93abe0` on the dark background 8.57:1. Blue is still reserved for clickable things. |
+| R5-2 | **Nav hover matched to the reference** frame by frame: the hovered link fades from near-black to a neutral grey (`#737373` light / `#8f8f8f` dark) in 0.15 s; the other links stay solid. | "The hover animation isn't working the way the reference shows; make it exact." | Measured from the clip at 50 fps: only the hovered item changes, from ≈#2f2f2f to ≈#757575 in ~0.1–0.15 s, with no movement or underline. Previously 0.3 s to a bluish grey. |
+| R5-3 | **"Work with us" (homepage) redesigned** (reference: RSAShield "How it works"). Was three equal text cards. Now three **alternating rows**: large "01. Title" with the number in grey, the original text and its original button (Request Samples / Discuss Application / Explore Supply), and an **interactive isometric diagram** on the other side. | "Replace the three-process section with this layout, with interactive diagrams generated in our theme." | Diagrams are SVG, theme-aware (light and dark tokens `--iso-*`): (1) sample jar + COA sheet whose checks tick on hover; (2) parameter tiles (wt%, RPM, D50, resin) with a graphene block that drops into the mix on hover; (3) batch stack that rises, with a consistency chart that draws and a COA badge. Idle float, motion off under reduced-motion. Copy unchanged from the original. |
+
+*Note:* the client's screenshot for R5-3 came from the live Applications page, which uses the same three-step block; it is applied here to the homepage section (the Applications page is not built yet).
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -250,8 +263,8 @@ off-screen screen-reader labels widened the page); all cards and gallery control
 | Body text (ink) on page | 19.46:1 | 17.89:1 |
 | Secondary text (muted) on page | 7.87:1 | 9.01:1 |
 | Secondary text on surface panels | 7.15:1 | 8.22:1 |
-| Blue link text on page | 6.46:1 | 8.09:1 |
-| White text on blue button | 6.46:1 | 5.17:1 |
+| Blue link text on page (round 5 blue) | 5.41:1 | 8.57:1 |
+| White text on blue button (round 5 blue) | 5.41:1 | 5.41:1 |
 | UI borders (non-text, 3:1 needed) | 3.18:1 | n/a |
 
 ### 5.2 Automated check of the built homepage (Playwright + headless Chrome)

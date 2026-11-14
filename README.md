@@ -44,7 +44,7 @@ src/
     Recognition.jsx       ┐
     IndiaOpportunity.jsx  │ replicated from the original site,
     CleanProduction.jsx   │ to be revised section by section
-    WorkWithUs.jsx        │
+    WorkWithUs.jsx        │ (round 5: alternating rows + IsoDiagrams.jsx)
     Footer.jsx            ┘ (also exports FutureVision)
     SectionHeading.jsx    shared two-line heading
     Logo.jsx              official logo (vector)
@@ -61,4 +61,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 - [x] Homepage round 2 (client review: full-image hero, team video, original lower sections restored)
 - [x] Round 3: nav hover fade + Technology page
 - [x] Round 4: Media page
+- [x] Round 5: softer blue, nav hover per reference, Work with us redesign
 - [ ] Company, Applications, Contact pages

@@ -8,7 +8,7 @@ const INK = '#f3f4f6'
 const MUTED = '#a9b0bb'
 const DIM = '#5b626d'
 const LINE = '#2a2e35'
-const BLUE = '#7da4ff'
+const BLUE = '#93abe0'
 const mono = { fontFamily: 'IBM Plex Mono, monospace' }
 const sans = { fontFamily: 'Inter Variable, sans-serif' }
 
