@@ -305,8 +305,17 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 | # | Change | Client reason | Notes |
 |---|---|---|---|
 | R10-1 | **Less white space between sections on every page**: section padding 96–128 px → 56–80 px (desktop 80 px); smaller CTA/strip sections 80–96 → 48–64 px; page heroes' bottom padding reduced; heading-to-content gaps 56–80 → 40–48 px. | "A lot of white space between the different sections… make it a little less so it looks smoother." | Applied through shared section classes on Home, Company, Technology, Applications and Media. |
-| R10-2 | **Light-mode hero image**: a light version of the graphene lattice (dark-grey lines on white), generated from the same render; dark mode keeps the original dark lattice. The light image is preloaded (light is the default theme). | "The hero base image looks very bad in light mode; okay in dark mode." | `hero-lattice-light.webp` (97 KB) + 960 px mobile version. |
+| R10-2 | ~~**Light-mode hero image**~~ *Reverted in R11-1.*: a light version of the graphene lattice (dark-grey lines on white), generated from the same render; dark mode keeps the original dark lattice. The light image is preloaded (light is the default theme). | "The hero base image looks very bad in light mode; okay in dark mode." | `hero-lattice-light.webp` (97 KB) + 960 px mobile version. |
 | R10-3 | **"Work with us" diagrams in the site's black/white/grey theme** (were blue): white/grey platforms and tiles, near-black blocks, black checks and chart line; in dark mode, dark platforms with light-grey blocks. Rows tightened further (section 1623 → 1447 px). | "A lot of space between them… you made it in the whole blue theme, but we have our black and white theme." | Blue stays only on the clickable buttons. |
+
+---
+
+## 3k. Round 11: Hero reverted; dispersion folders (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R11-1 | **Hero image reverted** to the previous dark lattice with the light fade (light-image version removed). | "What have you done, it's looking very bad, can we just go back to the previous one." | Hero code, preload and CSS restored exactly. |
+| R11-2 | **Dispersion & integration protocols as 3D folders** (reference: Loopsii tiles video): four square folders (with tab) swing up into place in perspective as the row scrolls in; each cover shows the title, a handwritten key spec (NMP · DMF · IPA / 3,000–6,000 RPM / resin first, then hardener / 18–25 °C · sealed · dry) and an animated black glyph. Hover, keyboard focus or tap opens the folder: the cover tips forward in 3D and a sheet slides up with the one-line key point. | "A 3D folder effect; as we hover over the folder we see the text… reduce the text of the whole website… the exact same thing for this section." | Text cut from ~30 words per card to ~15 (original wording kept in data). Greyscale covers to stay in the black/white theme. Phones: one column of wider folders, tap to open. Accessible: button role, aria-expanded, Enter/Space/Escape, description linked; reduced motion disables tilt and glyph animation. |
 
 ---
 

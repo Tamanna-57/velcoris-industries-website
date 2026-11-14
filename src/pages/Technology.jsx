@@ -1,11 +1,12 @@
 import { useId, useState } from 'react'
-import { Activity, Archive, ChartColumn, ChevronDown, CircleCheck, CircleX, Download, Droplets, FlaskConical, Layers, RotateCw } from 'lucide-react'
+import { Activity, ChartColumn, ChevronDown, CircleCheck, CircleX, Download, Layers } from 'lucide-react'
+import DispersionFolders from '../components/DispersionFolders'
 import ProcessStack from '../components/ProcessStack'
 import SectionHeading from '../components/SectionHeading'
 import { ArrowRight } from '../components/icons'
 import { SAMPLE_HREF } from '../lib/content'
 import { useReveal } from '../lib/hooks'
-import { COMPARISON, DATASHEET, DISPERSION, FAQ, QUALITY, TECH_CTA, TECH_HERO, TECH_STATS } from '../lib/technology'
+import { COMPARISON, DATASHEET, FAQ, QUALITY, TECH_CTA, TECH_HERO, TECH_STATS } from '../lib/technology'
 
 /* Technology page. Everything except "How our process works" (ProcessStack) replicates the
    original velcorisindustries.com/technology layout and copy, in the new type and colour
@@ -217,35 +218,6 @@ function QualityGates() {
   )
 }
 
-function Dispersion() {
-  const ref = useReveal()
-  const icons = [Droplets, RotateCw, FlaskConical, Archive]
-  return (
-    <section ref={ref} aria-labelledby="dispersion-title" className="bg-surface py-14 md:py-20">
-      <div className="container-x">
-        <div className="reveal mx-auto max-w-2xl text-center">
-          <SectionHeading id="dispersion-title" eyebrow={DISPERSION.eyebrow} first={DISPERSION.title} align="center" />
-          <p className="mt-5 text-muted">{DISPERSION.body}</p>
-        </div>
-        <ul className="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {DISPERSION.items.map(([t, body], i) => {
-            const Icon = icons[i]
-            return (
-              <li key={t} className="rounded-3xl border border-line bg-bg p-6">
-                <span className="grid size-10 place-items-center rounded-lg border border-line text-ink">
-                  <Icon className="size-[1.125rem]" strokeWidth={1.6} aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 font-sans text-base font-semibold tracking-normal text-ink">{t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{body}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    </section>
-  )
-}
-
 /** FAQ as a collapsed accordion (reference: WLX): questions only, answers open on demand. */
 function Faq() {
   const ref = useReveal()
@@ -331,7 +303,7 @@ export default function Technology() {
       <Comparison />
       <Datasheet />
       <QualityGates />
-      <Dispersion />
+      <DispersionFolders />
       <Faq />
       <TechCta />
     </>
