@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react'
  * 2. Live: some cells slowly dim and recover, and pulses of "current" run along the lattice edges
  *    like circuitry, lighting the nodes they pass.
  *
- * The lattice is faded behind the centred hero copy so the text stays readable. Respects
+ * One even, faint lattice sits behind the whole hero; pulses route around the copy. Respects
  * prefers-reduced-motion (draws the finished lattice once, no motion), pauses when off screen or
  * when the tab is hidden, follows the light/dark theme, and caps the pixel ratio at 2.
  */
@@ -18,8 +18,8 @@ const GROW_S = 2.6 // time for the growth to reach the farthest cell
 const CELL_IN_S = 0.42 // fade/scale-in time of one cell
 
 const PALETTE = {
-  light: { line: '17,18,20', lineA: 0.2, dotA: 0.32, pulse: '74,102,184', glow: 0.26 },
-  dark: { line: '255,255,255', lineA: 0.15, dotA: 0.28, pulse: '147,171,224', glow: 0.4 },
+  light: { line: '17,18,20', lineA: 0.072, dotA: 0.1, pulse: '74,102,184', glow: 0.18 },
+  dark: { line: '255,255,255', lineA: 0.08, dotA: 0.13, pulse: '147,171,224', glow: 0.3 },
 }
 const theme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
 const ease = (t) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3)
@@ -58,8 +58,26 @@ function buildGrid(W, H, seedY) {
     }
   }
   for (const c of cells) c.delay = (c.d / maxD) * GROW_S + c.jitter
+  // Unique edges and nodes, each drawn once (shared edges drawn per cell would come out darker)
+  const edgeMap = new Map()
+  const nodeMap = new Map()
+  cells.forEach((c, ci) => {
+    for (let k = 0; k < 6; k++) {
+      const [ax, ay] = c.corners.at(k)
+      const [bx, by] = c.corners.at((k + 1) % 6)
+      const ka = vKey(ax, ay)
+      const kb = vKey(bx, by)
+      const ek = ka < kb ? `${ka}|${kb}` : `${kb}|${ka}`
+      if (!edgeMap.has(ek)) edgeMap.set(ek, { ax, ay, bx, by, cells: [] })
+      edgeMap.get(ek).cells.push(ci)
+      if (!nodeMap.has(ka)) nodeMap.set(ka, { x: ax, y: ay, cells: [] })
+      nodeMap.get(ka).cells.push(ci)
+    }
+  })
+  const edges = [...edgeMap.values()]
+  const nodes = [...nodeMap.values()]
   const vList = [...verts.entries()].map(([k, v]) => ({ k, ...v, n: [...v.n] })).filter((v) => v.x > -R && v.x < W + R && v.y > seedY - R && v.y < H + R)
-  return { R, cells, verts, vList, growEnd: GROW_S + 0.22 + CELL_IN_S }
+  return { R, cells, edges, nodes, verts, vList, growEnd: GROW_S + 0.22 + CELL_IN_S }
 }
 
 export default function HexField({ className = '', topOffset = 72, protectRef }) {
@@ -79,39 +97,17 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
     const t0 = performance.now()
     let pulses = []
     let lastPulseAt = 0
-    const mask = document.createElement('canvas') // soft-edged hole behind the copy, rebuilt on resize
-    const mctx = mask.getContext('2d')
+    let keepOut = null // the copy block: pulses route around it so the text stays calm
 
-    // Build the text-protection mask: the copy block's rectangle, feathered with a shadow blur
-    // (works in every browser, computed once per resize instead of every frame).
-    const buildMask = () => {
-      const dpr = Math.min(2, window.devicePixelRatio || 1)
-      mask.width = canvas.width
-      mask.height = canvas.height
-      mctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      mctx.clearRect(0, 0, W, H)
+    const measureCopy = () => {
       const el = protectRef?.current
-      if (!el) return
+      if (!el) return (keepOut = null)
       const pr = canvas.parentElement.getBoundingClientRect()
       const r = el.getBoundingClientRect()
-      const pad = 28
-      const x = r.left - pr.left - pad
-      const y = r.top - pr.top - pad
-      const w = r.width + pad * 2
-      const h = r.height + pad * 2
-      const off = 10000
-      mctx.shadowColor = 'rgba(0,0,0,0.96)'
-      mctx.shadowBlur = 44
-      mctx.shadowOffsetX = off
-      mctx.fillStyle = '#000'
-      mctx.beginPath()
-      mctx.roundRect(x - off, y, w, h, 48)
-      mctx.fill()
-      mctx.beginPath() // solid core so the text area itself is fully clean
-      mctx.shadowColor = 'transparent'
-      mctx.roundRect(x + 12, y + 12, w - 24, h - 24, 36)
-      mctx.fill()
+      const pad = 16
+      keepOut = { x0: r.left - pr.left - pad, y0: r.top - pr.top - pad, x1: r.right - pr.left + pad, y1: r.bottom - pr.top + pad }
     }
+    const blocked = (v) => keepOut && v.x > keepOut.x0 && v.x < keepOut.x1 && v.y > keepOut.y0 && v.y < keepOut.y1
 
     const resize = () => {
       const r = canvas.parentElement.getBoundingClientRect()
@@ -125,19 +121,21 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       grid = buildGrid(W, H, topOffset + 6)
       pulses = []
-      buildMask()
+      measureCopy()
     }
 
     // A pulse = a random walk along lattice edges, drawn as a glowing head with a fading tail.
     const spawnPulse = () => {
       const vs = grid.vList
       if (!vs.length) return
-      let v = vs[Math.floor(Math.random() * vs.length)]
+      const free = vs.filter((x) => !blocked(x))
+      if (!free.length) return
+      let v = free[Math.floor(Math.random() * free.length)]
       const path = [v]
       let prev = null
       const len = 9 + Math.floor(Math.random() * 12)
       for (let i = 0; i < len; i++) {
-        const opts = v.n.filter((k) => k !== prev).map((k) => grid.verts.get(k)).filter(Boolean)
+        const opts = v.n.filter((k) => k !== prev).map((k) => grid.verts.get(k)).filter((x) => x && !blocked(x))
         if (!opts.length) break
         const next = opts[Math.floor(Math.random() * opts.length)]
         prev = v.k ?? `${Math.round(v.x)}:${Math.round(v.y)}`
@@ -149,34 +147,56 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
     }
 
     const drawLattice = (t, live) => {
-      const { cells } = grid
-      ctx.lineWidth = 1
-      for (const c of cells) {
-        const p = reduced ? 1 : ease((t - c.delay) / CELL_IN_S)
-        if (p <= 0) continue
-        let a = p
-        if (live && c.dim) a *= 0.12 + 0.88 * (0.5 + 0.5 * Math.cos((t / c.period) * Math.PI * 2 + c.phase))
-        const s = reduced ? 1 : 0.55 + 0.45 * p // cells "snap" into place as they appear
-        ctx.beginPath()
-        for (let k = 0; k < 6; k++) {
-          const [x, y] = c.corners.at(k)
-          const px = c.cx + (x - c.cx) * s
-          const py = c.cy + (y - c.cy) * s
-          if (k === 0) ctx.moveTo(px, py)
-          else ctx.lineTo(px, py)
+      const { cells, edges, nodes } = grid
+      // per-cell visibility this frame: growth progress × slow breathing for "dim" cells
+      const vis = new Float32Array(cells.length)
+      cells.forEach((c, i) => {
+        let a = reduced ? 1 : ease((t - c.delay) / CELL_IN_S)
+        if (a > 0 && live && c.dim) a *= 0.12 + 0.88 * (0.5 + 0.5 * Math.cos((t / c.period) * Math.PI * 2 + c.phase))
+        vis[i] = a
+      })
+      // Edges are grouped into a few strength buckets and each bucket is stroked as ONE path,
+      // so the three edges meeting at a node don't stack up into a darker spot.
+      const BUCKETS = 10
+      const paths = Array.from({ length: BUCKETS }, () => new Path2D())
+      const used = new Uint8Array(BUCKETS)
+      for (const e of edges) {
+        let grow = 0
+        let alpha = 0
+        for (const ci of e.cells) {
+          grow = Math.max(grow, reduced ? 1 : ease((t - cells[ci].delay) / CELL_IN_S))
+          alpha += vis[ci]
         }
-        ctx.closePath()
-        ctx.strokeStyle = `rgba(${pal.line},${(pal.lineA * a).toFixed(3)})`
-        ctx.stroke()
-        // nodes
-        ctx.fillStyle = `rgba(${pal.line},${(pal.dotA * a).toFixed(3)})`
-        for (let k = 0; k < 6; k += 2) {
-          const [x, y] = c.corners.at(k)
-          ctx.beginPath()
-          ctx.arc(c.cx + (x - c.cx) * s, c.cy + (y - c.cy) * s, 1.6, 0, Math.PI * 2)
-          ctx.fill()
-        }
+        alpha = Math.max(alpha / e.cells.length, grow * 0.5)
+        if (grow <= 0 || alpha <= 0.02) continue
+        const bi = Math.min(BUCKETS - 1, Math.round(alpha * (BUCKETS - 1)))
+        // edges draw outwards from their midpoint as the cells appear
+        const mx = (e.ax + e.bx) / 2
+        const my = (e.ay + e.by) / 2
+        paths[bi].moveTo(mx + (e.ax - mx) * grow, my + (e.ay - my) * grow)
+        paths[bi].lineTo(mx + (e.bx - mx) * grow, my + (e.by - my) * grow)
+        used[bi] = 1
       }
+      ctx.lineWidth = 0.7
+      ctx.strokeStyle = `rgb(${pal.line})`
+      for (let bi = 0; bi < BUCKETS; bi++) {
+        if (!used[bi]) continue
+        ctx.globalAlpha = pal.lineA * (bi / (BUCKETS - 1))
+        ctx.stroke(paths[bi])
+      }
+      // nodes (skipped right behind the copy, where they would sit on top of the words)
+      ctx.fillStyle = `rgb(${pal.line})`
+      for (const n of nodes) {
+        if (blocked(n)) continue
+        let a = 0
+        for (const ci of n.cells) a = Math.max(a, vis[ci])
+        if (a <= 0.02) continue
+        ctx.globalAlpha = pal.dotA * a
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, 1.1, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      ctx.globalAlpha = 1
     }
 
     const drawPulses = (now) => {
@@ -205,13 +225,13 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
           const y1 = A.y + (B.y - A.y) * f1
           const strength = 1 - (dist - to) / tail // brighter towards the head
           ctx.strokeStyle = `rgba(${pal.pulse},${(pal.glow * strength).toFixed(3)})`
-          ctx.lineWidth = 7
+          ctx.lineWidth = 5
           ctx.beginPath()
           ctx.moveTo(x0, y0)
           ctx.lineTo(x1, y1)
           ctx.stroke()
           ctx.strokeStyle = `rgba(${pal.pulse},${(0.95 * strength).toFixed(3)})`
-          ctx.lineWidth = 1.8
+          ctx.lineWidth = 1.2
           ctx.beginPath()
           ctx.moveTo(x0, y0)
           ctx.lineTo(x1, y1)
@@ -227,24 +247,15 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
           const hy = A.y + (B.y - A.y) * f
           ctx.fillStyle = `rgba(${pal.pulse},${pal.glow.toFixed(3)})`
           ctx.beginPath()
-          ctx.arc(hx, hy, 8, 0, Math.PI * 2)
+          ctx.arc(hx, hy, 6, 0, Math.PI * 2)
           ctx.fill()
           ctx.fillStyle = `rgba(${pal.pulse},1)`
           ctx.beginPath()
-          ctx.arc(hx, hy, 2.2, 0, Math.PI * 2)
+          ctx.arc(hx, hy, 1.8, 0, Math.PI * 2)
           ctx.fill()
         }
       }
       pulses = keep
-    }
-
-    // Cut the lattice out behind the copy so the text always reads cleanly.
-    const protectText = () => {
-      ctx.save()
-      ctx.setTransform(1, 0, 0, 1, 0, 0)
-      ctx.globalCompositeOperation = 'destination-out'
-      ctx.drawImage(mask, 0, 0)
-      ctx.restore()
     }
 
     const frame = (now) => {
@@ -260,7 +271,6 @@ export default function HexField({ className = '', topOffset = 72, protectRef })
         }
         drawPulses(now)
       }
-      protectText()
       if (running) raf = requestAnimationFrame(frame)
     }
 
