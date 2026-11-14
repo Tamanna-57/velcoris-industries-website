@@ -449,3 +449,8 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   - Hero text contrast at 390, 1024 and 1440 px, measured at 3.5 s, 6.2 s and 9.7 s into the animation: at least 4.66:1 everywhere (link 4.66, body 6.1+, headline 13.7+).
   - About 60 fps on desktop (1× and 2×), 52 fps on a 390 px phone.
   - Follows the theme toggle live and survives navigating away and back; reduced motion shows a still frame. No console errors.
+
+### R14-6 — Reverted to the pre-animation hero
+- **User's reason:** "Just revert to the first landing page that we made before this honeycomb animation. I want my previous one back."
+- `Hero.jsx`, `index.css` and `index.html` are restored exactly as they were at the PR #13 merge (R13-6: copy on the left, lattice photo fading in from the right in light mode, full lattice in dark mode, hero image preload).
+- `LatticeField.jsx` is removed. R14-1 to R14-5 are superseded. No other files changed.
