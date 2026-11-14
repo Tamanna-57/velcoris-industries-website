@@ -232,11 +232,13 @@ export const DISPERSION = {
   eyebrow: 'Handling & processing',
   title: 'Dispersion & integration protocols.',
   body: 'Optimal property translation from 2D sheets into polymer matrices or liquid coatings requires proper de-agglomeration and interfacial wetting.',
+  // Folder tiles (reference: Loopsii): label on the cover, the key point revealed on hover.
+  // `short` condenses the original text; `body` keeps the original wording.
   items: [
-    ['Solvent Selection', 'FLG powder disperses optimally in polar aprotic solvents (NMP, DMF) and alcohols (IPA). Graphene Oxide is directly dispersible in deionized water without surfactants.'],
-    ['Mechanical Shear', 'High-shear mixing (3,000 – 6,000 RPM) or planetary centrifugal mixers provide sufficient shear energy to break Van der Waals agglomerates without fracturing lateral flake dimensions.'],
-    ['Resin Compounding', 'For epoxy and polyurethane systems, pre-mix graphene with the resin component before adding the curing agent to ensure uniform distribution and avoid resin localized pre-cure.'],
-    ['Storage & Handling', 'Store powders in sealed, airtight containers at ambient room temperature (18–25°C) in dry conditions. Avoid prolonged ambient exposure to prevent moisture absorption.'],
+    { title: 'Solvent Selection', label: 'NMP · DMF · IPA', short: 'FLG disperses in NMP, DMF or IPA. Graphene oxide goes straight into deionised water, no surfactants.', body: 'FLG powder disperses optimally in polar aprotic solvents (NMP, DMF) and alcohols (IPA). Graphene Oxide is directly dispersible in deionized water without surfactants.' },
+    { title: 'Mechanical Shear', label: '3,000–6,000 RPM', short: 'High-shear or planetary mixing breaks agglomerates without fracturing the flakes.', body: 'High-shear mixing (3,000 – 6,000 RPM) or planetary centrifugal mixers provide sufficient shear energy to break Van der Waals agglomerates without fracturing lateral flake dimensions.' },
+    { title: 'Resin Compounding', label: 'resin first, then hardener', short: 'For epoxy and PU, pre-mix graphene into the resin before the curing agent for even distribution.', body: 'For epoxy and polyurethane systems, pre-mix graphene with the resin component before adding the curing agent to ensure uniform distribution and avoid resin localized pre-cure.' },
+    { title: 'Storage & Handling', label: '18–25 °C · sealed · dry', short: 'Keep powders sealed and airtight at room temperature, away from moisture.', body: 'Store powders in sealed, airtight containers at ambient room temperature (18–25°C) in dry conditions. Avoid prolonged ambient exposure to prevent moisture absorption.' },
   ],
 }
 
