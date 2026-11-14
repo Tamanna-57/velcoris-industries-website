@@ -36,7 +36,7 @@ export default function Hero() {
     <section aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-[72px]">
       {/* Lattice backdrop */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <picture>
+        <picture className="hero-lattice">
           <source media="(max-width: 767px)" srcSet="/media/hero-lattice-960.webp" type="image/webp" />
           <img
             ref={imgRef}
@@ -49,9 +49,10 @@ export default function Hero() {
             className="h-full w-full scale-[1.04] object-cover object-center transition-transform duration-700 ease-out will-change-transform"
           />
         </picture>
-        {/* Left→right fade (desktop) / top→bottom fade (mobile) from the page colour into the dark lattice */}
-        <div className="absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
-        <div className="absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />
+        {/* Dark theme: left→right (desktop) / top→bottom (mobile) wash from the page colour into the lattice.
+            Light theme: no wash; the image itself fades out (mask in index.css), so the text sits on clean white. */}
+        <div className="hero-fade absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
+        <div className="hero-fade absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />
       </div>
 
       <div className="container-x flex flex-1 flex-col justify-center pb-28 pt-12 md:py-20">

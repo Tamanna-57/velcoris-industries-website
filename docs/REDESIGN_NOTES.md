@@ -341,6 +341,7 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 | R13-3 | **Cache headers**: `/media/*` cached 30 days with background revalidation (was revalidated on every visit); hashed build files a year. | Same. | Repeat views of media skip the network. |
 | R13-4 | **Hero preload matches the screen**: phones preload the 45 KB image only (the 114 KB desktop image was also downloading). | Found while measuring. | One hero download per visit. |
 | R13-5 | Applications photos (Unsplash) at quality 60 instead of 70. | Same. | About a quarter smaller. |
+| R13-6 | **Light-mode hero redone (option A of three previews)**: the lattice image itself now fades out (CSS mask) instead of being covered by a translucent white layer, which had turned the dark image muddy grey. The headline sits on clean white; the dark lattice rises in from the right, starting just past the text column at every width (phones: from the bottom). Dark mode unchanged. | "The hero image looks good in dark mode but very bad in light mode." Client picked A ("dark lattice from the right") from a side-by-side preview of three options. | Hero text contrast at the worst pixel: 7.87–19.46:1 at 390, 1024 and 1440 px (was as low as 4.57:1). |
 
 ---
 
