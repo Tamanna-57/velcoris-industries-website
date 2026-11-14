@@ -28,7 +28,7 @@ const STEPS = [
 export default function WorkWithUs() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="work-title" className="bg-bg py-24 md:py-28">
+    <section ref={ref} aria-labelledby="work-title" className="bg-bg py-20 md:py-24">
       <div className="container-x">
         <div className="reveal mx-auto max-w-2xl text-center">
           <SectionHeading id="work-title" eyebrow="Work with us" first="Three steps from sample" second="to production supply." align="center" />
