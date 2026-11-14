@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Homepage round 2 built and verified (hero, video and "three advantages" redesigned; lower sections replicated from the original for section-by-section review).
+**Status:** Round 3: new header interaction, and the Technology page (original replicated; process section redesigned).
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -88,6 +88,8 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | anduril.com | Confident grotesk typography (Helvetica Now Display), black canvas, monospace data labels, industrial seriousness | Type system, labels, dark theme |
 | coffee-tech.com | "Our Approach" list: heading list with hover underline progress, image swap, arrow links to detail pages | "What sets us apart" section |
 | procreator.design | Bold geometric sans headlines (Gilroy), generous whitespace, single strong accent | Hero scale, spacing |
+| EquitiFy Assets (client clip) | Floating pill nav, hover fade on the hovered item, dark-glass tone over dark sections | Header (round 3) |
+| Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
 
@@ -166,6 +168,40 @@ most demanding selectors" (two national shortlists); "11×" vs "10× to 1000×" 
 
 ---
 
+## 3c. Round 3: header interaction and Technology page (14 Nov 2026)
+
+**Workflow decision:** all further work goes on the existing `redesign/homepage-v1` branch and
+is merged by PR, rather than one branch per change.
+
+### Header (reference: EquitiFy Assets, client clip)
+| # | Change | Reason |
+|---|---|---|
+| R3-1 | Header floats over the page (no full-width bar). The five nav links sit in a frosted, rounded **pill**; uppercase labels with slight tracking. | Matches the client's reference; lighter and more product-like than a solid bar, and the hero image shows behind it. |
+| R3-2 | **Hover fade:** only the hovered (or keyboard-focused) item fades to grey, over 250 ms; the others stay solid. | Replicates the reference interaction: a calm, precise cue that suits an industrial brand better than colour flashes. |
+| R3-3 | **Adaptive tone:** when the header passes over a dark section (video once full-bleed, Recognition, India opportunity, Technology stats band, footer), the pill, logo and controls switch to dark glass with white text, and switch back over light sections. | From the reference clip: keeps the header legible on any background without a heavy solid bar. Implemented with one rAF-throttled scroll check against sections tagged `data-header="dark"`. |
+| R3-4 | Current page is marked with a small blue dot and `aria-current="page"`. | Wayfinding now that there is more than one page; announced to screen readers. |
+| R3-5 | "Request a sample" stays a solid blue button outside the pill. | Keeps the single primary action visually distinct (blue = clickable rule). |
+
+Verified: nav text contrast measured on real pixels is 14.0–17.1:1 over the hero and 16.6–17.0:1
+over dark bands (both themes).
+
+### Technology page (`/technology`)
+| # | Section | Treatment | Reason |
+|---|---|---|---|
+| R3-6 | Hero, stats band, comparison, datasheet, quality gates, dispersion, FAQ, CTA | **Replicated** from the original page: same copy (verbatim), same order and layout, in the new type and colour system. Grey italic second heading lines → same sans, lighter weight. | Client direction: keep the original structure, revise section by section. |
+| R3-7 | **How our process works** | **Redesigned** (reference: Loopsii, client clip). Was: a list of six steps on the left and one text panel on the right, only one stage visible at a time, ~60 words each, no visuals. Now: **six stacking cards**. Each stage card slides up over the previous one as you scroll; earlier cards scale back slightly and peek out above, so the sequence reads as a stack. Each card pairs the stage number, label, title, a one-sentence summary and three spec rows (Input / QA gate / Control) with a **diagram**. A sticky 01–06 rail shows progress and jumps to any stage. | The client found the section too text-heavy with no imagery. The stack shows sequence and progress physically, and each diagram explains its stage at a glance. All original detail (input, QA gate, mechanism) is kept as scannable rows; the full paragraphs remain in `src/lib/technology.js`. |
+| R3-8 | Stage diagrams | Pattern-style SVG, not photos: contaminant screen (feedstock), cartridge cells filling (cartridge), reactor core with T/P gauges (reactor), sealed loop (collection), D50 size histogram with 5–15 µm band (refinement), Raman spectrum with D/G/2D peaks and ID/IG < 0.1 (verification). Spectrum and histogram are labelled *illustrative*. | No real process imagery exists, and the process is proprietary. Abstract diagrams explain without revealing reactor engineering, cost ~0 KB, and animate lightly only while in view. |
+| R3-9 | Colour in the stack | Reference cards are multicoloured; ours use our palette: white/graphite cards, a stepped blue-grey frame tone per stage (so stacked edges stay distinguishable), dark diagram panels with a single blue highlight. | Client direction: replicate the effect in our colour theme. |
+| R3-10 | Datasheet | Product switch + category list implemented as accessible **ARIA tabs** (arrow keys, Home/End, focus follows selection). | Original had clickable tabs without keyboard semantics. |
+| R3-11 | Routing | Minimal path-based routing (`/`, `/technology`), per-page `<title>`. | Enough for the prototype. Hosting needs an SPA fallback to `index.html` (Vite dev/preview already provide it). |
+
+Verified (Playwright, 1440px and 390px, both themes): no runtime errors; no horizontal overflow;
+text contrast on all 208 Technology text elements passes in dark, and in light once false alarms
+from translucent pills were re-measured on real pixels (stage rail ≥ 7.8:1); diagram text uses
+#a9b0bb on #0f1114 (8.8:1); datasheet tab keyboard focus confirmed.
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -228,4 +264,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages (/company, /technology, /applications, /media, /contact) are linked, not yet redesigned.
+- Inner pages /company, /applications, /media and /contact are linked but not yet built; /technology is built (round 3).
+- Technology figures and specs are the original site's claims, copied verbatim and not independently verified.

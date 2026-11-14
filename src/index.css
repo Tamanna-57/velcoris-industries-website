@@ -151,9 +151,56 @@
   .link-accent:hover svg { transform: translateX(3px); }
 }
 
+/* Floating header tones (pill nav, logo, controls) */
+.site-header {
+  --hdr-ink: var(--ink);
+  --hdr-muted: var(--muted);
+  --hdr-line: color-mix(in srgb, var(--line) 80%, transparent);
+  --hdr-pill: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+.site-header[data-tone="dark"] {
+  --hdr-ink: #f3f4f6;
+  --hdr-muted: #a9b0bb;
+  --hdr-line: rgba(255, 255, 255, 0.16);
+  --hdr-pill: rgba(17, 18, 20, 0.62);
+}
+/* Hover fade (reference: EquitiFy): only the hovered item dims to grey */
+.nav-link { transition: color 0.25s ease, opacity 0.25s ease; }
+.nav-pill .nav-link:hover,
+.nav-pill .nav-link:focus-visible { color: var(--hdr-muted); }
+#mobile-menu .nav-link:hover { color: var(--muted); }
+
 /* Hexagon grid texture used on the original site's dark sections */
 .hex-pattern {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.07'/%3E%3Cpath d='M28 97 L56 80.8 L56 48.5 L28 64.7 L0 48.5 L0 80.8 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* Light variant of the hex texture for light sections */
+.hex-pattern-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%230b0d10' stroke-width='0.6' stroke-opacity='0.06'/%3E%3Cpath d='M28 97 L56 80.8 L56 48.5 L28 64.7 L0 48.5 L0 80.8 Z' fill='none' stroke='%230b0d10' stroke-width='0.6' stroke-opacity='0.06'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] .hex-pattern-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.06'/%3E%3Cpath d='M28 97 L56 80.8 L56 48.5 L28 64.7 L0 48.5 L0 80.8 Z' fill='none' stroke='%23ffffff' stroke-width='0.6' stroke-opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* Process-stage diagram motion (paused by the reduced-motion rule below) */
+@keyframes viz-drift { 50% { transform: translateX(10px); } }
+@keyframes viz-spin { to { transform: rotate(360deg); } }
+@keyframes viz-pulse { 50% { opacity: 0.55; } }
+@keyframes viz-flow { to { stroke-dashoffset: -32; } }
+.viz-drift { animation: viz-drift 4s ease-in-out infinite; }
+.viz-spin { animation: viz-spin 14s linear infinite; transform-box: fill-box; transform-origin: center; }
+.viz-pulse { animation: viz-pulse 2.2s ease-in-out infinite; }
+.viz-flow { animation: viz-flow 1.2s linear infinite; }
+
+/* Stacking process cards: frame tones step down the stack so edges stay readable */
+:root, [data-theme="light"] {
+  --stage-1: #dfe3ea; --stage-2: #d3d9e3; --stage-3: #c7cfdc;
+  --stage-4: #bcc5d4; --stage-5: #b1bccd; --stage-6: #a6b2c6;
+}
+[data-theme="dark"] {
+  --stage-1: #1c2028; --stage-2: #20252e; --stage-3: #242a34;
+  --stage-4: #282f3a; --stage-5: #2c3440; --stage-6: #303946;
 }
 
 /* Scroll reveal: quick, starts before the section is fully in view,

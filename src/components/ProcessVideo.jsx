@@ -156,6 +156,7 @@ export default function ProcessVideo() {
       <div ref={nearRef} className="absolute inset-x-0 top-0 h-px" aria-hidden="true" />
       <div
         ref={stageRef}
+        data-header={expanded ? 'dark' : undefined}
         className="sticky top-0 h-[100svh] overflow-hidden"
         style={{ '--ix': '30vw', '--it': '40vh', '--ib': '20vh', '--ir': '18px', '--title-o': 1, '--title-y': '0px', '--cap-o': 0 }}
       >

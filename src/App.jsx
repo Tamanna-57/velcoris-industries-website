@@ -1,14 +1,23 @@
-import Approach from './components/Approach'
-import CleanProduction from './components/CleanProduction'
-import Footer, { FutureVision } from './components/Footer'
+import { useEffect } from 'react'
+import Footer from './components/Footer'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import IndiaOpportunity from './components/IndiaOpportunity'
-import ProcessVideo from './components/ProcessVideo'
-import Recognition from './components/Recognition'
-import WorkWithUs from './components/WorkWithUs'
+import Home from './pages/Home'
+import Technology from './pages/Technology'
+
+// Minimal path-based routing (plain links, full page loads) — enough for the prototype.
+// Hosting needs an SPA fallback to index.html; Vite dev/preview already do this.
+const ROUTES = {
+  '/': { page: Home, title: 'Velcoris Industries — Industrial Graphene, Made in India' },
+  '/technology': { page: Technology, title: 'Closed-Loop Graphene Technology & Specs | Velcoris Industries' },
+}
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/$/, '') || '/'
+  const route = ROUTES[path] ?? ROUTES['/']
+  useEffect(() => {
+    document.title = route.title
+  }, [route.title])
+  const Page = route.page
   return (
     <>
       <a
@@ -19,16 +28,7 @@ export default function App() {
       </a>
       <Header />
       <main id="main-content">
-        {/* Redesigned */}
-        <Hero />
-        <ProcessVideo />
-        <Approach />
-        {/* Replicated from the original site (to be revised section by section) */}
-        <Recognition />
-        <IndiaOpportunity />
-        <CleanProduction />
-        <WorkWithUs />
-        <FutureVision />
+        <Page />
       </main>
       <Footer />
     </>
