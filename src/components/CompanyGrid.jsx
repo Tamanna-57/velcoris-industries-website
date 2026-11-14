@@ -94,7 +94,7 @@ export default function CompanyGrid() {
   const tails = [0, 0.18, 0.5, 0.75, 0.2, 0.55, 0.1, 0.35, 0]
 
   return (
-    <section aria-labelledby="grid-title" className="overflow-hidden bg-surface py-20 md:py-24">
+    <section aria-labelledby="grid-title" className="overflow-hidden bg-surface py-12 md:py-16">
       <div className="container-x">
         <SectionHeading id="grid-title" eyebrow={GRID_INTRO.eyebrow} first={GRID_INTRO.first} second={GRID_INTRO.second} size="md" />
       </div>

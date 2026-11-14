@@ -137,7 +137,7 @@ export default function ProcessVideo() {
   // Reduced motion: a normal framed section, no scroll choreography or autoplay
   if (reduced) {
     return (
-      <section ref={nearRef} aria-labelledby="process-title" className="bg-bg py-24">
+      <section ref={nearRef} aria-labelledby="process-title" className="bg-bg py-14">
         <div className="container-x">
           <p className="eyebrow">The science</p>
           <h2 id="process-title" className="mt-4 text-[clamp(2.25rem,5vw,4rem)] text-ink">Engineered at the atomic scale.</h2>

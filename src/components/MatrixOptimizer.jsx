@@ -37,7 +37,7 @@ export default function MatrixOptimizer() {
   const subs = [firstSub, 'Thermal pathways', 'Functional gain']
 
   return (
-    <section ref={ref} aria-labelledby="optimizer-title" className="bg-surface py-24 md:py-28">
+    <section ref={ref} aria-labelledby="optimizer-title" className="bg-surface py-14 md:py-20">
       <div className="container-x">
         <div className="reveal max-w-3xl">
           <SectionHeading id="optimizer-title" eyebrow={OPTIMIZER_INTRO.eyebrow} first={OPTIMIZER_INTRO.title} />

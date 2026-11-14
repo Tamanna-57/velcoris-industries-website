@@ -24,7 +24,7 @@ const POINTS = [
 export default function CleanProduction() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="clean-title" className="bg-surface py-24 md:py-28">
+    <section ref={ref} aria-labelledby="clean-title" className="bg-surface py-14 md:py-20">
       <div className="container-x grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div className="reveal">
           <SectionHeading id="clean-title" eyebrow="Clean production" first="Engineered clean," second="built to scale." />

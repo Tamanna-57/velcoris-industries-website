@@ -35,7 +35,7 @@ export default function LinkedInNews() {
   const arrow = 'grid size-11 place-items-center rounded-full border border-line bg-bg text-ink transition-colors hover:border-accent hover:text-accent disabled:pointer-events-none disabled:opacity-35'
 
   return (
-    <section aria-labelledby="linkedin-title" className="bg-bg py-24 md:py-28">
+    <section aria-labelledby="linkedin-title" className="bg-bg py-14 md:py-20">
       <div className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">

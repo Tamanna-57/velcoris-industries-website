@@ -39,7 +39,7 @@ export default function StepRows({ steps }) {
   const [hover, setHover] = useState(-1)
   const reduced = useReducedMotion()
   return (
-    <ol className="mt-12 space-y-14 md:mt-14 md:space-y-10">
+    <ol className="mt-8 space-y-10 md:mt-6 md:space-y-0">
       {steps.map((s, i) => {
         const Diagram = DIAGRAMS[i % DIAGRAMS.length]
         return (

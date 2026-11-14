@@ -9,7 +9,7 @@ import SectionHeading from './SectionHeading'
 export function FutureVision() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="vision-title" className="bg-surface py-20 md:py-24">
+    <section ref={ref} aria-labelledby="vision-title" className="bg-surface py-12 md:py-16">
       <div className="container-x">
         <div className="reveal hex-pattern rounded-3xl bg-band px-6 py-16 text-center shadow-2xl shadow-black/20 sm:px-12 md:py-20">
           <SectionHeading

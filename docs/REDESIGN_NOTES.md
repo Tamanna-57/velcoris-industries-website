@@ -300,6 +300,16 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 
 ---
 
+## 3j. Round 10: Spacing, light hero, monochrome diagrams (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R10-1 | **Less white space between sections on every page**: section padding 96–128 px → 56–80 px (desktop 80 px); smaller CTA/strip sections 80–96 → 48–64 px; page heroes' bottom padding reduced; heading-to-content gaps 56–80 → 40–48 px. | "A lot of white space between the different sections… make it a little less so it looks smoother." | Applied through shared section classes on Home, Company, Technology, Applications and Media. |
+| R10-2 | **Light-mode hero image**: a light version of the graphene lattice (dark-grey lines on white), generated from the same render; dark mode keeps the original dark lattice. The light image is preloaded (light is the default theme). | "The hero base image looks very bad in light mode; okay in dark mode." | `hero-lattice-light.webp` (97 KB) + 960 px mobile version. |
+| R10-3 | **"Work with us" diagrams in the site's black/white/grey theme** (were blue): white/grey platforms and tiles, near-black blocks, black checks and chart line; in dark mode, dark platforms with light-grey blocks. Rows tightened further (section 1623 → 1447 px). | "A lot of space between them… you made it in the whole blue theme, but we have our black and white theme." | Blue stays only on the clickable buttons. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
