@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import Applications from './pages/Applications'
 import Company from './pages/Company'
+import Contact from './pages/Contact'
 import Media from './pages/Media'
 import Technology from './pages/Technology'
 
@@ -15,6 +16,7 @@ const ROUTES = {
   '/company': { page: Company, title: 'About Velcoris Industries | Indigenous Graphene Hub India' },
   '/technology': { page: Technology, title: 'Closed-Loop Graphene Technology & Specs | Velcoris Industries' },
   '/applications': { page: Applications, title: 'Graphene Applications: Defence, EV & Concrete | Velcoris Industries' },
+  '/contact': { page: Contact, title: 'Contact Us & Request Samples | Velcoris Industries' },
   '/media': { page: Media, title: 'Graphene Media, Lab Research & Facility Footage | Velcoris Industries' },
 }
 const norm = (p) => p.replace(/\/$/, '') || '/'
@@ -22,6 +24,22 @@ const norm = (p) => p.replace(/\/$/, '') || '/'
 // Reference timing: page-colour panel rises from the bottom (~0.45 s), short hold while the next
 // page mounts, then the panel retracts upward so the new page is revealed bottom-up and the
 // header appears last (~0.55 s).
+// Deploy check: client-side navigation keeps the JS bundle that was loaded first, so a tab opened
+// before a deploy would keep showing the old site. On each nav click we compare the bundle in the
+// live index.html with ours; if it changed, the click becomes a full page load (fresh version).
+const BUILD = document.querySelector('script[type="module"][src*="/assets/"]')?.getAttribute('src') ?? null
+async function hasNewBuild() {
+  if (!BUILD) return false // dev server
+  try {
+    const html = await (await fetch('/', { cache: 'no-store' })).text()
+    const m = html.match(/\/assets\/index-[\w-]+\.js/)
+    return Boolean(m && !BUILD.endsWith(m[0]))
+  } catch {
+    return false
+  }
+}
+const withTimeout = (p, ms) => Promise.race([p, new Promise((r) => setTimeout(() => r(false), ms))])
+
 const COVER_MS = 450
 const HOLD_MS = 120
 const REVEAL_MS = 550
@@ -40,18 +58,23 @@ export default function App() {
     const url = new URL(to, window.location.href)
     const next = norm(url.pathname)
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const fresh = withTimeout(hasNewBuild(), 1500)
     const swap = () => {
-      if (push) window.history.pushState({}, '', url.pathname + url.search)
+      if (push) window.history.pushState({}, '', url.pathname + url.search + url.hash)
       setPath(next)
       window.scrollTo(0, 0)
     }
     if (reduced) {
-      swap()
+      fresh.then((isNew) => (isNew ? window.location.assign(url.href) : swap()))
       return
     }
     busy.current = true
     setPhase('cover')
-    setTimeout(() => {
+    setTimeout(async () => {
+      if (await fresh) {
+        window.location.assign(url.href) // new deploy: load it, curtain stays up meanwhile
+        return
+      }
       swap()
       setTimeout(() => {
         setPhase('reveal')
@@ -72,8 +95,8 @@ export default function App() {
       const url = new URL(a.href, window.location.href)
       if (url.origin !== window.location.origin) return
       const next = norm(url.pathname)
-      if (!ROUTES[next] || url.search) return
-      if (next === norm(window.location.pathname)) {
+      if (!ROUTES[next]) return
+      if (next === norm(window.location.pathname) && url.search === window.location.search) {
         if (url.hash) return // in-page anchor
         e.preventDefault()
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -100,8 +123,8 @@ export default function App() {
       >
         Skip to main content
       </a>
-      <Header key={path} />
-      <main id="main-content" key={path}>
+      <Header key={`header-${path}`} />
+      <main id="main-content" key={`main-${path}`}>
         <Page />
       </main>
       <Footer />

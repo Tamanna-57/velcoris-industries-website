@@ -319,6 +319,18 @@ Sequence as the client asked: mission → founder → grid → leadership → jo
 
 ---
 
+## 3l. Round 12: Folder gradient, Approach photos, Contact page, navigation bug (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R12-1 | **Dispersion folders: soft blue gradient** (near-white top-left into the site blue bottom-right, a little deeper on each folder; tab one step darker) instead of flat grey. | "The grey looks very bad… not the whole folder blue nor grey… a little gradient so it has both the punch." | Same gradient logic in dark mode, tuned stronger so the blue reads. |
+| R12-2 | **Homepage "Three advantages" panel uses real photos** from the original site's lab set instead of the dark pattern visuals: synthesis reactor head (Economical), production reactor rig (Scalable), thermal unit with energy recovery (Sustainable), with a small caption chip; soft zoom when a row becomes active. | "The patterns are not looking good at all… extract images from the website that go with the information." | Photos referenced from velcorisindustries.com like the media gallery (R4-6). Old `ApproachVisuals.jsx` removed. |
+| R12-3 | **Contact page replicated** from the original: "Let's build what comes next." hero; "Have a question?" form (Name, Email ID, Phone optional, Message, hidden honeypot, Send Inquiry); Reach us (email, phone, headquarters, response time, LinkedIn). Site buttons with `?intent=sample/supply/application` prefill the message. | "Contact page as it is in the original website." | No backend in the prototype: Send Inquiry opens the visitor's email app addressed to contact@velcorisindustries.com with all fields filled in. |
+| R12-4 | **Navigation bug fixed (two causes).** (1) The header and page content shared the same React key, so each client-side navigation left the previous header in the page, stacked and stale. Keys are now unique. (2) Client-side navigation keeps the first-loaded bundle, so a tab opened before a deploy kept showing the old site until reload. Each nav click now checks the live `index.html`; if a new build is out, the click does a full page load. Added explicit cache headers (`index.html` no-cache, hashed assets immutable). | "When I load it, it shows the old version; after reloading, the Home link and spacing appear… there is some glitch." | Verified: one header and one main after every navigation; simulated new deploy triggers a full reload. |
+| R12-5 | **Font options prepared** (Inter Tight current vs Geist, Manrope, Instrument Sans with ~18% smaller headings), awaiting the client's choice. | "Not liking my font, it looks very big… use another font and show it to me." | Preview image shared; nothing switched yet. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).

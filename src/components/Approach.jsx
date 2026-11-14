@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { APPROACH } from '../lib/content'
 import { useReveal } from '../lib/hooks'
-import { VISUALS } from './ApproachVisuals'
 import { ArrowRight } from './icons'
 
 /**
@@ -27,20 +26,28 @@ export default function Approach() {
         <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:gap-8">
           {/* Visual panel */}
           <div className="reveal md:col-span-5">
-            <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#0f1114] md:sticky md:top-28">
-              {APPROACH.map((item, i) => {
-                const Viz = VISUALS[item.id]
-                return (
-                  <div
-                    key={item.id}
-                    className="absolute inset-0 transition-opacity duration-500"
-                    style={{ opacity: active === i ? 1 : 0 }}
-                    aria-hidden={active !== i}
-                  >
-                    <Viz active={active === i} />
-                  </div>
-                )
-              })}
+            <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface md:sticky md:top-28">
+              {APPROACH.map((item, i) => (
+                <figure
+                  key={item.id}
+                  className="absolute inset-0 transition-opacity duration-500"
+                  style={{ opacity: active === i ? 1 : 0 }}
+                  aria-hidden={active !== i}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    width="1200"
+                    height="1200"
+                    loading="lazy"
+                    decoding="async"
+                    className={`h-full w-full object-cover transition-transform duration-[1.2s] ease-out ${active === i ? 'scale-100' : 'scale-[1.04]'}`}
+                  />
+                  <figcaption className="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.1em] text-white backdrop-blur-sm">
+                    {item.caption}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
 
