@@ -424,3 +424,15 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
 - Removed the white cut-out (mask) behind the copy, so the lattice now runs evenly across the whole hero.
 - Lines are thinner (0.7 px) and fainter (light 7%, dark 8%). Each edge is drawn once, so overlapping lines don't stack up into darker spots.
 - To keep the text readable, junction dots and the flowing pulses skip the area behind the copy. Every text item still passes WCAG AA (lowest is 4.54:1).
+
+### R14-4 — Back to the earlier hero, with a thinner, animated honeycomb
+- **User's reason:** "Go back to the one from before those two changes. Just thin the lines of that honeycomb and make it animated. The electric lines look very bad; change them a little and make them thinner."
+- Restored the hero layout from before R14-1: copy on the left, dark honeycomb rising in from the right (light mode), full lattice with the left wash (dark mode).
+- The lattice photo is replaced by a canvas drawing of the same perspective honeycomb (`LatticeField.jsx`). Its lines are thinner (0.4–0.65 px), and junction dots fade with depth.
+- Animation: a slow glide towards the viewer plus a gentle surface wave.
+- The thick "electric" pulses are replaced by a few small sparks: about 1 px thick, under two bonds long, kept to the right side, fading in and out.
+- Removed: `HexField.jsx`, the centred word-by-word intro, and the uniform lattice.
+- **Checks:**
+  - About 60 fps at 1440 px (1× and 2× screens) and on a 390 px phone. Large canvases are capped at 1.5× resolution.
+  - Pauses when off screen or in a background tab; reduced motion draws one still frame.
+  - Hero text contrast: 7.3–19.5:1, with the link at 5.4:1 or above.
