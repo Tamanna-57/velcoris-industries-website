@@ -1,76 +1,73 @@
-import { useEffect, useRef } from 'react'
-import { HERO_STATS, SAMPLE_HREF } from '../lib/content'
-import { useReducedMotion } from '../lib/hooks'
-import { ArrowRight } from './icons'
+import { HERO_STATS, SAMPLE_HREF } from "../lib/content";
+import { useRef } from "react";
+import { useReducedMotion } from "../lib/hooks";
+import { ArrowRight } from "./icons";
+
+import HexField from "./HexField";
 
 /**
- * Full-bleed hero. The whole graphene lattice image covers the section; a gradient
- * washes it out (faded) on the left, where the copy sits, and lets it fade to full
- * dark on the right.
- * Replaces the old 50/50 text + boxed-image split and the top ticker.
+ * Full-bleed hero with an animated 2D graphene lattice (HexField): hexagons grow out from just under
+ * the navigation bar until they fill the section, then pulses of current run along the edges.
+ * The copy is centred and comes in word by word while the lattice forms.
+ * Replaces the static lattice image (and its 114 KB preload).
  */
-export default function Hero() {
-  const imgRef = useRef(null)
-  const reduced = useReducedMotion()
+const LINE_1 = ["Graphene", "at", "industrial", "scale."];
+const LINE_2 = ["Made", "in", "India."];
 
-  // Subtle pointer parallax on the lattice (desktop, motion allowed only)
-  useEffect(() => {
-    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
-    let raf = 0
-    const onMove = (e) => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const dx = (e.clientX / innerWidth - 0.5) * -14
-        const dy = (e.clientY / innerHeight - 0.5) * -10
-        if (imgRef.current) imgRef.current.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(1.04)`
-      })
-    }
-    window.addEventListener('pointermove', onMove, { passive: true })
-    return () => {
-      window.removeEventListener('pointermove', onMove)
-      cancelAnimationFrame(raf)
-    }
-  }, [reduced])
+export default function Hero() {
+  const reduced = useReducedMotion();
+  const copyRef = useRef(null);
+  const d = (s) => ({ "--d": `${s}s` }); // animation delay per element
 
   return (
-    <section aria-labelledby="hero-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-[72px]">
-      {/* Lattice backdrop */}
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <picture className="hero-lattice">
-          <source media="(max-width: 767px)" srcSet="/media/hero-lattice-960.webp" type="image/webp" />
-          <img
-            ref={imgRef}
-            src="/media/hero-lattice.webp"
-            alt=""
-            width="1920"
-            height="1080"
-            fetchPriority="high"
-            decoding="async"
-            className="h-full w-full scale-[1.04] object-cover object-center transition-transform duration-700 ease-out will-change-transform"
-          />
-        </picture>
-        {/* Dark theme: left→right (desktop) / top→bottom (mobile) wash from the page colour into the lattice.
-            Light theme: no wash; the image itself fades out (mask in index.css), so the text sits on clean white. */}
-        <div className="hero-fade absolute inset-0 hidden md:block [background:linear-gradient(90deg,color-mix(in_srgb,var(--bg)_86%,transparent)_0,color-mix(in_srgb,var(--bg)_86%,transparent)_40rem,color-mix(in_srgb,var(--bg)_62%,transparent)_50rem,color-mix(in_srgb,var(--bg)_32%,transparent)_62rem,color-mix(in_srgb,var(--bg)_10%,transparent)_76rem,transparent_88rem)]" />
-        <div className="hero-fade absolute inset-0 md:hidden [background:linear-gradient(180deg,color-mix(in_srgb,var(--bg)_88%,transparent)_0,color-mix(in_srgb,var(--bg)_88%,transparent)_72%,color-mix(in_srgb,var(--bg)_40%,transparent)_88%,transparent_100%)]" />
-      </div>
+    <section
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-[72px]"
+    >
+      <HexField className="-z-10" protectRef={copyRef} />
 
-      <div className="container-x flex flex-1 flex-col justify-center pb-28 pt-12 md:py-20">
-        <div className="max-w-[36rem]">
-          <p className="eyebrow">Industrial graphene · Greater Noida, India</p>
+      <div
+        className={`container-x flex flex-1 flex-col items-center justify-center pb-24 pt-14 text-center md:py-20 ${reduced ? "" : "hero-anim"}`}
+      >
+        <div ref={copyRef} className="flex max-w-full flex-col items-center">
+          <p className="eyebrow hero-in" style={d(0.35)}>
+            Industrial graphene · Greater Noida, India
+          </p>
 
           <h1
             id="hero-title"
-            className="mt-6 text-[clamp(2.75rem,6vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-ink"
+            className="mt-6 max-w-6xl text-[clamp(2.5rem,5.4vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-ink"
           >
-            Graphene at industrial scale. <span className="block">Made in India.</span>
+            <span className="block md:whitespace-nowrap">
+              {LINE_1.map((w, i) => (
+                <span key={w} className="hero-word" style={d(0.55 + i * 0.09)}>
+                  {w}
+                  {i < LINE_1.length - 1 ? "\u00a0" : ""}
+                </span>
+              ))}
+            </span>
+            <span className="block">
+              {LINE_2.map((w, i) => (
+                <span key={w} className="hero-word" style={d(0.95 + i * 0.09)}>
+                  {w}
+                  {i < LINE_2.length - 1 ? "\u00a0" : ""}
+                </span>
+              ))}
+            </span>
           </h1>
 
-          <p className="mt-6 max-w-[32rem] text-lg leading-relaxed text-muted md:text-xl">
-            High-purity graphene for defence, energy and aerospace, at a fraction of the cost of imports.
+          <p
+            className="hero-in mt-7 max-w-[34rem] text-lg leading-relaxed text-muted md:text-xl"
+            style={d(1.35)}
+          >
+            High-purity graphene for defence, energy and aerospace, at a
+            fraction of the cost of imports.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div
+            className="hero-in mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+            style={d(1.55)}
+          >
             <a href={SAMPLE_HREF} className="btn-primary">
               Request a sample <ArrowRight />
             </a>
@@ -80,8 +77,12 @@ export default function Hero() {
           </div>
 
           {/* Former ticker, now a single statement */}
-          <p className="mt-10 border-l-2 border-line-strong pl-3 text-sm text-muted">
-            Formerly <strong className="font-semibold text-ink">Weber Innovations</strong>, now Velcoris Industries.
+          <p className="hero-in mt-10 text-sm text-muted" style={d(1.8)}>
+            Formerly{" "}
+            <strong className="font-semibold text-ink">
+              Weber Innovations
+            </strong>
+            , now Velcoris Industries.
           </p>
         </div>
       </div>
@@ -90,13 +91,20 @@ export default function Hero() {
       <div className="relative border-t border-white/10 bg-[#0a0b0d]/85">
         <dl className="container-x grid grid-cols-3 divide-x divide-white/10">
           {HERO_STATS.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse py-5 pl-4 first:pl-0 sm:py-6 sm:pl-8">
-              <dt className="mt-1 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-[#a9b0bb]">{s.label}</dt>
-              <dd className="font-display text-xl font-semibold tracking-tight text-[#f3f4f6] sm:text-3xl">{s.value}</dd>
+            <div
+              key={s.label}
+              className="flex flex-col-reverse py-5 pl-4 first:pl-0 sm:py-6 sm:pl-8"
+            >
+              <dt className="mt-1 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-[#a9b0bb]">
+                {s.label}
+              </dt>
+              <dd className="font-display text-xl font-semibold tracking-tight text-[#f3f4f6] sm:text-3xl">
+                {s.value}
+              </dd>
             </div>
           ))}
         </dl>
       </div>
     </section>
-  )
+  );
 }
