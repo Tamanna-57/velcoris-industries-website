@@ -30,7 +30,7 @@ const FACTS = [
 export default function Recognition() {
   const ref = useReveal()
   return (
-    <section ref={ref} aria-labelledby="recognition-title" className="hex-pattern bg-band py-24 md:py-28">
+    <section ref={ref} aria-labelledby="recognition-title" data-header="dark" className="hex-pattern bg-band py-24 md:py-28">
       <div className="container-x">
         <div className="reveal">
           <SectionHeading

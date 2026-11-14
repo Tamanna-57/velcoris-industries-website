@@ -55,7 +55,7 @@ export default function ThemeToggle() {
       aria-pressed={dark}
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       title={dark ? 'Light theme' : 'Dark theme'}
-      className="relative grid size-11 place-items-center rounded-full border border-line text-ink transition-colors hover:border-accent hover:text-accent"
+      className="relative grid size-11 place-items-center rounded-full border border-[var(--hdr-line,var(--line))] bg-[var(--hdr-pill,transparent)] text-[var(--hdr-ink,var(--ink))] backdrop-blur-md transition-colors duration-300 hover:border-accent hover:text-accent"
     >
       <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
         {/* sun/moon morph: the mask circle slides in to carve the moon */}

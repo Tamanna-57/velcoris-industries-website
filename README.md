@@ -25,12 +25,15 @@ npm run preview   # serve the build
 ## Structure
 ```
 src/
-  App.jsx                 page composition
+  App.jsx                 header/footer shell + path routing
+  pages/Home.jsx          homepage
+  pages/Technology.jsx    technology page
+  lib/technology.js       technology page copy (verbatim from the original)
   index.css               tokens (light/dark), base styles, focus, reduced-motion
   lib/content.js          all homepage copy and figures
   lib/hooks.js            reveal / in-view / reduced-motion hooks
   components/
-    Header.jsx            sticky nav, mobile menu
+    Header.jsx            floating pill nav (hover fade, adaptive dark tone), mobile menu
     ThemeToggle.jsx       light/dark toggle with circular reveal (light is default)
     Hero.jsx              full-bleed lattice hero, faded left → dark right
     ProcessVideo.jsx      scroll-expand graphene video
@@ -43,6 +46,8 @@ src/
     Footer.jsx            ┘ (also exports FutureVision)
     SectionHeading.jsx    shared two-line heading
     Logo.jsx              official logo (vector)
+    ProcessStack.jsx      technology: stacking 6-stage process cards
+    StageVisuals.jsx      technology: diagram for each process stage
 public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
 ```
@@ -50,4 +55,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 ## Status
 - [x] Homepage round 1 (redesign)
 - [x] Homepage round 2 (client review: full-image hero, team video, original lower sections restored)
-- [ ] Company, Technology, Applications, Media, Contact pages
+- [x] Round 3: header interaction + Technology page
+- [ ] Company, Applications, Media, Contact pages
