@@ -3,6 +3,7 @@ import SectionHeading from '../components/SectionHeading'
 import { ArrowRight, ArrowUpRight } from '../components/icons'
 import { FOUNDER, JOIN, LEADERSHIP, MISSION } from '../lib/company'
 import { useReveal } from '../lib/hooks'
+import { opt, srcSet } from '../lib/img'
 
 function Linkedin({ className }) {
   return (
@@ -36,7 +37,9 @@ function FounderNote() {
       <div className="container-x">
         <figure className="reveal grid items-center gap-8 border-t border-line pt-12 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-12 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)]">
           <img
-            src={FOUNDER.photo}
+            src={opt(FOUNDER.photo, 480)}
+            srcSet={srcSet(FOUNDER.photo, [320, 480, 640])}
+            sizes="(min-width: 768px) 272px, 192px"
             alt={`${FOUNDER.name}, ${FOUNDER.role}`}
             width="1097"
             height="1097"
@@ -77,7 +80,7 @@ function Leadership() {
         <ul className="mt-12 flex justify-center">
           {LEADERSHIP.people.map((p) => (
             <li key={p.name} className="reveal grid w-full max-w-3xl gap-6 rounded-3xl border border-line bg-bg p-6 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center md:p-8">
-              <img src={p.photo} alt={p.name} width="1015" height="1015" loading="lazy" className="aspect-square w-32 rounded-2xl bg-surface object-cover sm:w-full" />
+              <img src={opt(p.photo, 320)} srcSet={srcSet(p.photo, [320, 640])} sizes="160px" alt={p.name} width="1015" height="1015" loading="lazy" className="aspect-square w-32 rounded-2xl bg-surface object-cover sm:w-full" />
               <div>
                 <h3 className="text-xl font-semibold text-ink">{p.name}</h3>
                 <p className="font-mono text-xs uppercase tracking-[0.1em] text-muted">{p.role}</p>

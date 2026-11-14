@@ -105,11 +105,12 @@ export default function ProcessVideo() {
       muted
       loop
       playsInline
-      preload="none"
+      preload={near ? 'auto' : 'none'}
       aria-describedby="process-desc"
       onPlay={() => setPlaying(true)}
       onPause={() => setPlaying(false)}
     >
+      {near && <source src="/media/graphene-conductivity-540.mp4" type="video/mp4" media="(max-width: 767px)" />}
       {near && <source src="/media/graphene-conductivity.mp4" type="video/mp4" />}
     </video>
   )

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { APPROACH } from '../lib/content'
 import { useReveal } from '../lib/hooks'
 import { ArrowRight } from './icons'
+import { opt, srcSet } from '../lib/img'
 
 /**
  * "What sets us apart" (reference: coffee-tech.com "Our Approach").
@@ -35,7 +36,9 @@ export default function Approach() {
                   aria-hidden={active !== i}
                 >
                   <img
-                    src={item.image}
+                    src={opt(item.image, 960)}
+                    srcSet={srcSet(item.image, [640, 960, 1280])}
+                    sizes="(min-width: 768px) 45vw, 92vw"
                     alt={item.alt}
                     width="1200"
                     height="1200"

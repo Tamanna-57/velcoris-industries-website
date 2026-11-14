@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { GALLERY, GALLERY_CATEGORIES } from '../lib/media'
 import { useReducedMotion } from '../lib/hooks'
+import { opt, srcSet } from '../lib/img'
 
 // Values measured from the original velcorisindustries.com/media carousel.
 const ANGLES = [0, 42, 62, 77.7, 82] // rotateY (deg) by distance from centre, capped at 82
@@ -181,7 +182,7 @@ export default function MediaGallery() {
                     zIndex: 100 - Math.round(a * 10),
                   }}
                 >
-                  <img src={item.src} alt={isCenter ? item.title : ''} loading="lazy" decoding="async" draggable="false" className="pointer-events-none h-full w-full object-cover" />
+                  <img src={opt(item.src, 480)} srcSet={srcSet(item.src, [480, 960])} sizes="(max-width: 640px) 60vw, 360px" width="480" height="480" alt={isCenter ? item.title : ''} loading="lazy" decoding="async" draggable="false" className="pointer-events-none h-full w-full object-cover" />
                 </button>
               )
             })}
@@ -226,7 +227,7 @@ export default function MediaGallery() {
         className="m-auto max-h-[92vh] max-w-[92vw] overflow-visible bg-transparent p-0 backdrop:bg-black/85"
         onClick={(e) => e.target === dialogRef.current && dialogRef.current.close()}
       >
-        <img src={current.src} alt={current.title} className="max-h-[86vh] max-w-[92vw] rounded-xl object-contain" />
+        <img src={opt(current.src, 1280)} srcSet={srcSet(current.src, [960, 1280, 1600])} sizes="92vw" alt={current.title} className="max-h-[86vh] max-w-[92vw] rounded-xl object-contain" />
         <p className="mt-3 text-center text-sm text-white">{current.title} · {groupIndex} of {groupItems.length}</p>
         <button type="button" onClick={() => dialogRef.current.close()} aria-label="Close" className="absolute -right-3 -top-3 grid size-11 place-items-center rounded-full bg-white text-black">
           <X className="size-5" aria-hidden="true" />

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Home from './pages/Home'
+import Admin from './pages/Admin'
 import Applications from './pages/Applications'
 import Company from './pages/Company'
 import Contact from './pages/Contact'
@@ -15,6 +16,7 @@ const ROUTES = {
   '/company': { page: Company, title: 'About Velcoris Industries | Indigenous Graphene Hub India' },
   '/technology': { page: Technology, title: 'Closed-Loop Graphene Technology & Specs | Velcoris Industries' },
   '/applications': { page: Applications, title: 'Graphene Applications: Defence, EV & Concrete | Velcoris Industries' },
+  '/admin': { page: Admin, title: 'Enquiries · Velcoris Admin' },
   '/contact': { page: Contact, title: 'Contact Us & Request Samples | Velcoris Industries' },
   '/media': { page: Media, title: 'Graphene Media, Lab Research & Facility Footage | Velcoris Industries' },
 }
@@ -50,6 +52,7 @@ export default function App() {
       window.location.assign(url.href) // a new deploy is live: load it fresh
       return
     }
+    sessionStorage.setItem('vc-from', window.location.pathname) // where an enquiry came from
     if (push) window.history.pushState({}, '', url.pathname + url.search + url.hash)
     setPath(norm(url.pathname))
     window.scrollTo(0, 0)
