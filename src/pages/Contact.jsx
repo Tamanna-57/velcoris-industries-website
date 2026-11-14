@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import { ArrowRight, ArrowUpRight } from '../components/icons'
+import { submitEnquiry, supabaseConfigured } from '../lib/supabase'
 
 /* Contact page: replicated from velcorisindustries.com/contact (copy, fields, order). */
 
@@ -40,17 +41,40 @@ const inputCls =
 export default function Contact() {
   const uid = useId()
   const intent = new URLSearchParams(window.location.search).get('intent')
-  const [sent, setSent] = useState(false)
+  const [state, setState] = useState({ status: 'idle', msg: '' }) // idle | sending | sent | error
 
-  // The prototype has no backend: the inquiry opens in the visitor's email app, addressed to the
-  // company inbox with every field filled in (see REDESIGN_NOTES assumptions).
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const f = new FormData(e.currentTarget)
-    if (f.get('website')) return // honeypot, as on the original
+  const mailto = (f) => {
     const body = `${f.get('message')}\n\nName: ${f.get('name')}\nEmail: ${f.get('email')}${f.get('phone') ? `\nPhone: ${f.get('phone')}` : ''}`
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Website inquiry from ${f.get('name')}`)}&body=${encodeURIComponent(body)}`
-    setSent(true)
+    return `mailto:${EMAIL}?subject=${encodeURIComponent(`Website inquiry from ${f.get('name')}`)}&body=${encodeURIComponent(body)}`
+  }
+
+  // Enquiries are stored in Supabase (table `enquiries`, insert-only for the public). If the
+  // database isn't configured, the inquiry opens in the visitor's email app instead.
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const f = new FormData(form)
+    if (f.get('website')) return // honeypot, as on the original
+    if (!supabaseConfigured) {
+      window.location.href = mailto(f)
+      setState({ status: 'sent', msg: `Your email app should open with the inquiry ready to send. If it doesn't, write to ${EMAIL}.` })
+      return
+    }
+    setState({ status: 'sending', msg: 'Sending your enquiry…' })
+    try {
+      await submitEnquiry({
+        name: f.get('name'),
+        email: f.get('email'),
+        phone: f.get('phone'),
+        message: f.get('message'),
+        intent,
+        sourcePage: sessionStorage.getItem('vc-from') || null,
+      })
+      form.reset()
+      setState({ status: 'sent', msg: "Thank you. Your enquiry has been received and we'll be in touch within 24 hours." })
+    } catch (err) {
+      setState({ status: 'error', msg: err.message, href: mailto(f) })
+    }
   }
 
   return (
@@ -104,11 +128,17 @@ export default function Contact() {
                   className={`${inputCls} h-auto resize-y py-3`}
                 />
               </Field>
-              <button type="submit" className="btn-primary">
-                Send Inquiry <ArrowRight />
+              <button type="submit" className="btn-primary disabled:opacity-60" disabled={state.status === 'sending'}>
+                {state.status === 'sending' ? 'Sending…' : 'Send Inquiry'} <ArrowRight />
               </button>
-              <p role="status" className="text-sm text-muted">
-                {sent ? `Your email app should open with the inquiry ready to send. If it doesn't, write to ${EMAIL}.` : ''}
+              <p role="status" aria-live="polite" className={`text-sm ${state.status === 'error' ? 'text-[#b42318]' : state.status === 'sent' ? 'font-medium text-ink' : 'text-muted'}`}>
+                {state.msg}
+                {state.status === 'error' && state.href && (
+                  <>
+                    {' '}
+                    <a href={state.href} className="font-semibold text-accent underline">Send by email instead</a>
+                  </>
+                )}
               </p>
             </form>
           </div>
