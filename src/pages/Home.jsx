@@ -15,9 +15,10 @@ export default function Home() {
       <ProcessVideo />
       <Approach />
       {/* Replicated from the original site (to be revised section by section) */}
+      {/* Light section between the two dark bands, so dark and light alternate (client request). */}
       <Recognition />
-      <IndiaOpportunity />
       <CleanProduction />
+      <IndiaOpportunity />
       <WorkWithUs />
       <FutureVision />
     </>

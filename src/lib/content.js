@@ -11,6 +11,7 @@ export const CONTACT = {
 }
 
 export const NAV = [
+  { label: 'Home', href: '/' },
   { label: 'Company', href: '/company' },
   { label: 'Technology', href: '/technology' },
   { label: 'Applications', href: '/applications' },
