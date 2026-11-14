@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { Activity, Archive, ChartColumn, CircleCheck, CircleX, Download, Droplets, FlaskConical, Layers, RotateCw } from 'lucide-react'
+import { Activity, Archive, ChartColumn, ChevronDown, CircleCheck, CircleX, Download, Droplets, FlaskConical, Layers, RotateCw } from 'lucide-react'
 import ProcessStack from '../components/ProcessStack'
 import SectionHeading from '../components/SectionHeading'
 import { ArrowRight } from '../components/icons'
@@ -246,22 +246,52 @@ function Dispersion() {
   )
 }
 
+/** FAQ as a collapsed accordion (reference: WLX): questions only, answers open on demand. */
 function Faq() {
   const ref = useReveal()
+  const uid = useId()
+  const [open, setOpen] = useState(-1)
   return (
     <section ref={ref} aria-labelledby="faq-title" className="bg-bg py-24 md:py-28">
       <div className="container-x">
-        <div className="reveal mx-auto max-w-2xl text-center">
-          <SectionHeading id="faq-title" eyebrow={FAQ.eyebrow} first={FAQ.title} align="center" size="md" />
+        <div className="reveal max-w-3xl">
+          <SectionHeading id="faq-title" eyebrow={FAQ.eyebrow} first={FAQ.title} size="md" />
         </div>
-        <dl className="reveal mx-auto mt-12 max-w-4xl space-y-4">
-          {FAQ.items.map(([q, a]) => (
-            <div key={q} className="rounded-2xl border border-line bg-surface p-6">
-              <dt className="font-semibold text-ink">{q}</dt>
-              <dd className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{a}</dd>
-            </div>
-          ))}
-        </dl>
+        <ul className="reveal mt-12 border-t border-line">
+          {FAQ.items.map(([q, a], i) => {
+            const isOpen = open === i
+            return (
+              <li key={q} className="border-b border-line">
+                <h3 className="font-sans text-base tracking-normal">
+                  <button
+                    type="button"
+                    id={`${uid}-q${i}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`${uid}-a${i}`}
+                    onClick={() => setOpen(isOpen ? -1 : i)}
+                    className="group flex w-full items-center justify-between gap-6 py-6 text-left text-[clamp(1.125rem,1.8vw,1.5rem)] font-medium text-ink transition-colors hover:text-muted"
+                  >
+                    {q}
+                    <ChevronDown
+                      className={`size-5 shrink-0 text-ink transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </h3>
+                <div
+                  id={`${uid}-a${i}`}
+                  role="region"
+                  aria-labelledby={`${uid}-q${i}`}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+                >
+                  <div className="overflow-hidden" inert={!isOpen}>
+                    <p className="max-w-3xl pb-6 text-muted">{a}</p>
+                  </div>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </section>
   )
