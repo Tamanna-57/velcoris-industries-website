@@ -1,8 +1,15 @@
+import MatrixOptimizer from '../components/MatrixOptimizer'
+import SectionHeading from '../components/SectionHeading'
 import SectorRows from '../components/SectorRows'
+import StepRows from '../components/StepRows'
+import { ArrowRight } from '../components/icons'
 import { APPS_HERO } from '../lib/applications'
+import { SAMPLE_HREF } from '../lib/content'
+import { useReveal } from '../lib/hooks'
+import { APPS_CTA, PATHWAY } from '../lib/optimizer'
 
-/* Applications page. Hero replicates the original; the sector list is redesigned in the
-   style of the client's reference (WLX "Work" list) with 4 sectors + "View all". */
+/* Applications page. Hero, Matrix Optimizer and CTA replicate the original; the sector list
+   (WLX reference) and the integration pathway (RSAShield reference) are redesigned. */
 
 function AppsHero() {
   return (
@@ -19,11 +26,51 @@ function AppsHero() {
   )
 }
 
+function Pathway() {
+  const ref = useReveal()
+  return (
+    <section ref={ref} aria-labelledby="pathway-title" className="bg-bg py-24 md:py-28">
+      <div className="container-x">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <SectionHeading id="pathway-title" eyebrow={PATHWAY.eyebrow} first={PATHWAY.title} align="center" />
+          <p className="mt-5 text-muted">{PATHWAY.body}</p>
+        </div>
+        <StepRows steps={PATHWAY.steps} />
+      </div>
+    </section>
+  )
+}
+
+function AppsCta() {
+  const ref = useReveal()
+  return (
+    <section ref={ref} aria-labelledby="apps-cta-title" className="bg-surface py-20 md:py-24">
+      <div className="container-x">
+        <div className="reveal hex-pattern rounded-3xl bg-band px-6 py-16 text-center sm:px-12 md:py-20">
+          <SectionHeading id="apps-cta-title" eyebrow={APPS_CTA.eyebrow} first={APPS_CTA.first} second={APPS_CTA.second} align="center" tone="band" />
+          <p className="mx-auto mt-5 max-w-2xl text-band-muted">{APPS_CTA.body}</p>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a href={SAMPLE_HREF} className="btn-primary">
+              Request Evaluation Sample <ArrowRight />
+            </a>
+            <a href="/contact?intent=consultation" className="inline-flex min-h-11 items-center rounded-full border border-band-line px-5 font-semibold text-band-ink transition-colors hover:border-band-link hover:text-band-link">
+              Technical Consultation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Applications() {
   return (
     <>
       <AppsHero />
       <SectorRows />
+      <MatrixOptimizer />
+      <Pathway />
+      <AppsCta />
     </>
   )
 }

@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 6: Applications page (sector list redesigned with 4 + "View all").
+**Status:** Round 7: Applications page completed (all original sections), sector rows rebalanced, smoother reveal.
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -218,6 +218,10 @@ the LinkedIn section in that style, keep the LinkedIn links, and use a picture f
 | R4-5 | Hackathon card headline | "Shortlisted for the MSME Idea Hackathon 6.0 Pitch Round" instead of the original label "MSME Idea Hackathon 3.0 Stage-2 Winner". | The post itself (and its cover image) says *shortlisted among 7 teams for the MSME Idea Hackathon 6.0 pitch round*; the old label contradicted the post. **To confirm with the client.** |
 | R4-6 | Gallery photo files | Referenced from the live site (`velcorisindustries.com/assets/...`) for now. | The 45 originals (WhatsApp JPEGs up to 1600 px, several hundred KB each) could not be exported from this environment. **To do:** add the originals to `public/media/gallery/` as compressed WebP and switch the paths in `src/lib/media.js`. |
 | R4-8 | Homepage scroll-expand video | Replaced with the team's new clip (graphene conductivity, a solid sheet, and a sheet floating beside a dandelion to show lightness); compressed from 5.9 MB to about 1.3 MB, audio removed. Caption unchanged. | Client supplied a newer brand video. The caption ("One atom thick. More conductive than copper.") still matches the content. |
+| R4-9 | **Gallery rebuilt to match the original exactly** (client review). The first version stepped between five fixed positions; now it is the original's **continuous curved strip**: every photo's rotation (0° → 42° → 62° → 78°, capped at 82°), depth (≈ −0.65 × card × d^0.55) and opacity (−10% per step) are computed from its fractional distance to the centre. **Dragging moves the strip smoothly under the pointer** and it eases to the nearest photo on release (with flick momentum); arrows and keyboard use the same 0.5 s ease. Card size `clamp(220px, 28vw, 360px)`, square, 1.05× spacing, perspective 3× card: all measured from the live page. | Client: the original drag is very smooth and animated; ours was static. "Use Playwright to write the exact same one." Measurements were taken from the live page in the browser; drag continuity was verified with Playwright (fractional mid-drag rotations). |
+| R4-10 | **Category filters restyled to the original's proportions**: 12px semibold labels, 32px-tall pills, 8px gaps, centred; inactive = white with a light border and grey text, active = solid black. | Client: our larger pills spread across the page looked "AI generated"; keep them professional, as on the original. |
+| R4-11 | **Caption block redesigned** as one compact card: category + milestone title + drag hint on the left; "Archive index 05 / 08" with a small progress bar on the right. Section padding reduced. | Client: the caption area looked plain and empty (a sparse centred table with lots of white space). |
+| R4-12 | LinkedIn card 1 cover repositioned (focus moved up) so people's heads are no longer cropped. | Client: heads were cut off in the first card. |
 | R4-7 | Press relations | **Replicated**: same copy; button is the blue primary action. | Faithful replication, consistent with the blue-is-clickable rule. |
 
 Verified: no runtime errors at 1440px and 390px; no horizontal overflow on mobile (fixed a bug where
@@ -252,6 +256,19 @@ with the same effect and animation.
 | R6-3 | **Animation** (from the reference): as each row enters the viewport the photo **widens into place** (clip reveal from the text side, 1.2 s) while zooming from 118% to 100%, and the text **fades in from a blur**, line by line. | Replicates the clip. Runs once per row; disabled under reduced-motion (content shows immediately). |
 | R6-4 | **4 + "View all 9 applications"**: the four commercial-scale sectors (Coatings, Infrastructure, Energy Storage, Polymers) show first; the button reveals the five R&D / co-development sectors under "Strategic horizons & R&D" with the same animation, and keyboard focus moves to the first new sector. | Client: show the main four the company is known for; let interested visitors load the rest. The grouping is the original page's own ("Commercial focus" vs "Strategic horizons & R&D"). |
 | R6-5 | Photos | The original page's Unsplash images (free under the Unsplash licence), served at 1200 px. Smart Conductive Textiles has **no working photo on the original site**, so a woven-fibre pattern stands in; replace it with a real photo when available. |
+
+---
+
+## 3g. Round 7: Applications page finalised (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R7-1 | **Photo and text balanced**: photos now take half the row and are square on desktop (were 5/12 width, 4:3); sector descriptions condensed by ~35% (e.g. 53 → 45 words, 58 → 33) keeping every figure. | "Increase the image size to match the text, and crisp the text a little so image and text stay level." | Full original paragraphs remain in `src/lib/applications.js` (`body`); rows show `short`. |
+| R7-2 | **Smoother text reveal**: blur reduced from 8px to 3px; blur, fade and 10px rise share one easing curve (0.9 s) with a 60 ms stagger, so they finish together. | "Ours has a lot of blur; you can see it's blurry first and then the text comes. The reference is smooth." | Matches the subtle blur-in of the WLX reference. |
+| R7-3 | **Faster loading**: preconnect to the image host; responsive images (640 / 960 / 1280 px via `srcset`); first sector photo loads eagerly at high priority; rows start revealing earlier (8% before entering vs 18%). | "There's latency when the Applications page loads." | Smaller images on phones; no blank wait on the first photo. |
+| R7-4 | **Interactive Matrix Optimizer** (replicated from the original): host-matrix select (cement, epoxy, rubber, battery slurry), target property (mechanical / thermal / functional), loading slider with each matrix's own range and optimal-window band; three live outputs, window status, dispersion method and interfacial mechanism. | "Have you added the other sections of the Applications page?" | All labels, ranges, windows, dispersion methods and mechanism texts are the original's. Curves are calibrated to the original's peak/end values and labelled *illustrative model*. Accessible: labelled select, radio group, range with spoken value text, live-region status. |
+| R7-5 | **Commercial integration pathway** ("From evaluation to plant-scale production"): Source & Evaluate / Formulate & Optimize / Scale & Deploy in the alternating RSAShield layout with interactive isometric diagrams, original text and tags, plus a button per step. | The client's earlier request (round 5) to replace the three-process block with the RSAShield layout referred to this section. | Shares one `StepRows` component with the homepage "Work with us". |
+| R7-6 | **Closing CTA** ("Your industry. Our nanomaterials.") replicated. | Complete the page. | Same dark band as other pages. |
 
 ---
 
@@ -317,5 +334,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (round 6, hero + sector list) are built.
+- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (rounds 6–7, all sections) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.

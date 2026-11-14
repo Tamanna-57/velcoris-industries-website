@@ -1,7 +1,7 @@
 // Applications page content, from velcorisindustries.com/applications (14 Nov 2026).
 // Photos are the original page's Unsplash images (free to use under the Unsplash licence).
 
-const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=70`
+const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70` // width added per srcset
 
 export const APPS_HERO = {
   eyebrow: 'Industrial applications',
@@ -18,6 +18,7 @@ export const SECTORS = [
     label: 'Coatings & Tribology',
     title: 'Coatings, Paints & Greases',
     tagline: 'Impenetrable barrier. Extreme low-friction wear.',
+    short: 'Corrosion and wear cost heavy industry billions in early asset failure. A fraction of a percent of Velcoris graphene in primers, sealants and greases forms a barrier against moisture and oxygen: over 3,000 hours of ASTM B117 salt spray and up to 45% lower friction.',
     body: 'Industrial corrosion and mechanical wear cost heavy industries billions in premature asset failure. Dispersing a fraction of a percent of Velcoris graphene into primers, industrial sealants, and greases creates an impenetrable physical labyrinth against moisture and oxygen—surpassing 3,000 hours of ASTM B117 salt spray exposure while cutting friction coefficients by up to 45%.',
     stats: [['>3,000 hrs', 'Salt spray ASTM B117'], ['-45%', 'Friction coeff (COF)'], ['>50%', 'Wear scar reduction']],
     loading: '0.05 – 0.25 wt%',
@@ -33,6 +34,7 @@ export const SECTORS = [
     label: 'Infrastructure',
     title: 'Infrastructure & Concrete',
     tagline: 'Micro-crack arrest. Low-carbon structural durability.',
+    short: 'Porous concrete lets water and chlorides corrode rebar, and high clinker content inflates carbon cost. Velcoris graphene seals micro-capillary pores: +44% 28-day compressive strength, 200% less water penetration and 31% lower embodied carbon.',
     body: 'Standard concrete is inherently porous, allowing water and corrosive chlorides to degrade internal steel rebar while demanding high cement clinker volumes that inflate project carbon costs. Velcoris graphene acts as a crystalline nucleation catalyst, locking micro-capillary pores shut to increase 28-day compressive strength by 44% and reduce water penetration by 200%—delivering longer-lasting structures with 31% lower embodied carbon.',
     stats: [['+44%', 'Compressive strength'], ['-200%', 'Water permeability'], ['-31%', 'Carbon footprint']],
     loading: '0.03 – 0.08 wt%',
@@ -48,6 +50,7 @@ export const SECTORS = [
     label: 'Energy storage',
     title: 'Energy Storage & Batteries',
     tagline: 'Silicon anode buffering. Rapid electron transport.',
+    short: 'Graphite anodes are at their limit, and silicon swells 300% while charging. Our graphene networks cage silicon particles to absorb that expansion: 5× faster charging and +27.6% energy density across 500+ deep cycles.',
     body: 'Graphite anodes have reached their physical capacity limit, while silicon expands 300% during charging and destroys standard electrodes. Our conductive graphene networks envelope silicon active particles in a flexible carbon cage—buffering mechanical breathing, unlocking 5× faster charge speeds, and increasing pack energy density by 27.6% across 500+ deep cycles.',
     stats: [['5× Faster', 'Charge speed'], ['+27.6%', 'Energy density'], ['500+ Cycles', 'Cycle life']],
     loading: '0.5 – 1.5 wt%',
@@ -63,6 +66,7 @@ export const SECTORS = [
     label: 'Polymers & tyres',
     title: 'Polymers, Rubber & Tyres',
     tagline: 'Lower rolling resistance. Elevated impact toughness.',
+    short: 'Tyre and polymer makers trade wear life against rolling resistance and toughness. Graphene-reinforced elastomers remove the trade-off: 35% less abrasion loss, 18% lower rolling resistance and 53% lighter EV battery enclosures.',
     body: 'Tyre and polymer manufacturers have long been trapped in the compromise between wear life, rolling resistance, and impact toughness. Velcoris graphene reinforces the vulcanized elastomer matrix to resolve this trade-off—slashing drum abrasion volume loss by 35% and cutting tyre rolling resistance by 18%, while making EV battery polymer enclosures 53% lighter.',
     stats: [['+87%', 'Impact toughness'], ['-53%', 'Battery housing wt'], ['-35%', 'Abrasion volume loss']],
     loading: '0.2 – 0.8 wt%',
@@ -78,6 +82,7 @@ export const SECTORS = [
     label: 'Aerospace',
     title: 'Aerospace & Space Systems',
     tagline: 'Structural lightweighting. Extreme thermal dissipation.',
+    short: 'Every kilogram in flight or orbit costs fuel and carries thermal stress. We co-develop graphene-infused carbon-fibre prepregs that cut airframe weight by 40%, move heat 20× faster and add built-in EMI shielding.',
     body: 'Every kilogram launched into orbit or flown at cruising altitude carries massive fuel penalties and intense thermal stress. We partner with aerospace engineering teams to co-develop graphene-infused carbon fiber prepregs that reduce structural airframe weight by 40%, dissipate engine heat 20× faster, and provide integrated electromagnetic (EMI) shielding.',
     stats: [['-40%', 'Structural weight'], ['20×', 'Thermal conduction'], ['TRL 5', 'Tech readiness']],
     loading: '0.1 – 0.3 wt%',
@@ -93,6 +98,7 @@ export const SECTORS = [
     label: 'Defence',
     title: 'Defence & Armour Systems',
     tagline: 'High-dissipation ballistic composites.',
+    short: 'Vehicles and personnel need lighter armour without losing multi-hit protection. Graphene in ceramic and composite armour spreads impact energy across its sheets: 3.8× higher impact toughness at 35% less weight.',
     body: 'Modern tactical personnel and combat vehicles require ultra-lightweight agility without compromising multi-hit ballistic survivability. Velcoris collaborates with defence contractors to integrate pristine graphene into ceramic and composite armor—dissipating kinetic shockwaves laterally across carbon sheets to deliver 3.8× higher impact toughness at 35% less weight.',
     stats: [['3.8× Tougher', 'Impact dissipation'], ['-35%', 'Armor weight'], ['TRL 6', 'Tech readiness']],
     loading: '0.1 – 0.3 wt%',
@@ -108,6 +114,7 @@ export const SECTORS = [
     label: 'Healthcare',
     title: 'Healthcare & Biosensors',
     tagline: 'Ultra-sensitive electrochemical arrays.',
+    short: "Early diagnosis needs detection limits metal electrodes can't reach. Graphene's surface area and electron mobility enable biosensing arrays with 4,000× higher sensitivity, plus ISO 10993 biocompatible coatings with 99.9% antibacterial efficacy.",
     body: "Early disease interception demands detection thresholds that metallic electrodes cannot reach. By harnessing graphene's atomic surface area and ballistic electron mobility, our joint medical development track enables electrochemical biosensing arrays with 4,000× higher sensitivity, paired with biocompatible (ISO 10993) coatings providing 99.9% antibacterial efficacy.",
     stats: [['4000×', 'Sensor sensitivity'], ['99.9%', 'Antibacterial efficacy'], ['ISO 10993', 'Biocompatibility']],
     loading: '0.01 – 0.05 wt%',
@@ -123,6 +130,7 @@ export const SECTORS = [
     label: 'Smart textiles',
     title: 'Smart Conductive Textiles',
     tagline: 'Thermal regulation. Wash-durable smart fibres.',
+    short: 'Heated and smart textiles fail when brittle wires snap in the wash. Our graphene yarn treatments make standard fibres 10× more thermally conductive and durable over 180+ wash cycles, without changing drape or breathability.',
     body: 'E-textiles and heated industrial apparel have historically failed due to brittle wires that snap after repeated laundering. We co-develop flexible graphene yarn treatments that convert standard synthetic and cotton fibres into thermally conductive (10×), wash-durable (180+ cycles), and lightweight heated garments without altering fabric drape or breathability.',
     stats: [['10×', 'Thermal conduction'], ['68%', 'Moisture capacity'], ['180+ Cycles', 'Wash durability']],
     loading: '0.2 – 0.5 wt%',
@@ -138,6 +146,7 @@ export const SECTORS = [
     label: 'R&D',
     title: 'Institutional & Academic R&D',
     tagline: 'Certified purity. Standardized spectral profiles.',
+    short: 'Research stalls on uncharacterised, inconsistent graphene. We supply labs and incubators with certified 99.5% purity batches, each with full Raman, XPS and XRD dossiers for reproducible, peer-review-grade work.',
     body: 'Materials science breakthroughs stall when research teams are forced to work with uncharacterized, inconsistent graphene. Velcoris supplies research institutes, university labs, and deep-tech incubators with certified, high-purity (99.5%) research batches backed by complete Raman, XPS, and XRD spectral dossiers for reproducible, peer-review-grade science.',
     stats: [['99.5%', 'Carbon purity'], ['0.5 – 15 µm', 'Tunable D50 flake'], ['Raman + XPS', 'Batch analytics']],
     loading: 'Custom wt%',

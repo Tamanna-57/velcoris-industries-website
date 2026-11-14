@@ -73,6 +73,7 @@ export const LINKEDIN_POSTS = [
     title: 'Industrial Scaling & MSME Supply Chain',
     summary: 'A high-signal discussion with Satish Kumar, Assistant Director at the Ministry of MSME, on what it takes for deep-tech to escape the lab and scale through MSME-driven manufacturing.',
     cover: '/media/linkedin/msme-mentorship.webp',
+    position: 'center 18%', // keep heads in frame
     alt: 'Velcoris team presenting to Ministry of MSME officials',
     href: 'https://www.linkedin.com/posts/shivendra-pratap-singh-748998302_most-breakthroughs-dont-fail-because-the-ugcPost-7408649121416282112-z88f',
   },

@@ -24,24 +24,30 @@ function WovenPattern() {
  * On entering the viewport the photo widens into place (clip reveal from the text side)
  * and the text fades in from a blur, staggered.
  */
-function SectorRow({ s, index, imageLeft, headingRef }) {
+function SectorRow({ s, index, imageLeft, headingRef, eager }) {
   const reduced = useReducedMotion()
-  const [ref, seen] = useInView('0px 0px -18% 0px')
+  const [ref, seen] = useInView('0px 0px -8% 0px')
   const on = reduced || seen
   const n = String(index + 1).padStart(2, '0')
-  const blur = (i) => ({
-    opacity: on ? 1 : 0,
-    filter: on ? 'blur(0)' : 'blur(8px)',
-    transform: on ? 'none' : 'translateY(10px)',
-    transition: `opacity .7s ${0.15 + i * 0.09}s, filter .7s ${0.15 + i * 0.09}s, transform .7s ${0.15 + i * 0.09}s`,
-  })
+  // Text reveal: soft 3px blur + fade + 10px rise, all on one easing curve so blur and
+  // opacity finish together (the previous 8px blur showed as a separate "blurry" stage).
+  const ease = 'cubic-bezier(.22,.61,.36,1)'
+  const blur = (i) => {
+    const delay = `${0.08 + i * 0.06}s`
+    return {
+      opacity: on ? 1 : 0,
+      filter: on ? 'blur(0)' : 'blur(3px)',
+      transform: on ? 'none' : 'translateY(10px)',
+      transition: `opacity .9s ${ease} ${delay}, filter .9s ${ease} ${delay}, transform .9s ${ease} ${delay}`,
+    }
+  }
 
   return (
     <li ref={ref} id={`sector-${s.id}`} className="grid scroll-mt-28 items-center gap-10 md:grid-cols-12 md:gap-12">
       {/* photo */}
-      <div className={`md:col-span-5 ${imageLeft ? '' : 'md:order-2 md:col-start-8'}`}>
+      <div className={`md:col-span-6 ${imageLeft ? '' : 'md:order-2 md:col-start-7'}`}>
         <div
-          className="aspect-[4/3] overflow-hidden bg-surface"
+          className="aspect-[4/3] overflow-hidden bg-surface md:aspect-square"
           style={{
             clipPath: on ? 'inset(0 0 0 0)' : imageLeft ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)',
             transition: 'clip-path 1.2s cubic-bezier(.65,0,.25,1)',
@@ -49,7 +55,16 @@ function SectorRow({ s, index, imageLeft, headingRef }) {
         >
           <div className="h-full w-full" style={{ transform: on ? 'scale(1)' : 'scale(1.18)', transition: 'transform 1.6s cubic-bezier(.2,.8,.2,1)' }}>
             {s.image ? (
-              <img src={s.image} alt={s.alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              <img
+                src={`${s.image}&w=960`}
+                srcSet={`${s.image}&w=640 640w, ${s.image}&w=960 960w, ${s.image}&w=1280 1280w`}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt={s.alt}
+                loading={eager ? 'eager' : 'lazy'}
+                fetchPriority={eager ? 'high' : 'auto'}
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             ) : (
               <WovenPattern />
             )}
@@ -58,7 +73,7 @@ function SectorRow({ s, index, imageLeft, headingRef }) {
       </div>
 
       {/* text */}
-      <div className={`md:col-span-6 ${imageLeft ? 'md:col-start-7' : 'md:order-1'}`}>
+      <div className={`md:col-span-5 ${imageLeft ? 'md:col-start-8' : 'md:order-1'}`}>
         <p className="font-mono text-xs uppercase tracking-[0.12em] text-muted" style={blur(0)}>
           Sector · {n} · {s.label}
         </p>
@@ -70,7 +85,7 @@ function SectorRow({ s, index, imageLeft, headingRef }) {
         >
           <span className="font-light">{s.title}.</span> <span className="font-semibold">{s.tagline}</span>
         </h3>
-        <p className="mt-5 max-w-xl text-muted" style={blur(2)}>{s.body}</p>
+        <p className="mt-5 max-w-xl text-muted" style={blur(2)}>{s.short}</p>
         <dl className="mt-8 grid max-w-xl grid-cols-2 gap-x-8" style={blur(3)}>
           {s.stats.map(([v, k]) => (
             <div key={k} className="border-t border-line py-3 text-sm">
@@ -113,7 +128,7 @@ export default function SectorRows() {
         <h2 id="sectors-title" className="eyebrow mb-14 md:mb-20">Commercial focus</h2>
         <ol className="space-y-24 md:space-y-32">
           {commercial.map((s, i) => (
-            <SectorRow key={s.id} s={s} index={i} imageLeft={i % 2 === 1} />
+            <SectorRow key={s.id} s={s} index={i} imageLeft={i % 2 === 1} eager={i === 0} />
           ))}
         </ol>
 
