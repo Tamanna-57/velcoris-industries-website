@@ -74,7 +74,7 @@ function Folder({ item, i }) {
       >
         <span className="folder-back" aria-hidden="true" />
         <div className="folder-paper">
-          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{item.title}</p>
+          <p className="font-mono text-xs uppercase tracking-[0.1em] text-muted">{item.title}</p>
           <p id={`${id}-d`} className="mt-2 text-[15px] leading-snug text-ink">{item.short}</p>
         </div>
         <div className="folder-front">
