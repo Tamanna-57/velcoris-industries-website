@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 6: Applications page (sector list redesigned with 4 + "View all").
+**Status:** Round 7: Applications page completed (all original sections), sector rows rebalanced, smoother reveal.
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -259,6 +259,19 @@ with the same effect and animation.
 
 ---
 
+## 3g. Round 7: Applications page finalised (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R7-1 | **Photo and text balanced**: photos now take half the row and are square on desktop (were 5/12 width, 4:3); sector descriptions condensed by ~35% (e.g. 53 → 45 words, 58 → 33) keeping every figure. | "Increase the image size to match the text, and crisp the text a little so image and text stay level." | Full original paragraphs remain in `src/lib/applications.js` (`body`); rows show `short`. |
+| R7-2 | **Smoother text reveal**: blur reduced from 8px to 3px; blur, fade and 10px rise share one easing curve (0.9 s) with a 60 ms stagger, so they finish together. | "Ours has a lot of blur; you can see it's blurry first and then the text comes. The reference is smooth." | Matches the subtle blur-in of the WLX reference. |
+| R7-3 | **Faster loading**: preconnect to the image host; responsive images (640 / 960 / 1280 px via `srcset`); first sector photo loads eagerly at high priority; rows start revealing earlier (8% before entering vs 18%). | "There's latency when the Applications page loads." | Smaller images on phones; no blank wait on the first photo. |
+| R7-4 | **Interactive Matrix Optimizer** (replicated from the original): host-matrix select (cement, epoxy, rubber, battery slurry), target property (mechanical / thermal / functional), loading slider with each matrix's own range and optimal-window band; three live outputs, window status, dispersion method and interfacial mechanism. | "Have you added the other sections of the Applications page?" | All labels, ranges, windows, dispersion methods and mechanism texts are the original's. Curves are calibrated to the original's peak/end values and labelled *illustrative model*. Accessible: labelled select, radio group, range with spoken value text, live-region status. |
+| R7-5 | **Commercial integration pathway** ("From evaluation to plant-scale production"): Source & Evaluate / Formulate & Optimize / Scale & Deploy in the alternating RSAShield layout with interactive isometric diagrams, original text and tags, plus a button per step. | The client's earlier request (round 5) to replace the three-process block with the RSAShield layout referred to this section. | Shares one `StepRows` component with the homepage "Work with us". |
+| R7-6 | **Closing CTA** ("Your industry. Our nanomaterials.") replicated. | Complete the page. | Same dark band as other pages. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -321,5 +334,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (round 6, hero + sector list) are built.
+- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (rounds 6–7, all sections) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.

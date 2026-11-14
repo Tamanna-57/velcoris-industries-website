@@ -55,6 +55,9 @@ src/
     MediaGallery.jsx      media: category filter + coverflow gallery
     LinkedInNews.jsx      media: LinkedIn posts as article cards
     SectorRows.jsx        applications: 4 + view-all sector rows with reveal animation
+    MatrixOptimizer.jsx   applications: interactive formulation model
+    StepRows.jsx          alternating step rows with isometric diagrams (home + applications)
+  lib/optimizer.js        optimizer model + pathway/CTA copy
 public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
 ```
@@ -66,4 +69,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 - [x] Round 4: Media page
 - [x] Round 5: softer blue, nav hover per reference, Work with us redesign
 - [x] Round 6: Applications page (hero + sector list)
+- [x] Round 7: Applications page complete
 - [ ] Company, Contact pages
