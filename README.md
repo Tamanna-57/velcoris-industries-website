@@ -29,6 +29,8 @@ src/
   pages/Home.jsx          homepage
   pages/Technology.jsx    technology page
   pages/Media.jsx         media page
+  pages/Applications.jsx  applications page
+  lib/applications.js     the nine sectors (copy, stats, photos)
   lib/media.js            media page content (gallery, LinkedIn posts)
   lib/technology.js       technology page copy (verbatim from the original)
   index.css               tokens (light/dark), base styles, focus, reduced-motion
@@ -52,6 +54,7 @@ src/
     StageVisuals.jsx      technology: diagram for each process stage
     MediaGallery.jsx      media: category filter + coverflow gallery
     LinkedInNews.jsx      media: LinkedIn posts as article cards
+    SectorRows.jsx        applications: 4 + view-all sector rows with reveal animation
 public/media/             hero image, graphene video + poster, lab photo
 scripts/render_lattice.py procedural renders for the hero and video
 ```
@@ -62,4 +65,5 @@ scripts/render_lattice.py procedural renders for the hero and video
 - [x] Round 3: nav hover fade + Technology page
 - [x] Round 4: Media page
 - [x] Round 5: softer blue, nav hover per reference, Work with us redesign
-- [ ] Company, Applications, Contact pages
+- [x] Round 6: Applications page (hero + sector list)
+- [ ] Company, Contact pages

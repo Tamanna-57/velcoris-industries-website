@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 5: softer accent blue, nav hover matched to the reference, "Work with us" redesigned.
+**Status:** Round 6: Applications page (sector list redesigned with 4 + "View all").
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -92,6 +92,7 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
 | vastworld.ai (client screenshot) | News grid: picture, date · source, large headline, short summary; alternate cards offset | Media › Latest from LinkedIn (round 4) |
 | RSAShield (client screenshots) | Alternating "01. Title" rows with isometric diagrams | Home › Work with us (round 5) |
+| WLX / Weiss Lameraner (client clip) | Alternating work rows: photo widens into place, text blur-in, two-tone headline, facts with rules, tag line | Applications › sector list (round 6) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
 
@@ -236,6 +237,24 @@ off-screen screen-reader labels widened the page); all cards and gallery control
 
 ---
 
+## 3f. Round 6: Applications page (14 Nov 2026)
+
+Client reasons, as given: build the "Transforming core industries" section (nine sectors, each with
+an image and information) in the style of the reference clip (WLX "Work" list), with the same effect
+and animation. Show only the **four main sectors the company is known for**, so the client's time
+isn't wasted, and add a **load-more** button for anyone who wants to see all nine; the rest should open
+with the same effect and animation.
+
+| # | Change | Reason / notes |
+|---|---|---|
+| R6-1 | **Hero** replicated from the original ("Transforming core industries with atomic-scale precision.") | Faithful replication. |
+| R6-2 | **Sector list redesigned** (reference: WLX). Was: a sidebar of nine sector buttons with one large panel (photo, badge, title, italic tagline, paragraph, three stat tiles, a formulation box, a use-case list), only one sector visible at a time. Now: one **row per sector**, photo and text alternating sides: eyebrow "Sector · 01 · Coatings & Tribology", a two-tone headline (title light + tagline bold), the original paragraph, the three stats as two-column facts with rules, a tag line (stage · loading window · dispersion method), and a "Discuss … application" link. | Matches the reference layout; each sector is readable on its own while scrolling, with no clicking between tabs. All original figures are kept; the four use-case bullets per sector stay in `src/lib/applications.js` (not shown, to keep rows short, as in the reference). |
+| R6-3 | **Animation** (from the reference): as each row enters the viewport the photo **widens into place** (clip reveal from the text side, 1.2 s) while zooming from 118% to 100%, and the text **fades in from a blur**, line by line. | Replicates the clip. Runs once per row; disabled under reduced-motion (content shows immediately). |
+| R6-4 | **4 + "View all 9 applications"**: the four commercial-scale sectors (Coatings, Infrastructure, Energy Storage, Polymers) show first; the button reveals the five R&D / co-development sectors under "Strategic horizons & R&D" with the same animation, and keyboard focus moves to the first new sector. | Client: show the main four the company is known for; let interested visitors load the rest. The grouping is the original page's own ("Commercial focus" vs "Strategic horizons & R&D"). |
+| R6-5 | Photos | The original page's Unsplash images (free under the Unsplash licence), served at 1200 px. Smart Conductive Textiles has **no working photo on the original site**, so a woven-fibre pattern stands in; replace it with a real photo when available. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -298,5 +317,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages /company, /applications and /contact are linked but not yet built; /technology (round 3) and /media (round 4) are built.
+- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (round 6, hero + sector list) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.
