@@ -68,6 +68,7 @@
   --font-display: "Inter Tight Variable", "Inter Variable", system-ui, sans-serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-num: "Space Grotesk Variable", "Inter Tight Variable", system-ui, sans-serif; /* highlighted figures */
 }
 
 @layer base {

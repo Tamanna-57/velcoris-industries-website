@@ -267,8 +267,18 @@ with the same effect and animation.
 | R7-2 | **Smoother text reveal**: blur reduced from 8px to 3px; blur, fade and 10px rise share one easing curve (0.9 s) with a 60 ms stagger, so they finish together. | "Ours has a lot of blur; you can see it's blurry first and then the text comes. The reference is smooth." | Matches the subtle blur-in of the WLX reference. |
 | R7-3 | **Faster loading**: preconnect to the image host; responsive images (640 / 960 / 1280 px via `srcset`); first sector photo loads eagerly at high priority; rows start revealing earlier (8% before entering vs 18%). | "There's latency when the Applications page loads." | Smaller images on phones; no blank wait on the first photo. |
 | R7-4 | **Interactive Matrix Optimizer** (replicated from the original): host-matrix select (cement, epoxy, rubber, battery slurry), target property (mechanical / thermal / functional), loading slider with each matrix's own range and optimal-window band; three live outputs, window status, dispersion method and interfacial mechanism. | "Have you added the other sections of the Applications page?" | All labels, ranges, windows, dispersion methods and mechanism texts are the original's. Curves are calibrated to the original's peak/end values and labelled *illustrative model*. Accessible: labelled select, radio group, range with spoken value text, live-region status. |
-| R7-5 | **Commercial integration pathway** ("From evaluation to plant-scale production"): Source & Evaluate / Formulate & Optimize / Scale & Deploy in the alternating RSAShield layout with interactive isometric diagrams, original text and tags, plus a button per step. | The client's earlier request (round 5) to replace the three-process block with the RSAShield layout referred to this section. | Shares one `StepRows` component with the homepage "Work with us". |
+| R7-5 | **Commercial integration pathway** ("From evaluation to plant-scale production"): Source & Evaluate / Formulate & Optimize / Scale & Deploy. *Superseded by R8-3: now replicated as the original three cards.* | — | — |
 | R7-6 | **Closing CTA** ("Your industry. Our nanomaterials.") replicated. | Complete the page. | Same dark band as other pages. |
+
+---
+
+## 3h. Round 8: Applications corrections (14 Nov 2026)
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R8-1 | **Matrix Optimizer resized to the original's proportions**: panel split ~41/59, tighter padding, 44 px select, 36 px property buttons, smaller tiles. The whole tool (controls + outputs) now fits on one screen. | "Look at the difference of the ratios… see it on a single screen." | Measured 518 px tall at 1440×900 and 1920×1080 (original ≈ 468 px). |
+| R8-2 | **Numbers in a distinct display font** (Space Grotesk, semibold, tabular) for the three live outputs and the wt% badge. | "Change the numbers font, it's not highlighting at all." | Self-hosted via Fontsource; units set smaller beside the figure so values stand out. |
+| R8-3 | **Commercial integration pathway restored to the original layout**: three cards (number, black icon square, title, text, tags) with the original copy. RSAShield rows removed from this page. | "I haven't told you [to change it]… keep the other page exactly the same as the original." | RSAShield layout stays only on the homepage "Work with us" section, where it was asked for. |
 
 ---
 

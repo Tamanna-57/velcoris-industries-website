@@ -44,9 +44,9 @@ export default function MatrixOptimizer() {
           <p className="mt-5 text-muted">{OPTIMIZER_INTRO.body}</p>
         </div>
 
-        <div className="reveal mt-12 grid gap-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <div className="reveal mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)]">
           {/* controls */}
-          <div className="rounded-3xl border border-line bg-bg p-7 md:p-9">
+          <div className="rounded-3xl border border-line bg-bg p-6 md:p-8">
             <label htmlFor={`${uid}-matrix`} className="eyebrow block">1. Host matrix system</label>
             <div className="relative mt-3">
               <select
@@ -57,7 +57,7 @@ export default function MatrixOptimizer() {
                   setMIdx(i)
                   setX(MATRICES[i].start)
                 }}
-                className="h-12 w-full appearance-none rounded-xl border border-line bg-bg pl-4 pr-10 text-ink outline-none focus-visible:border-accent"
+                className="h-11 w-full appearance-none rounded-xl border border-line bg-bg pl-4 pr-10 text-sm text-ink outline-none focus-visible:border-accent"
               >
                 {MATRICES.map((mm) => (
                   <option key={mm.id} value={mm.id}>{mm.name}</option>
@@ -65,9 +65,9 @@ export default function MatrixOptimizer() {
               </select>
               <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true" />
             </div>
-            <p className="mt-3 text-sm text-muted">{m.note}</p>
+            <p className="mt-2.5 text-[0.8125rem] leading-relaxed text-muted">{m.note}</p>
 
-            <p className="eyebrow mt-8" id={`${uid}-prop`}>2. Primary target property</p>
+            <p className="eyebrow mt-6" id={`${uid}-prop`}>2. Primary target property</p>
             <div role="radiogroup" aria-labelledby={`${uid}-prop`} className="mt-3 grid grid-cols-3 gap-2">
               {PROPERTIES.map((p, i) => (
                 <button
@@ -76,18 +76,18 @@ export default function MatrixOptimizer() {
                   role="radio"
                   aria-checked={prop === i}
                   onClick={() => setProp(i)}
-                  className={`h-11 rounded-xl border text-sm font-medium transition-colors ${prop === i ? 'border-ink bg-ink text-bg' : 'border-line bg-bg text-ink hover:border-line-strong'}`}
+                  className={`h-9 rounded-xl border text-xs font-semibold transition-colors ${prop === i ? 'border-ink bg-ink text-bg' : 'border-line bg-bg text-ink hover:border-line-strong'}`}
                 >
                   {p}
                 </button>
               ))}
             </div>
 
-            <div className="mt-8 flex items-center justify-between gap-4">
+            <div className="mt-6 flex items-center justify-between gap-4">
               <label htmlFor={`${uid}-load`} className="eyebrow">3. Graphene loading weight</label>
-              <output htmlFor={`${uid}-load`} className="rounded-md bg-ink px-2.5 py-1 font-mono text-sm text-bg">{x.toFixed(2)} wt%</output>
+              <output htmlFor={`${uid}-load`} className="rounded-md bg-ink px-2.5 py-1 font-[family-name:var(--font-num)] text-sm font-semibold tabular-nums text-bg">{x.toFixed(2)} wt%</output>
             </div>
-            <div className="relative mt-5">
+            <div className="relative mt-4">
               {/* optimal window band */}
               <div className="pointer-events-none absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[#2f9e6b]/25" style={{ left: `${winL}%`, width: `${winR - winL}%` }} aria-hidden="true" />
               <input
@@ -107,49 +107,49 @@ export default function MatrixOptimizer() {
               <span>{m.min.toFixed(2)} wt%</span>
               <span>Max {m.max.toFixed(2)} wt%</span>
             </div>
-            <p className="mt-6 text-sm text-muted">
+            <p className="mt-4 text-[0.8125rem] text-muted">
               Optimal window: <span className="font-mono text-ink">{a.toFixed(2)}% – {b.toFixed(2)}% wt%</span>
             </p>
-            <p className="mt-4 flex items-center gap-2.5 border-t border-line pt-4 text-sm text-ink" aria-live="polite">
+            <p className="mt-4 flex items-center gap-2.5 border-t border-line pt-4 text-[0.8125rem] text-ink" aria-live="polite">
               <span className={`size-2 shrink-0 rounded-full ${status.dot}`} aria-hidden="true" /> {status.text}
             </p>
           </div>
 
           {/* model output */}
-          <div className="flex flex-col rounded-3xl border border-line bg-bg p-7 md:p-9">
-            <div className="flex flex-col gap-3 border-b border-line pb-6 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col rounded-3xl border border-line bg-bg p-6 md:p-8">
+            <div className="flex flex-col gap-3 border-b border-line pb-5 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="eyebrow">Kinetic performance model</p>
-                <h3 className="mt-2 text-2xl font-semibold text-ink md:text-[1.75rem]">{m.name}</h3>
+                <h3 className="mt-1.5 text-xl font-semibold text-ink md:text-2xl">{m.name}</h3>
               </div>
-              <p className="text-sm text-muted sm:max-w-[15rem] sm:shrink-0 sm:text-right">{m.dispersion}</p>
+              <p className="text-[0.8125rem] text-muted sm:max-w-[14rem] sm:shrink-0 sm:text-right">{m.dispersion}</p>
             </div>
 
-            <dl className="mt-6 grid gap-3 sm:grid-cols-3" aria-live="polite">
+            <dl className="mt-5 grid gap-3 sm:grid-cols-3" aria-live="polite">
               {m.outputs.map((o, i) => {
                 const on = prop === i
                 return (
-                  <div key={o.label} className={`flex flex-col rounded-2xl p-5 transition-colors ${on ? 'hex-pattern bg-band text-band-ink' : 'border border-line bg-surface text-ink'}`}>
+                  <div key={o.label} className={`flex flex-col rounded-2xl p-4 transition-colors md:p-5 ${on ? 'hex-pattern bg-band text-band-ink' : 'border border-line bg-surface text-ink'}`}>
                     <dt className={`order-1 font-mono text-[0.75rem] uppercase tracking-[0.1em] ${on ? 'text-band-muted' : 'text-muted'}`}>{o.label}</dt>
-                    <dd className="order-2 mt-4 whitespace-nowrap font-display text-[clamp(1.75rem,2.6vw,2.25rem)] font-semibold tabular-nums tracking-tight">
+                    <dd className="order-2 mt-3 whitespace-nowrap font-[family-name:var(--font-num)] text-[clamp(2rem,2.9vw,2.6rem)] font-semibold leading-none tabular-nums tracking-[-0.02em]">
                       {fmtNum(o, modelValue(m, o, x))}
                       <span className={o.unit.trim().length > 1 ? 'ml-1 text-base font-medium' : ''}>{o.unit.trim()}</span>
                     </dd>
-                    <dd className={`order-3 mt-1 text-sm ${on ? 'text-band-muted' : 'text-muted'}`}>{subs[i]}</dd>
+                    <dd className={`order-3 mt-2 text-xs ${on ? 'text-band-muted' : 'text-muted'}`}>{subs[i]}</dd>
                   </div>
                 )
               })}
             </dl>
 
-            <div className="mt-5 rounded-2xl border border-line bg-surface p-5">
+            <div className="mt-4 rounded-2xl border border-line bg-surface p-4 md:p-5">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="eyebrow">Interfacial mechanism</p>
                 <p className="text-sm font-semibold text-ink">{mech[0]}</p>
               </div>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">“{mech[1]}”</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">“{mech[1]}”</p>
             </div>
 
-            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6 text-sm">
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5 text-[0.8125rem]">
               <span className="text-muted">Tested to ASTM / DIN standards · illustrative model</span>
               <a href={`/contact?intent=formulation&matrix=${m.id}`} className="link-accent">
                 Discuss formulation with an engineer <ArrowRight />
