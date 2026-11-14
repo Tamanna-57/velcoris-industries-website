@@ -13,9 +13,9 @@
   --line-strong: #8a919c;
   --ink: #0b0d10;
   --muted: #4a5260;
-  --accent: #1f4fe0;        /* links, focus, active */
-  --accent-strong: #1f4fe0; /* button fill */
-  --accent-hover: #173fb8;
+  --accent: #4a66b8;        /* links, focus, active (softened from #1f4fe0) */
+  --accent-strong: #4a66b8; /* button fill */
+  --accent-hover: #3d579f;
   --on-accent: #ffffff;
   /* Dark bands (Recognition, India, footer, CTA card): dark in both themes */
   --band-bg: #111214;
@@ -23,7 +23,7 @@
   --band-muted: #a9b0bb;
   --band-line: rgba(255, 255, 255, 0.12);
   --band-card: rgba(255, 255, 255, 0.04);
-  --band-link: #7da4ff;
+  --band-link: #93abe0;
   color-scheme: light;
 }
 
@@ -34,16 +34,16 @@
   --line-strong: #6b7380;
   --ink: #f3f4f6;
   --muted: #a9b0bb;
-  --accent: #7da4ff;
-  --accent-strong: #2f5bff;
-  --accent-hover: #4a72ff;
+  --accent: #93abe0;
+  --accent-strong: #4a66b8;
+  --accent-hover: #5874c6;
   --on-accent: #ffffff;
   --band-bg: #15171b;
   --band-ink: #f3f4f6;
   --band-muted: #a9b0bb;
   --band-line: rgba(255, 255, 255, 0.1);
   --band-card: rgba(255, 255, 255, 0.04);
-  --band-link: #7da4ff;
+  --band-link: #93abe0;
   color-scheme: dark;
 }
 
@@ -152,9 +152,9 @@
 }
 
 /* Nav hover (reference: EquitiFy): only the hovered item fades to grey */
-:root, [data-theme="light"] { --nav-hover: #6b7380; } /* 4.8:1 on white */
-[data-theme="dark"] { --nav-hover: #8a919c; }         /* 6.3:1 on #0a0b0d */
-.nav-link { transition: color 0.3s ease; }
+:root, [data-theme="light"] { --nav-hover: #737373; } /* neutral grey as in the reference; 4.7:1 on white */
+[data-theme="dark"] { --nav-hover: #8f8f8f; }         /* 6.1:1 on #0a0b0d */
+.nav-link { transition: color 0.15s ease-out; }       /* reference fades in ~0.1–0.15 s */
 .nav-link:hover,
 .nav-link:focus-visible { color: var(--nav-hover); }
 
@@ -190,6 +190,22 @@
   --stage-1: #1c2028; --stage-2: #20252e; --stage-3: #242a34;
   --stage-4: #282f3a; --stage-5: #2c3440; --stage-6: #303946;
 }
+
+/* Isometric diagrams (Work with us) */
+:root, [data-theme="light"] {
+  --iso-plate: #eef1f9; --iso-plate-side: #dfe5f3; --iso-stroke: #a9b8de;
+  --iso-tile: #ffffff; --iso-tile-side: #e8ecf6; --iso-tile-dark: #d6ddee;
+  --iso-block-top: #a7b6e2; --iso-block: #2a3352; --iso-block-dark: #1b2138;
+  --iso-accent: #4a66b8; --iso-text: #2a3352;
+}
+[data-theme="dark"] {
+  --iso-plate: #1a1f2a; --iso-plate-side: #141821; --iso-stroke: #3b4766;
+  --iso-tile: #232a38; --iso-tile-side: #1c2230; --iso-tile-dark: #171c27;
+  --iso-block-top: #93abe0; --iso-block: #3a4670; --iso-block-dark: #2b3456;
+  --iso-accent: #93abe0; --iso-text: #d5dbea;
+}
+@keyframes iso-float { 50% { transform: translateY(-6px); } }
+.iso-float { animation: iso-float 4.5s ease-in-out infinite; }
 
 /* Scroll reveal: quick, starts before the section is fully in view,
    and content stays visible if JS is unavailable. */

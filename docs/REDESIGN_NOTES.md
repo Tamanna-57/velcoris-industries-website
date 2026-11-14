@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 4: Media page (original replicated; "Latest from LinkedIn" redesigned).
+**Status:** Round 6: Applications page (sector list redesigned with 4 + "View all").
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -91,6 +91,8 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | EquitiFy Assets (client clip) | Hover fade on the hovered nav item | Header (round 3) |
 | Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
 | vastworld.ai (client screenshot) | News grid: picture, date · source, large headline, short summary; alternate cards offset | Media › Latest from LinkedIn (round 4) |
+| RSAShield (client screenshots) | Alternating "01. Title" rows with isometric diagrams | Home › Work with us (round 5) |
+| WLX / Weiss Lameraner (client clip) | Alternating work rows: photo widens into place, text blur-in, two-tone headline, facts with rules, tag line | Applications › sector list (round 6) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
 
@@ -223,6 +225,36 @@ off-screen screen-reader labels widened the page); all cards and gallery control
 
 ---
 
+## 3e. Round 5 (14 Nov 2026)
+
+| # | Change | Client reason | Implementation notes |
+|---|---|---|---|
+| R5-1 | **Accent blue softened**: light `#1f4fe0` → `#4a66b8` (buttons, links, focus); dark-mode links `#7da4ff` → `#93abe0`, dark-mode buttons `#2f5bff` → `#4a66b8`. Diagram highlights and dark-band links updated to match. | "The blue is quite bright and looks harsh. It should still highlight, but less." | Still meets WCAG AA: white on `#4a66b8` 5.41:1; `#4a66b8` on white 5.41:1 and on the grey surface 4.91:1; `#93abe0` on the dark background 8.57:1. Blue is still reserved for clickable things. |
+| R5-2 | **Nav hover matched to the reference** frame by frame: the hovered link fades from near-black to a neutral grey (`#737373` light / `#8f8f8f` dark) in 0.15 s; the other links stay solid. | "The hover animation isn't working the way the reference shows; make it exact." | Measured from the clip at 50 fps: only the hovered item changes, from ≈#2f2f2f to ≈#757575 in ~0.1–0.15 s, with no movement or underline. Previously 0.3 s to a bluish grey. |
+| R5-3 | **"Work with us" (homepage) redesigned** (reference: RSAShield "How it works"). Was three equal text cards. Now three **alternating rows**: large "01. Title" with the number in grey, the original text and its original button (Request Samples / Discuss Application / Explore Supply), and an **interactive isometric diagram** on the other side. | "Replace the three-process section with this layout, with interactive diagrams generated in our theme." | Diagrams are SVG, theme-aware (light and dark tokens `--iso-*`): (1) sample jar + COA sheet whose checks tick on hover; (2) parameter tiles (wt%, RPM, D50, resin) with a graphene block that drops into the mix on hover; (3) batch stack that rises, with a consistency chart that draws and a COA badge. Idle float, motion off under reduced-motion. Copy unchanged from the original. |
+
+*Note:* the client's screenshot for R5-3 came from the live Applications page, which uses the same three-step block; it is applied here to the homepage section (the Applications page is not built yet).
+
+---
+
+## 3f. Round 6: Applications page (14 Nov 2026)
+
+Client reasons, as given: build the "Transforming core industries" section (nine sectors, each with
+an image and information) in the style of the reference clip (WLX "Work" list), with the same effect
+and animation. Show only the **four main sectors the company is known for**, so the client's time
+isn't wasted, and add a **load-more** button for anyone who wants to see all nine; the rest should open
+with the same effect and animation.
+
+| # | Change | Reason / notes |
+|---|---|---|
+| R6-1 | **Hero** replicated from the original ("Transforming core industries with atomic-scale precision.") | Faithful replication. |
+| R6-2 | **Sector list redesigned** (reference: WLX). Was: a sidebar of nine sector buttons with one large panel (photo, badge, title, italic tagline, paragraph, three stat tiles, a formulation box, a use-case list), only one sector visible at a time. Now: one **row per sector**, photo and text alternating sides: eyebrow "Sector · 01 · Coatings & Tribology", a two-tone headline (title light + tagline bold), the original paragraph, the three stats as two-column facts with rules, a tag line (stage · loading window · dispersion method), and a "Discuss … application" link. | Matches the reference layout; each sector is readable on its own while scrolling, with no clicking between tabs. All original figures are kept; the four use-case bullets per sector stay in `src/lib/applications.js` (not shown, to keep rows short, as in the reference). |
+| R6-3 | **Animation** (from the reference): as each row enters the viewport the photo **widens into place** (clip reveal from the text side, 1.2 s) while zooming from 118% to 100%, and the text **fades in from a blur**, line by line. | Replicates the clip. Runs once per row; disabled under reduced-motion (content shows immediately). |
+| R6-4 | **4 + "View all 9 applications"**: the four commercial-scale sectors (Coatings, Infrastructure, Energy Storage, Polymers) show first; the button reveals the five R&D / co-development sectors under "Strategic horizons & R&D" with the same animation, and keyboard focus moves to the first new sector. | Client: show the main four the company is known for; let interested visitors load the rest. The grouping is the original page's own ("Commercial focus" vs "Strategic horizons & R&D"). |
+| R6-5 | Photos | The original page's Unsplash images (free under the Unsplash licence), served at 1200 px. Smart Conductive Textiles has **no working photo on the original site**, so a woven-fibre pattern stands in; replace it with a real photo when available. |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -250,8 +282,8 @@ off-screen screen-reader labels widened the page); all cards and gallery control
 | Body text (ink) on page | 19.46:1 | 17.89:1 |
 | Secondary text (muted) on page | 7.87:1 | 9.01:1 |
 | Secondary text on surface panels | 7.15:1 | 8.22:1 |
-| Blue link text on page | 6.46:1 | 8.09:1 |
-| White text on blue button | 6.46:1 | 5.17:1 |
+| Blue link text on page (round 5 blue) | 5.41:1 | 8.57:1 |
+| White text on blue button (round 5 blue) | 5.41:1 | 5.41:1 |
 | UI borders (non-text, 3:1 needed) | 3.18:1 | n/a |
 
 ### 5.2 Automated check of the built homepage (Playwright + headless Chrome)
@@ -285,5 +317,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages /company, /applications and /contact are linked but not yet built; /technology (round 3) and /media (round 4) are built.
+- Inner pages /company and /contact are linked but not yet built; /technology (round 3), /media (round 4) and /applications (round 6, hero + sector list) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.

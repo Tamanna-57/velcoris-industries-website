@@ -4,7 +4,7 @@
 
 const INK = '#f3f4f6'
 const MUTED = '#a9b0bb'
-const BLUE = '#7da4ff'
+const BLUE = '#93abe0'
 const LINE = '#2a2e35'
 
 export function EconomicalViz({ active }) {
