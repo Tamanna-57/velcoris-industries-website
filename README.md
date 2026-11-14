@@ -28,6 +28,10 @@ src/
   App.jsx                 header/footer shell + path routing
   pages/Home.jsx          homepage
   pages/Company.jsx       company page (founder note, Loopsii-style grid)
+  pages/Contact.jsx       contact form, stores enquiries in Supabase
+  pages/Admin.jsx         /admin enquiries viewer (Supabase Auth + RLS)
+  lib/supabase.js         lazy Supabase client + submitEnquiry()
+supabase/migrations/      database schema and security rules (Task 2)
   pages/Technology.jsx    technology page
   pages/Media.jsx         media page
   pages/Applications.jsx  applications page
