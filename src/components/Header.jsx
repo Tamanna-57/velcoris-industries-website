@@ -33,9 +33,9 @@ export default function Header() {
         scrolled || open ? 'border-line bg-bg' : 'border-transparent bg-bg'
       }`}
     >
-      <div className="container-x flex h-[72px] items-center justify-between gap-6">
+      <div className="container-x flex h-[72px] items-center justify-between gap-4 xl:gap-6">
         <a href="/" className="text-ink" aria-label="Velcoris Industries, home">
-          <Logo className="h-8 w-auto sm:h-9" />
+          <Logo className="h-8 w-auto sm:h-9 lg:h-8 xl:h-9" />
         </a>
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -44,8 +44,8 @@ export default function Header() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  aria-current={current.startsWith(item.href) ? 'page' : undefined}
-                  className="nav-link rounded-full px-3.5 py-2 text-[0.9375rem] font-medium text-ink"
+                  aria-current={(item.href === '/' ? current === '/' : current.startsWith(item.href)) ? 'page' : undefined}
+                  className="nav-link rounded-full px-2.5 py-2 text-[0.9375rem] font-medium text-ink xl:px-3.5"
                 >
                   {item.label}
                 </a>

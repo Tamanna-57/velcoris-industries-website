@@ -27,6 +27,7 @@ npm run preview   # serve the build
 src/
   App.jsx                 header/footer shell + path routing
   pages/Home.jsx          homepage
+  pages/Company.jsx       company page (founder note, Loopsii-style grid)
   pages/Technology.jsx    technology page
   pages/Media.jsx         media page
   pages/Applications.jsx  applications page

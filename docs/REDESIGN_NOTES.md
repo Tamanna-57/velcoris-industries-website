@@ -285,6 +285,21 @@ with the same effect and animation.
 
 ---
 
+## 3i. Round 9: Company page (14 Nov 2026)
+
+Sequence as the client asked: mission → founder → grid → leadership → join us.
+
+| # | Change | Client reason | Notes |
+|---|---|---|---|
+| R9-1 | **Mission hero** replicated from the original ("We exist to make the world's most advanced material, truly accessible."). | Keep the rest of the page the same as the original. | Same hero pattern as the other pages. |
+| R9-2 | **Founder's note condensed** from two long paragraphs to the founder's photo plus a two-line quote, name, role and LinkedIn. | "It's way too much bigger. We can just have 2 lines from the founder and his picture." | Quote wording is taken from the original note. Photo served from the live site. |
+| R9-3 | **Grid section** (reference: Loopsii grid video): an 8 × 3 square-cell line grid; six staggered white cards that swap between two site facts each with a rolling text change (purity, layers, flake size, QC, effluent, production, cost, supply range, lab kits, COA, grades, functionalisation); blue hand-drawn notes with arrows that draw in ("Raman + XRD on every batch", "tuned to your resin or slurry", "solvent recovered, zero effluent", "no import delays"); the original's four stats (45+ specialists, 6 departments, 100% indigenous, 99.5% FLG) count up on the right, pinned to grid intersections with square markers. | "Have this grid section, make it a smoother version, with the numbers already in the original website; the orange markups in our blue; put specific pointers relevant to the website." | Every figure comes from the original Company, Technology or FAQ copy. Notes in Caveat (self-hosted), only for the annotations. Below 1024 px: 2-column cards + 2 × 2 stats. Reduced motion: no swaps, roll, count or draw. |
+| R9-4 | **Leadership Board** and **Join us** replicated from the original (business-card and LinkedIn links kept; "View Careers" to contact). | Keep the rest the same as the original. | Join us uses the same dark band as other pages' CTAs. |
+| R9-5 | **"Home" added as the first nav item** (Home, Company, Technology, Applications, Media, Contact), as on the original. Active state matches "/" exactly; link spacing tightens at 1024–1279 px so the bar still fits. | "Keep the sequence of the header the same; you have missed out the Home one." | Desktop and mobile menus. |
+| R9-6 | **Homepage section order**: "Engineered clean, built to scale" (light) moved between "Recognised by…" and "Graphene is revolutionary" (both dark), so dark and light sections alternate. | "Two black sections together… move one section from below to above… it's not looking good at all." | Order now: Approach (light) → Recognition (dark) → Clean production (light) → India opportunity (dark) → Work with us (light) → Future vision (light) → footer (dark). |
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
