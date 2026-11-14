@@ -28,7 +28,7 @@ function TechHero() {
 
 function TechStats() {
   return (
-    <section aria-label="Key material figures" data-header="dark" className="hex-pattern bg-band">
+    <section aria-label="Key material figures" className="hex-pattern bg-band">
       <dl className="container-x grid grid-cols-2 lg:grid-cols-4">
         {TECH_STATS.map((s, i) => (
           <div key={s.label} className={`flex flex-col py-9 lg:px-8 lg:first:pl-0 ${i ? 'lg:border-l lg:border-band-line' : ''}`}>

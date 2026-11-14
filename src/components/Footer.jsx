@@ -62,7 +62,7 @@ function InstagramIcon() {
 /** Replica of the original footer (dark, hex texture). */
 export default function Footer() {
   return (
-    <footer data-header="dark" className="hex-pattern bg-band text-band-ink">
+    <footer className="hex-pattern bg-band text-band-ink">
       <div className="container-x grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
           <Logo className="h-9 w-auto text-band-ink" />

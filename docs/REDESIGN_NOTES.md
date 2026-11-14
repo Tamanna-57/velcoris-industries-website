@@ -88,7 +88,7 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | anduril.com | Confident grotesk typography (Helvetica Now Display), black canvas, monospace data labels, industrial seriousness | Type system, labels, dark theme |
 | coffee-tech.com | "Our Approach" list: heading list with hover underline progress, image swap, arrow links to detail pages | "What sets us apart" section |
 | procreator.design | Bold geometric sans headlines (Gilroy), generous whitespace, single strong accent | Hero scale, spacing |
-| EquitiFy Assets (client clip) | Floating pill nav, hover fade on the hovered item, dark-glass tone over dark sections | Header (round 3) |
+| EquitiFy Assets (client clip) | Hover fade on the hovered nav item | Header (round 3) |
 | Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
@@ -176,14 +176,10 @@ is merged by PR, rather than one branch per change.
 ### Header (reference: EquitiFy Assets, client clip)
 | # | Change | Reason |
 |---|---|---|
-| R3-1 | Header floats over the page (no full-width bar). The five nav links sit in a frosted, rounded **pill**; uppercase labels with slight tracking. | Matches the client's reference; lighter and more product-like than a solid bar, and the hero image shows behind it. |
-| R3-2 | **Hover fade:** only the hovered (or keyboard-focused) item fades to grey, over 250 ms; the others stay solid. | Replicates the reference interaction: a calm, precise cue that suits an industrial brand better than colour flashes. |
-| R3-3 | **Adaptive tone:** when the header passes over a dark section (video once full-bleed, Recognition, India opportunity, Technology stats band, footer), the pill, logo and controls switch to dark glass with white text, and switch back over light sections. | From the reference clip: keeps the header legible on any background without a heavy solid bar. Implemented with one rAF-throttled scroll check against sections tagged `data-header="dark"`. |
-| R3-4 | Current page is marked with a small blue dot and `aria-current="page"`. | Wayfinding now that there is more than one page; announced to screen readers. |
-| R3-5 | "Request a sample" stays a solid blue button outside the pill. | Keeps the single primary action visually distinct (blue = clickable rule). |
+| R3-1 | Header layout unchanged from round 2 (solid bar, same links and button). Only the **hover** changed: the hovered or focused link fades to grey (#6b7380 light / #8a919c dark, 300 ms); the other links stay solid. Replaces the previous blue hover. | Client reference: the hovered item fades out while the rest stay put. The grey stays above 4.5:1 in both themes. |
 
-Verified: nav text contrast measured on real pixels is 14.0–17.1:1 over the hero and 16.6–17.0:1
-over dark bands (both themes).
+*Revision:* a first pass also restyled the header (frosted pill, uppercase labels, dark-glass
+switching, active dot). The client had not asked for that, so it was reverted; only the hover fade remains.
 
 ### Technology page (`/technology`)
 | # | Section | Treatment | Reason |
@@ -194,7 +190,7 @@ over dark bands (both themes).
 | R3-9 | Colour in the stack | Reference cards are multicoloured; ours use our palette: white/graphite cards, a stepped blue-grey frame tone per stage (so stacked edges stay distinguishable), dark diagram panels with a single blue highlight. | Client direction: replicate the effect in our colour theme. |
 | R3-10 | Datasheet | Product switch + category list implemented as accessible **ARIA tabs** (arrow keys, Home/End, focus follows selection). | Original had clickable tabs without keyboard semantics. |
 | R3-12 | FAQ ("Production consistency & order fulfillment") | Collapsed accordion (reference: WLX): question rows with dividers and a chevron; answers open on click; all closed by default. `aria-expanded`, `aria-controls`, and closed answers are `inert`. | Client direction: less text on screen; visitors open only the answers they need. |
-| R3-11 | Routing | Minimal path-based routing (`/`, `/technology`), per-page `<title>`. | Enough for the prototype. Hosting needs an SPA fallback to `index.html` (Vite dev/preview already provide it). |
+| R3-11 | Routing | Minimal path-based routing (`/`, `/technology`), per-page `<title>`. `vercel.json` rewrites every path to `index.html`. | Without the rewrite, Vercel previews returned 404 for `/technology` (reported by the client). |
 
 Verified (Playwright, 1440px and 390px, both themes): no runtime errors; no horizontal overflow;
 text contrast on all 208 Technology text elements passes in dark, and in light once false alarms
