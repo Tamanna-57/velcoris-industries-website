@@ -7,7 +7,7 @@ This is the source material for the final Task 1 report.
 functionality, and build a working, responsive prototype that reflects Velcoris as an
 advanced-materials and industrial-technology company.
 
-**Status:** Round 3: new header interaction, and the Technology page (original replicated; process section redesigned).
+**Status:** Round 4: Media page (original replicated; "Latest from LinkedIn" redesigned).
 
 **Stack:** React 19 + Vite + Tailwind CSS v4. No animation libraries.
 
@@ -90,6 +90,7 @@ and an automated WCAG contrast pass. Pages reviewed: `/`, `/technology`, `/appli
 | procreator.design | Bold geometric sans headlines (Gilroy), generous whitespace, single strong accent | Hero scale, spacing |
 | EquitiFy Assets (client clip) | Hover fade on the hovered nav item | Header (round 3) |
 | Loopsii (client clip) | Stacking feature cards with text + coloured visual panel | Technology › How our process works (round 3) |
+| vastworld.ai (client screenshot) | News grid: picture, date · source, large headline, short summary; alternate cards offset | Media › Latest from LinkedIn (round 4) |
 | LxL Creative (client clip) | Small video frame that grows to full-bleed as you scroll, then plays | Scroll-expand video section |
 | View Transitions "circular reveal" theme switch | Classy drop/ripple from the toggle into the new theme | Theme toggle |
 
@@ -199,6 +200,28 @@ from translucent pills were re-measured on real pixels (stage rail ≥ 7.8:1); d
 
 ---
 
+## 3d. Round 4: Media page (14 Nov 2026)
+
+Client reasons, as given: the LinkedIn section on the live Media page **has a lot of latency and
+doesn't work** (the posts often load blank), and the client found a media layout (vastworld.ai)
+that shows posts as articles, which they preferred. Instruction: replicate the Media page, redesign
+the LinkedIn section in that style, keep the LinkedIn links, and use a picture from each post as its cover.
+
+| # | Section | Treatment | Reason |
+|---|---|---|---|
+| R4-1 | Hero ("The story of advanced materials, frame by frame.") | **Replicated**: same copy, new type system, light hex texture. | Client: keep the original, revise section by section. |
+| R4-2 | Gallery | **Replicated**: same six category filters, same 45 photos, titles and order; coverflow carousel (centre photo large, neighbours angled behind), arrows, drag/swipe, keyboard arrows, caption table (Milestone / Category / Archive index), click the centre photo to expand. | Faithful replication. Only the centre ±2 photos render, so at most five photos load at a time. |
+| R4-3 | **Latest from LinkedIn** | **Redesigned** (reference: vastworld.ai news grid). Was: four live LinkedIn iframe embeds in a carousel. Now: static article cards, each with a **cover picture from that post**, "Month Year · Author", a headline, a two-line summary and "View post on LinkedIn ↗". Alternate cards sit lower, as in the reference. The original's arrows and swipe are kept (the row scrolls with snap). | **Latency:** the four embeds loaded LinkedIn's full widget (scripts, fonts, tracking) for each post and often rendered blank. Static cards load four small images (26–56 KB each) and nothing else. **Readability:** an article layout (picture, date, headline, summary) scans faster than embedded social posts. **Redirect kept:** each card opens its original post in a new tab, as requested. |
+| R4-4 | Card content | Same four posts, same order as the original. Covers are the first picture of each post. Dates are decoded from each post's LinkedIn ID (Dec 2025, Oct 2026, Feb 2026, Aug 2026). Headlines: the original card labels, except the hackathon card (see R4-5); summaries condensed from each post's own text. | Accurate and traceable to the source posts. |
+| R4-5 | Hackathon card headline | "Shortlisted for the MSME Idea Hackathon 6.0 Pitch Round" instead of the original label "MSME Idea Hackathon 3.0 Stage-2 Winner". | The post itself (and its cover image) says *shortlisted among 7 teams for the MSME Idea Hackathon 6.0 pitch round*; the old label contradicted the post. **To confirm with the client.** |
+| R4-6 | Gallery photo files | Referenced from the live site (`velcorisindustries.com/assets/...`) for now. | The 45 originals (WhatsApp JPEGs up to 1600 px, several hundred KB each) could not be exported from this environment. **To do:** add the originals to `public/media/gallery/` as compressed WebP and switch the paths in `src/lib/media.js`. |
+| R4-7 | Press relations | **Replicated**: same copy; button is the blue primary action. | Faithful replication, consistent with the blue-is-clickable rule. |
+
+Verified: no runtime errors at 1440px and 390px; no horizontal overflow on mobile (fixed a bug where
+off-screen screen-reader labels widened the page); all cards and gallery controls keyboard-operable.
+
+---
+
 ## 4. Performance decisions
 - No WebGL or Three.js on the homepage. The lattice is a pre-rendered image; the process
   story is a short compressed video (WebM + MP4, poster frame, `preload="none"` until near the viewport).
@@ -261,5 +284,5 @@ All values are at or above the 4.5:1 AA minimum, even at the worst pixel.
   Velcoris footage, micrographs (TEM/Raman) and facility photos when available.
 - Copy is condensed from the live site. Figures (11×, 92%, ₹2,400 Cr, 100 g → tonnes,
   0 L effluent) are taken from the live site and not independently verified.
-- Inner pages /company, /applications, /media and /contact are linked but not yet built; /technology is built (round 3).
+- Inner pages /company, /applications and /contact are linked but not yet built; /technology (round 3) and /media (round 4) are built.
 - Technology figures and specs are the original site's claims, copied verbatim and not independently verified.
